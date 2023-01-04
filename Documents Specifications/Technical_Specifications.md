@@ -1,12 +1,22 @@
 # Technical Specifications
 
-Project : 2023 Project 3 - Harfang3D Binding Group 1  
-Client : [HARFANG3D](https://github.com/harfang3d/harfang3d)  
-Author : [Nicolas MIDA](https://github.com/Nicolas-Mida)  
-Created on : 2022-01-03  
-Last update : 2022-01-04
+## Table of Contents
 
-### Team Members:
+- [Technical Specifications](#technical-specifications)
+  - [Table of Contents](#table-of-contents)
+  - [Front Part](#front-part)
+  - [Team Members](#team-members)
+  - [Introduction](#introduction)
+  - [References](#references)
+  - [Glossary](#glossary)
+
+## Front Part
+
+| Project | Client | Author | Created on | Last update |
+|:---|:---|:---|:---|:---|
+| 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-04 |
+
+## Team Members
 
 | Role | Name |  
 |:---|:---|
@@ -16,23 +26,13 @@ Last update : 2022-01-04
 | Software Engineer | [Grégory PAGNOUX](https://github.com/Gregory-Pagnoux) |
 | Program Manager | [Rémy CHARLES](https://github.com/RemyCHARLES) |
 
-
-# Table of Contents
-    
-- [Technical Specifications](#technical-specifications)
-    - [Team Members:](#team-members)
-- [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [References](#references)
-  - [Glossary](#glossary)
-
 ## Introduction
 
 Currently, the Harfang3D library is written in C++ and can be used in CPython, Lua and Go. The goal of this project is to create a binding to the Harfang3D library in F# so that the user can use the Harfang3D API in F#.
 
 The binding will be done using [FABGen](https://github.com/ejulien/FABGen/), a tool to generate F# bindings from C++ headers. The binding will be done in a way that the user can use the Harfang3D API as if it was written in F#.
 
-For more details, please look at the [Functional Specifications](functional_specification.md).
+For more details, please look at the [Functional Specifications](functional_specifications.md).
 
 ## References
 
@@ -53,3 +53,4 @@ For more details, please look at the [Functional Specifications](functional_spec
 | Go | - | Go is a programming language |
 | API | Application Programming Interface | An API is a set of functions and procedures allowing the creation of applications that access the features or data of an operating system, application, or other service. |
 | Binding | - | A binding is a link between two things. |
+
