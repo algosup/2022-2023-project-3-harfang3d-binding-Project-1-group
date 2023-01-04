@@ -1,7 +1,8 @@
 # Functional Specifications 
 
 2023 Project Harfang3D Binding Group 1 <br>
-Created on: 2023-04-01
+Created on: 2023-04-01 <br>
+Author: [Rémy Charles](https://github.com/RemyCHARLES)
 
 | Role | Name | Document |
 | :--- | :--- | :--- |
@@ -17,13 +18,21 @@ ___
 
 <details><summary>Table of Contents</summary>
 
+- [Functional Specification](Functional_Specifications.md)
+  - [1. Context](Functional_Specifications.md#1-context)
+  - [2. Goal and non goal](Functional_Specifications.md#2-goal-and-non-goal)
+    - [2.1 Goal](Functional_Specifications.md#21-goal)
+    - [2.2 Non goal](Functional_Specifications.md#22-non-goal)
+  - 
 </details>
 
 ___
 
 <br>
 
-## 1. Context
+## 1. Introduction 
+
+### 1.1 Purpose 
 
 <img src="img/harfang3d-logo.png" width="100" height="100">
 
@@ -38,11 +47,57 @@ Based on the information provided, it appears that the purpose of developing ano
 | [François Gutherz](https://www.linkedin.com/in/astrofra/) | CTO & Project leader | francois.gutherz@harfang3d.com|
 | [Emmanuel Julien](https://www.linkedin.com/in/ejulien/) | Lead developer | emmanuel.julien@harfang3d.com|
 
-## 2. Goal and non goal
+### 1.2 Project Scope
 
-  - ### 2.1 Goal 
+   - Create Bindings for the **HARFANG® 3D** engine  
+   - Provide a **set of tools** and **documentation** that make it easy for **F#** developers to incorporate **HARFANG® 3D** into their projects.
+ 
+### 1.3 Scope of the document
 
-    - Create Bindings for the **HARFANG® 3D** engine in **F#**.
+### 1.4 Related documents
 
-  - ### 2.2 Non goal
-    - 
+### 1.5 Terms/ Acronyms and Definitions
+
+### 1.6 Risk and Assumptions
+
+## 2. System/ Solution Overview
+
+### 2.1 Context Diagram 
+
+### 2.2 System Actors
+
+### 2.3 Dependencies and Change Impacts
+
+## 3. Functional Specifications
+
+- ### 3.1 Binding F# for HARFANG® 3D
+
+  - #### 3.1.1 Purpose/ Description
+
+  - #### 3.1.2 Uses Cases
+
+  - #### 3.1.3 Mock-up
+
+  - #### 3.1.4 Functional Requirements
+
+  - #### 3.1.5 Field level Specifications
+
+## 4. System Confugurations
+
+## 5. Other System Requirements/ Non Functional Requirements
+
+## 6. Reporting Requirements
+
+## 7. Integration Requirements
+
+### 7.1 Exception Handling/ Error Reporting
+
+## 8. References
+
+## 9. Open Issues
+
+## 10. Glossary
+
+
+
+
