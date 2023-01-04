@@ -9,9 +9,9 @@ Harfang3D is a 3D game engine written in C++ and designed for ease of use and ex
 
 
 * [Elise Gautier] Project Manager
-* [Nicolas Midas] Technical Lead
-* [Rémy Charles] Programme Manager
-* [Théo Trouvé] Quality Manager
-* [Grégory Pagnoux] SOfftware Ingenieur
+* [Nicolas Mida] Technical Lead
+* [Rémy Charles] Program Manager
+* [Théo Trouvé] Quality Assurance
+* [Grégory Pagnoux] Software Engineer
 
 
