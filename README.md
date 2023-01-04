@@ -9,15 +9,19 @@ Harfang3D is a 3D game engine written in C++ and designed for ease of use and ex
 
 - [Functionnal Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/documents/Documents%20Specifications/Functional_Specifications.md)
 - [Technical Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/documents/Documents%20Specifications/Technical_Specification.md)
+- [Trello](https://trello.com/b/B7eB7vfa/f)
+- [Test Plan](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/documents/Test%20Plan/Test_Plan.md)
 
 
 ## Team
 
 
-* [Elise Gautier] Project Manager
-* [Nicolas Mida] Technical Lead
-* [Rémy Charles] Program Manager
-* [Théo Trouvé] Quality Assurance
-* [Grégory Pagnoux] Software Engineer
+| Members         | Roles             |
+| --------------- | ----------------- |
+| Elise GAUTIER   | Project Manager   |
+| Nicolas MIDA    | Tech Lead         |
+| Rémy CHARLES    | Program Manager   |
+| Grégory PAGNOUX | Software Engineer |
+| Théo Trouvé     | Quality Assurance |
 
 
