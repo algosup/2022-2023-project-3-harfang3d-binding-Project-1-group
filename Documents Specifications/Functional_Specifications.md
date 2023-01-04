@@ -48,6 +48,7 @@ ___
 
 ## 1. Introduction 
 
+<br>
 
 ### 1.1 Purpose 
 
@@ -62,10 +63,14 @@ Based on the information provided, it appears that the purpose of developing ano
 | [François Gutherz](https://www.linkedin.com/in/astrofra/) | CTO & Project leader | francois.gutherz@harfang3d.com|
 | [Emmanuel Julien](https://www.linkedin.com/in/ejulien/) | Lead developer | emmanuel.julien@harfang3d.com|
 
+<br>
+
 ### 1.2 Project Scope
 
    - Create Bindings for the **HARFANG® 3D** engine  
    - Provide a **set of tools** and **documentation** that make it easy for **F#** developers to incorporate **HARFANG® 3D** into their projects.
+
+<br>
 
 ### 1.3 Related documents
 
@@ -75,6 +80,8 @@ Based on the information provided, it appears that the purpose of developing ano
 | [Test Plan](/Test%20Plan/Test_Plan.md) | Test plan |
 | [Technical Specifications](/Documents%20Specifications/Technical_Specification.md) | Technical specifications |
 | [Trello](https://trello.com/b/B7eB7vfa/f) | Trello board |
+
+<br>
 
 ### 1.4 Terms/ Acronyms and Definitions
 
@@ -88,14 +95,19 @@ Based on the information provided, it appears that the purpose of developing ano
 | **DirectX 11** | Cross-platform API for rendering 2D and 3D graphics. |
 | **HTML5** | Markup language for web pages. |
 
+<br>
+
 ### 1.5 Risk and Assumptions
 
 - If we forget to create a binding for a function, it will not be possible to use it in F#.
 
+<br>
 
 ## 2. System/ Solution Overview
 
 
+
+<br>
 
 ### 2.1 Context Diagram 
 
