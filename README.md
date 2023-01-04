@@ -1,5 +1,3 @@
-# 2022-2023-project-3-harfang3d-binding-Project-1-group
-
 # Project 1: Harfang3D Binding
 
 ## Description
@@ -10,4 +8,10 @@ Harfang3D is a 3D game engine written in C++ and designed for ease of use and ex
 ## Team
 
 
-* [Elise Gautier]
+* [Elise Gautier] Project Manager
+* [Nicolas Midas] Technical Lead
+* [Rémy Charles] Programme Manager
+* [Théo Trouvé] Quality Manager
+* [Grégory Pagnoux] SOfftware Ingenieur
+
+
