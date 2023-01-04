@@ -4,13 +4,13 @@
 Created on: 2023-04-01 <br>
 Author: [Rémy Charles](https://github.com/RemyCHARLES)
 
-| Role | Name | Document |
-| :--- | :--- | :--- |
-| Project Manager | [Elise Gautier](https://github.com/elisegtr) | [Critical Path](/Critical%20Path/Critical_Path.md) / [Trello](https://trello.com/b/B7eB7vfa/f) |
-| Program Manager | [Rémy Charles](https://github.com/RemyCHARLES) | [Functional Specifications](/Functional_Specifications.md) |
-| Tech Lead | [Nicolas Mida](https://github.com/Nicolas-Mida) | [Technical Specifications](/Documents%20Specifications/Technical_Specification.md) |
-| Software Engineer | [Grégory Pagnoux](https://github.com/Gregory-Pagnoux) |  |
-| Quality Assurance | [Théo Trouvé](https://github.com/TheoTr) | [Test Plan](/Test%20Plan/Test_Plan.md) |
+| Role | Name | 
+| :--- | :--- |
+| Project Manager | [Elise Gautier](https://github.com/elisegtr) |
+| Program Manager | [Rémy Charles](https://github.com/RemyCHARLES) |
+| Tech Lead | [Nicolas Mida](https://github.com/Nicolas-Mida) | 
+| Software Engineer | [Grégory Pagnoux](https://github.com/Gregory-Pagnoux) |  
+| Quality Assurance | [Théo Trouvé](https://github.com/TheoTr) | 
 
 <br>
 
@@ -18,23 +18,38 @@ ___
 
 <details><summary>Table of Contents</summary>
 
-- [Functional Specification](Functional_Specifications.md)
-  - [1. Context](Functional_Specifications.md#1-context)
-  - [2. Goal and non goal](Functional_Specifications.md#2-goal-and-non-goal)
-    - [2.1 Goal](Functional_Specifications.md#21-goal)
-    - [2.2 Non goal](Functional_Specifications.md#22-non-goal)
-  - 
+- [Functional Specifications](#functional-specifications)
+  - [1. Introduction](#1-introduction)
+    - [1.1 Purpose](#11-purpose)
+    - [1.2 Project Scope](#12-project-scope)
+    - [1.3 Related documents](#13-related-documents)
+    - [1.4 Terms/ Acronyms and Definitions](#14-terms-acronyms-and-definitions)
+    - [1.5 Risk and Assumptions](#15-risk-and-assumptions)
+  - [2. System/ Solution Overview](#2-system-solution-overview)
+    - [2.1 Context Diagram](#21-context-diagram)
+    - [2.2 System Actors](#22-system-actors)
+    - [2.3 Dependencies and Change Impacts](#23-dependencies-and-change-impacts)
+  - [3. Functional Specifications](#3-functional-specifications)
+    - [3.1 Binding F# for HARFANG® 3D](#31-binding-f-for-harfang-3d)
+  - [4. System Configurations](#4-system-configurations)
+  - [5. Other System Requirements/ Non Functional Requirements](#5-other-system-requirements-non-functional-requirements)
+  - [6. Reporting Requirements](#6-reporting-requirements)
+  - [7. Integration Requirements](#7-integration-requirements)
+    - [7.1 Exception Handling/ Error Reporting](#71-exception-handling-error-reporting)
+  - [8. References](#8-references)
+  - [9. Open Issues](#9-open-issues)
+  - [10. Glossary](#10-glossary)
+  
 </details>
 
 ___
-
+<img id="image" src="img/harfang3d-logo.png" >
 <br>
 
 ## 1. Introduction 
 
-### 1.1 Purpose 
 
-<img src="img/harfang3d-logo.png" width="100" height="100">
+### 1.1 Purpose 
 
 [HARFANG® 3D](https://www.harfang3d.com/en_US/) is a 3D engine that allows you to create 3D games and applications. It is a cross-platform engine that can be used on Windows, Linux, macOS, iOS, Android, and HTML5. It is written in **C++** and uses OpenGL for rendering. It is also compatible with Vulkan and DirectX 11.
 
@@ -51,16 +66,36 @@ Based on the information provided, it appears that the purpose of developing ano
 
    - Create Bindings for the **HARFANG® 3D** engine  
    - Provide a **set of tools** and **documentation** that make it easy for **F#** developers to incorporate **HARFANG® 3D** into their projects.
- 
-### 1.3 Scope of the document
 
-### 1.4 Related documents
+### 1.3 Related documents
 
-### 1.5 Terms/ Acronyms and Definitions
+| Document | Description |
+| :--- | :--- |
+| [Critical Path](/Critical%20Path/Critical_Path.md) | Project schedule |
+| [Test Plan](/Test%20Plan/Test_Plan.md) | Test plan |
+| [Technical Specifications](/Documents%20Specifications/Technical_Specification.md) | Technical specifications |
+| [Trello](https://trello.com/b/B7eB7vfa/f) | Trello board |
 
-### 1.6 Risk and Assumptions
+### 1.4 Terms/ Acronyms and Definitions
+
+| Term | Definition |
+| :--- | :--- |
+| **HARFANG® 3D** | 3D engine that allows you to create 3D games and applications. |
+| **F#** | Functional programming language. |
+| **C++** | Object-oriented programming language. |
+| **OpenGL** | Cross-platform API for rendering 2D and 3D graphics. |
+| **Vulkan** | Cross-platform API for rendering 2D and 3D graphics. |
+| **DirectX 11** | Cross-platform API for rendering 2D and 3D graphics. |
+| **HTML5** | Markup language for web pages. |
+
+### 1.5 Risk and Assumptions
+
+- If we forget to create a binding for a function, it will not be possible to use it in F#.
+
 
 ## 2. System/ Solution Overview
+
+
 
 ### 2.1 Context Diagram 
 
@@ -70,7 +105,7 @@ Based on the information provided, it appears that the purpose of developing ano
 
 ## 3. Functional Specifications
 
-- ### 3.1 Binding F# for HARFANG® 3D
+### 3.1 Binding F# for HARFANG® 3D
 
   - #### 3.1.1 Purpose/ Description
 
@@ -82,7 +117,7 @@ Based on the information provided, it appears that the purpose of developing ano
 
   - #### 3.1.5 Field level Specifications
 
-## 4. System Confugurations
+## 4. System Configurations
 
 ## 5. Other System Requirements/ Non Functional Requirements
 
@@ -99,5 +134,12 @@ Based on the information provided, it appears that the purpose of developing ano
 ## 10. Glossary
 
 
-
+<style>
+  img {
+    width: 100px;
+    height: 100px;
+    margin-left: 450px;
+    position: absolute;
+  }
+</style>
 
