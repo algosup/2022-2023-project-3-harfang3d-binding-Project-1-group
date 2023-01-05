@@ -43,9 +43,9 @@ ___
 </details>
 
 ___
-<div style="position: absolute">
-  <img id="image" src="img/harfang3d-logo.png" width="100px" heigth="100px" style="margin-left:450px" >
-</div>
+
+<img id="image" src="img/harfang3d-logo.png" width="100px" heigth="100px" align="right" >
+
 <br>
 
 ## 1. Introduction 
