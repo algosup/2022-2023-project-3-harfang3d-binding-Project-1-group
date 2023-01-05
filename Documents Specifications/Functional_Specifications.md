@@ -38,7 +38,6 @@ ___
     - [7.1 Exception Handling/ Error Reporting](#71-exception-handling-error-reporting)
   - [8. References](#8-references)
   - [9. Open Issues](#9-open-issues)
-  - [10. Glossary](#10-glossary)
   
 </details>
 
@@ -90,8 +89,10 @@ Based on the information provided, it appears that the purpose of developing ano
 | Term | Definition |
 | :--- | :--- |
 | **HARFANG® 3D** | 3D engine that allows you to create 3D games and applications. |
+| **FABgen** | Generator of bindings for the C++ engine HARFANG® 3D. |
 | **F#** | Functional programming language. |
 | **C++** | Object-oriented programming language. |
+| **Python** | Interpreted, high-level, general-purpose programming language. |
 | **OpenGL** | Cross-platform API for rendering 2D and 3D graphics. |
 | **Vulkan** | Cross-platform API for rendering 2D and 3D graphics. |
 | **DirectX 11** | Cross-platform API for rendering 2D and 3D graphics. |
@@ -111,13 +112,25 @@ Based on the information provided, it appears that the purpose of developing ano
 
 ### 2.1 Context Diagram 
 
+We use a generator of bindings create by HARFANG® 3D. THis generator is called FABgen and it is written in python. It is used to generate the bindings for the C++ engine.
+<img src="img/Schema.png" >
 
-<img src="/img/Schema.png" >
-
+<br>
 
 ### 2.2 System Actors
 
+| User | Example | Frequency of use | Security/ Access, Features Used | Additional Comments |
+| :--- | :--- | :--- | :--- | :--- |
+| **F# developer** |  | - | - | - | 
+
+
 ### 2.3 Dependencies and Change Impacts
+
+  - #### 2.3.1 System Dependencies
+
+  - #### 2.3.2 Change Impacts
+
+
 
 ## 3. Functional Specifications
 
@@ -146,8 +159,3 @@ Based on the information provided, it appears that the purpose of developing ano
 ## 8. References
 
 ## 9. Open Issues
-
-## 10. Glossary
-
-
-
