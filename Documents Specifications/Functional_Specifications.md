@@ -43,7 +43,9 @@ ___
 </details>
 
 ___
-<img id="image" src="img/harfang3d-logo.png" >
+<div style="position: absolute">
+  <img id="image" src="img/harfang3d-logo.png" width="100px" heigth="100px" style="margin-left:450px" >
+</div>
 <br>
 
 ## 1. Introduction 
@@ -146,12 +148,4 @@ Based on the information provided, it appears that the purpose of developing ano
 ## 10. Glossary
 
 
-<style>
-  img {
-    width: 100px;
-    height: 100px;
-    margin-left: 450px;
-    position: absolute;
-  }
-</style>
 
