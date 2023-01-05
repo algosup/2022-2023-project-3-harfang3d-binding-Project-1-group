@@ -44,7 +44,7 @@ ___
 
 ___
 
-<img id="image" src="img/harfang3d-logo.png" width="100px" heigth="100px" align="right" >
+<img id="image" src="https://github.com/harfang3d/image-storage/raw/main/brand/logo_harfang3d_owl_only.png" width="150px" heigth="150px" align="right" >
 
 <br>
 
