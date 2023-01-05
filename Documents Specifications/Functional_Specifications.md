@@ -44,7 +44,7 @@ ___
 
 ___
 
-<img id="image" src="https://github.com/harfang3d/image-storage/raw/main/brand/logo_harfang3d_owl_only.png" width="150px" heigth="150px" align="right" >
+<img src="https://github.com/harfang3d/image-storage/raw/main/brand/logo_harfang3d_owl_only.png" width="150px" heigth="150px" align="right" >
 
 <br>
 
@@ -107,11 +107,13 @@ Based on the information provided, it appears that the purpose of developing ano
 
 ## 2. System/ Solution Overview
 
-
-
 <br>
 
 ### 2.1 Context Diagram 
+
+
+<img src="/img/Schema.png" >
+
 
 ### 2.2 System Actors
 
