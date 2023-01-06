@@ -57,6 +57,8 @@ ___
 
 Based on the information provided, it appears that the purpose of developing another 3D engine, **HARFANG® 3D** is to meet the specific technical, sovereignty, and long-term requirements of the civil and defense industries. These industries have strong technical requirements such as safety certification and custom hardware, as well as a need for confidentiality and the ability to run offline.
 
+<br>
+
 **Company distribution**
 
 | Person | Company role | Contact |
@@ -112,7 +114,6 @@ Based on the information provided, it appears that the purpose of developing ano
 
 ### 2.1 Context Diagram 
 
-We use a generator of bindings create by HARFANG® 3D. THis generator is called FABgen and it is written in python. It is used to generate the bindings for the C++ engine.
 <img src="img/Schema.png" >
 
 Schema of how FABgen works.
@@ -125,6 +126,7 @@ Schema of how FABgen works.
 | :--- | :--- | :--- | :--- | :--- |
 | **F# developer** |  | - | - | - | 
 
+<br>
 
 ### 2.3 Dependencies and Change Impacts
 
@@ -152,17 +154,58 @@ Schema of how FABgen works.
 
     The purpose of this section is to create the binding of the **HARFANG® 3D** engine in **F#**. The **HARFANG® 3D** engine is a 3D engine that allows you to create 3D games and applications. For that we will use the **FABgen** generator. This generator is written in **Python** and is used to generate the bindings for the **C++** engine, and it already got bindings in C#/Lua/Python/GoLang. 
 
+  <br>
+
   - #### 3.1.2 Uses Cases
 
-    - **Use Case 1** : Create a binding for the **HARFANG® 3D** engine in **F#**.
-    - **Use Case 2** : Create a **set of tools** and **documentation** that make it easy for **F#** developers to incorporate **HARFANG® 3D** into their projects.
+  | UC-1 | Create a binding for the HARFANG® 3D engine in F#. |
+  | --- | --- |
+  | **Primary Actor** | F# developer |
+  | **Stakeholders and Interests** | - |
+  | **Trigger** | The F# developer wants to use the HARFANG® 3D engine in F#. |
+  | **Preconditions** | The F# developer has the HARFANG® 3D engine installed on his computer. |
+  | **Postconditions** | The F# developer can use the HARFANG® 3D engine in F#. |
+  | **Main success scenario** | 1. The F# developer uses the FABgen generator to create the binding. <br> 2. The F# developer can use the HARFANG® 3D engine in F#. |
+  | **Extensions** | - |
+  | **Special Requirements** | - |
+  | **Open Questions** | - |
+  
+  <br>
+
+
+  | UC-2 | Create a set of tools and documentation that make it easy for F# developers to incorporate HARFANG® 3D into their projects. |
+  | --- | --- |
+  | **Primary Actor** | F# developer |
+  | **Stakeholders and Interests** | - |
+  | **Trigger** | The F# developer wants to use the HARFANG® 3D engine in F#. |
+  | **Preconditions** | The F# developer has the HARFANG® 3D engine installed on his computer. |
+  | **Postconditions** | The F# developer can use the HARFANG® 3D engine in F#. |
+  | **Main success scenario** | 1. The F# developer uses the FABgen generator to create the binding. <br> 2. The F# developer can use the HARFANG® 3D engine in F#. |
+  | **Extensions** | - |
+  | **Special Requirements** | - |
+  | **Open Questions** | - |
+
+  <br>
 
   - #### 3.1.3 Mock-up
 
+<img src="img/Mock-Up.png" >
+ 
+F# are not mentioned in the schema but that will work the same way as the other languages.
+
+<br>
    
   - #### 3.1.4 Functional Requirements
 
+| ID | Description | Priority | Status |
+| :--- | :--- | :--- | :--- |
+| FR-1 | The F# developer can use the HARFANG® 3D engine in F#. | 1 | To do |
+| FR-2 | Have a document to explain how to use the F# bindings | 2 | To do |
+
+
   - #### 3.1.5 Field level Specifications
+
+
 
 ## 4. System Configurations
 
