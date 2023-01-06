@@ -108,6 +108,8 @@ Based on the information provided, it appears that the purpose of developing ano
 
 <br>
 
+___
+
 ## 2. System/ Solution Overview
 
 <br>
@@ -115,8 +117,6 @@ Based on the information provided, it appears that the purpose of developing ano
 ### 2.1 Context Diagram 
 
 <img src="img/Schema.png" >
-
-Schema of how FABgen works.
 
 <br>
 
@@ -145,6 +145,8 @@ Schema of how FABgen works.
      - **DirectX 11** : Cross-platform API for rendering 2D and 3D graphics.
 
 <br>
+
+___
 
 ## 3. Functional Specifications
 
@@ -194,7 +196,7 @@ Schema of how FABgen works.
 F# are not mentioned in the schema but that will work the same way as the other languages.
 
 <br>
-   
+
   - #### 3.1.4 Functional Requirements
 
 | ID | Description | Priority | Status |
@@ -207,18 +209,49 @@ F# are not mentioned in the schema but that will work the same way as the other 
 
 
 
+  - #### 3.1.6 Personas
+
+| Name | Age | Role |Description | 
+| :--- | :--- | :--- | :--- |
+| Mathias Durant | 38 |F# developer | The F# developer wants to use the HARFANG® 3D engine in F# to create a simulation 3D in Virtual Reality (VR) to know which is most likely to attract the attention of a passer-by on the street. | 
+| Pierre-Étienne Morency | 23 | Computer Science Student | He is a students who need to use the HARFRANG® 3D engine in F# to create a reproduction of his school in VR. |
+| Jean-Philippe Lavoie | 48 | Software Engeneer | He is a software engeneer who needs to use the HARFRANG® 3D engine in F# to create a AR system for this car company. | 
+| Marie-Ève Lavoie | 25 |  | She is a students who need to use the HARFRANG® 3D engine in F# to create a reproduction of her school in VR. |
+
+___
+
 ## 4. System Configurations
 
 
 
+___
+
 ## 5. Other System Requirements/ Non Functional Requirements
+
+
+
+___
 
 ## 6. Reporting Requirements
 
+
+
+___
+
 ## 7. Integration Requirements
+
+
 
 ### 7.1 Exception Handling/ Error Reporting
 
+
+
+___
+
 ## 8. References
+
+
+
+___
 
 ## 9. Open Issues
