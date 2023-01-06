@@ -91,12 +91,12 @@ Based on the information provided, it appears that the purpose of developing ano
 | **HARFANG® 3D** | 3D engine that allows you to create 3D games and applications. |
 | **FABgen** | Generator of bindings for the C++ engine HARFANG® 3D. |
 | **F#** | Functional programming language. |
+| **lua** | Scripting language. |
 | **C++** | Object-oriented programming language. |
 | **Python** | Interpreted, high-level, general-purpose programming language. |
 | **OpenGL** | Cross-platform API for rendering 2D and 3D graphics. |
 | **Vulkan** | Cross-platform API for rendering 2D and 3D graphics. |
 | **DirectX 11** | Cross-platform API for rendering 2D and 3D graphics. |
-| **HTML5** | Markup language for web pages. |
 
 <br>
 
@@ -115,6 +115,8 @@ Based on the information provided, it appears that the purpose of developing ano
 We use a generator of bindings create by HARFANG® 3D. THis generator is called FABgen and it is written in python. It is used to generate the bindings for the C++ engine.
 <img src="img/Schema.png" >
 
+Schema of how FABgen works.
+
 <br>
 
 ### 2.2 System Actors
@@ -127,10 +129,20 @@ We use a generator of bindings create by HARFANG® 3D. THis generator is called 
 ### 2.3 Dependencies and Change Impacts
 
   - #### 2.3.1 System Dependencies
+      
+       The proposed solution will not depend on any other system because it is   not mandatory for the proper functioning of Harfang3D or other systems.
+
+<br>
 
   - #### 2.3.2 Change Impacts
 
+    - **HARFANG® 3D** : 3D engine that allows you to create 3D games and applications.
+    - **FABgen** : Generator of bindings for the C++ engine HARFANG® 3D.
+     - **OpenGL** : Cross-platform API for rendering 2D and 3D graphics.
+     - **Vulkan** : Cross-platform API for rendering 2D and 3D graphics.
+     - **DirectX 11** : Cross-platform API for rendering 2D and 3D graphics.
 
+<br>
 
 ## 3. Functional Specifications
 
@@ -138,15 +150,23 @@ We use a generator of bindings create by HARFANG® 3D. THis generator is called 
 
   - #### 3.1.1 Purpose/ Description
 
+    The purpose of this section is to create the binding of the **HARFANG® 3D** engine in **F#**. The **HARFANG® 3D** engine is a 3D engine that allows you to create 3D games and applications. For that we will use the **FABgen** generator. This generator is written in **Python** and is used to generate the bindings for the **C++** engine, and it already got bindings in C#/Lua/Python/GoLang. 
+
   - #### 3.1.2 Uses Cases
+
+    - **Use Case 1** : Create a binding for the **HARFANG® 3D** engine in **F#**.
+    - **Use Case 2** : Create a **set of tools** and **documentation** that make it easy for **F#** developers to incorporate **HARFANG® 3D** into their projects.
 
   - #### 3.1.3 Mock-up
 
+   
   - #### 3.1.4 Functional Requirements
 
   - #### 3.1.5 Field level Specifications
 
 ## 4. System Configurations
+
+
 
 ## 5. Other System Requirements/ Non Functional Requirements
 
