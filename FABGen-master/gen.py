@@ -1,10 +1,12 @@
 # FABGen - The FABulous binding Generator for CPython and Lua
 #	Copyright (C) 2018 Emmanuel Julien
 
-from pypeg2 import re, flag, name, Plain, optional, attr, K, parse, Keyword, Enum, List, csl, some, maybe_some
+from pypeg2 import *
 from collections import OrderedDict
 import zlib
 import copy
+
+
 
 
 #

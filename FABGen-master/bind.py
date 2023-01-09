@@ -13,6 +13,7 @@ import lang.lua
 import lang.go
 import lang.cpython
 import lang.xml
+import lang.fsharp
 
 import lib.std
 import lib.stl
@@ -119,6 +120,8 @@ if args.go:
 if args.xml:
 	output_binding(setup_generator(lang.xml.XMLGenerator()))
 
+if args.fsharp:
+	output_binding(setup_generator(lang.fsharp()))
 
 # output Fabgen API
 if not args.no_fabgen_api:
