@@ -1,21 +1,38 @@
 # Technical Specifications
 
-## Table of Contents
+
+<details><summary><b>Table of Contents</b></summary>
 
 - [Technical Specifications](#technical-specifications)
-  - [Table of Contents](#table-of-contents)
-  - [Front Part](#front-part)
+- [Introduction](#introduction)
+  - [Purpose](#purpose)
+  - [General Description](#general-description)
   - [Team Members](#team-members)
-  - [Introduction](#introduction)
+- [Sources](#sources)
   - [References](#references)
   - [Glossary](#glossary)
+  
 
-## Front Part
+</details>
+&nbsp;
 
+# Introduction
+
+
+## Purpose
+
+Currently, the Harfang3D library is written in C++ and can be used in CPython, Lua and Go. The goal of this project is to create a binding to the Harfang3D library in F# so that the user can use the Harfang3D API in F#.
+
+The binding will be done using [FABGen](https://github.com/ejulien/FABGen/), a tool to generate F# bindings from C++ headers. The binding will be done in a way that the user can use the Harfang3D API as if it was written in F#.
+
+For more details, please look at the [Functional Specifications](functional_specifications.md).
+
+&nbsp;
+ ## General Description
 | Project | Client | Author | Created on | Last update |
 |:---|:---|:---|:---|:---|
 | 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-04 |
-
+&nbsp;
 ## Team Members
 
 | Role | Name |  
@@ -26,14 +43,9 @@
 | Software Engineer | [Grégory PAGNOUX](https://github.com/Gregory-Pagnoux) |
 | Program Manager | [Rémy CHARLES](https://github.com/RemyCHARLES) |
 
-## Introduction
 
-Currently, the Harfang3D library is written in C++ and can be used in CPython, Lua and Go. The goal of this project is to create a binding to the Harfang3D library in F# so that the user can use the Harfang3D API in F#.
-
-The binding will be done using [FABGen](https://github.com/ejulien/FABGen/), a tool to generate F# bindings from C++ headers. The binding will be done in a way that the user can use the Harfang3D API as if it was written in F#.
-
-For more details, please look at the [Functional Specifications](functional_specifications.md).
-
+&nbsp;
+# Sources
 ## References
 
 [1] [Harfang3D Website](https://www.harfang3d.com/en_US/)  
