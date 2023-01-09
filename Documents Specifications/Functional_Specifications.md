@@ -51,7 +51,7 @@ ___
 
 ### 1.1 Purpose 
 
-[HARFANG® 3D](https://www.harfang3d.com/en_US/) is a 3D engine that allows you to create 3D games and applications. It is a cross-platform engine that can be used on Windows, Linux and macOS. It is written in **C++** and uses OpenGL for rendering. It is also compatible with Vulkan and DirectX 11.
+[HARFANG® 3D](https://www.harfang3d.com/en_US/) is a 3D engine that allows you to create 3D games and applications. It is a cross-platform engine that can be used on Win32, Win64 Intel, Linux 64 Intel and Aarch 64 ARM . It is written in **C++** and uses OpenGL for rendering. It is also compatible with Vulkan and DirectX 11.
 
 Based on the information provided, it appears that the purpose of developing another 3D engine, **HARFANG® 3D** is to meet the specific technical, sovereignty, and long-term requirements of the civil and defense industries. These industries have strong technical requirements such as safety certification and custom hardware, as well as a need for confidentiality and the ability to run offline.
 
@@ -247,4 +247,5 @@ ___
 
 ## 8. Open Issues
 
+<!-- Todo -->
 
