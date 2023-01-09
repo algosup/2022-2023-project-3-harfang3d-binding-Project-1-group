@@ -31,13 +31,11 @@ ___
     - [2.3 Dependencies and Change Impacts](#23-dependencies-and-change-impacts)
   - [3. Functional Specifications](#3-functional-specifications)
     - [3.1 Binding F# for HARFANG® 3D](#31-binding-f-for-harfang-3d)
-  - [4. System Configurations](#4-system-configurations)
-  - [5. Other System Requirements/ Non Functional Requirements](#5-other-system-requirements-non-functional-requirements)
-  - [6. Reporting Requirements](#6-reporting-requirements)
-  - [7. Integration Requirements](#7-integration-requirements)
-    - [7.1 Exception Handling/ Error Reporting](#71-exception-handling-error-reporting)
-  - [8. References](#8-references)
-  - [9. Open Issues](#9-open-issues)
+  - [4. Other System Requirements/ Non Functional Requirements](#4-other-system-requirements-non-functional-requirements)
+  - [6. Integration Requirements](#6-integration-requirements)
+    - [6.1 Exception Handling/ Error Reporting](#61-exception-handling-error-reporting)
+  - [7. References](#7-references)
+  - [8. Open Issues](#8-open-issues)
   
 </details>
 
@@ -207,7 +205,10 @@ F# are not mentioned in the schema but that will work the same way as the other 
 
   - #### 3.1.5 Field level Specifications
 
-
+| ID | Description | Priority | Status |
+| :--- | :--- | :--- | :--- |
+| FLS-1 | The F# developer can use the HARFANG® 3D engine in F#. | 1 | To do |
+| FLS-2 | Have a document to explain how to use the F# bindings | 2 | To do |
 
   - #### 3.1.6 Personas
 
@@ -215,43 +216,35 @@ F# are not mentioned in the schema but that will work the same way as the other 
 | :--- | :--- | :--- | :--- |
 | Mathias Durant | 38 |F# developer | The F# developer wants to use the HARFANG® 3D engine in F# to create a simulation 3D in Virtual Reality (VR) to know which is most likely to attract the attention of a passer-by on the street. | 
 | Pierre-Étienne Morency | 23 | Computer Science Student | He is a students who need to use the HARFRANG® 3D engine in F# to create a reproduction of his school in VR. |
-| Jean-Philippe Lavoie | 48 | Software Engeneer | He is a software engeneer who needs to use the HARFRANG® 3D engine in F# to create a AR system for this car company. | 
-| Marie-Ève Lavoie | 25 |  | She is a students who need to use the HARFRANG® 3D engine in F# to create a reproduction of her school in VR. |
+| Jean-Philippe Lavoie | 48 | Software Engineer | He is a software engineer who needs to use the HARFRANG® 3D engine in F# to create a AR system for this car company. | 
+| Marie-Ève Lavoie | 25 | Entrepreneur | She is a young entrepreneur who wants to have a 3D visualization of her final product and thanks to some knowledge in F#, she uses HARFRANG® 3D. |
 
 ___
 
-## 4. System Configurations
+## 4. Other System Requirements/ Non Functional Requirements
 
-
-
-___
-
-## 5. Other System Requirements/ Non Functional Requirements
-
-
+<!-- Todo -->
 
 ___
 
-## 6. Reporting Requirements
+## 6. Integration Requirements
 
+### 6.1 Exception Handling/ Error Reporting
 
+See the [Test Plan](/Test%20Plan/Test_Plan.md) or the [Critical Path](/Critical%20Path/Critical_Path.md)
 
 ___
 
-## 7. Integration Requirements
+## 7. References
 
-
-
-### 7.1 Exception Handling/ Error Reporting
-
+| ID | Description | URL |
+| :--- | :--- | :--- |
+| 1 | HARFANG® 3D | [Link](https://www.harfang3d.com/en_US/) |
+| 2 | FABgen | [Link](https://github.com/ejulien/FABGen) |
 
 
 ___
 
-## 8. References
+## 8. Open Issues
 
 
-
-___
-
-## 9. Open Issues
