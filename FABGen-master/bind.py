@@ -109,7 +109,7 @@ if args.go:
 	output_binding(setup_generator(go_gen))
 	os.chdir(args.out)
 	os.system(f"go mod init {go_gen._name}")
-	os.system("go fmt bind.go")
+	# go mod tidy should be added // os.system("go mod tidy")
 	os.system("goimports -w bind.go")
 
 	try:
