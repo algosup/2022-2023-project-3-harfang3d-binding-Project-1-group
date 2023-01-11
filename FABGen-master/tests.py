@@ -439,12 +439,6 @@ class GoTestBed:
 		try:
 			subprocess.check_output('go mod init mytest', shell=True, stderr=subprocess.STDOUT)
 			subprocess.check_output("go fmt mytest", shell=True, stderr=subprocess.STDOUT)
-			subprocess.check_output("go mod tidy", shell=True, stderr=subprocess.STDOUT)
-					# print file content bind.go with os
-					# read only first line
-			print(os.popen('cat test.go').readline())
-			print(os.popen('cat bind.go').readline())
-			print("files in current dir:" + str(os.listdir()))
 			subprocess.check_output("goimports -w bind.go", shell=True, stderr=subprocess.STDOUT)
 			subprocess.check_output('go test -run ""', shell=True, stderr=subprocess.STDOUT)
 		except subprocess.CalledProcessError as e:
