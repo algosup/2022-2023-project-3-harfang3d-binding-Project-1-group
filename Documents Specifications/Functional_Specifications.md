@@ -88,15 +88,15 @@ Based on the information provided, it appears that the purpose of developing ano
 
 | Term | Definition |
 | :--- | :--- |
-| **HARFANG® 3D** | 3D engine that allows you to create 3D games and applications. |
+| **HARFANG® 3D** | HARFANG® 3D is a proprietary, cross-platform 3D engine and toolset for creating interactive 3D applications and games, developed by "SNEAKY GAMES" and supports Windows, MacOS, Linux. |
 | **FABgen** | Generator of bindings for the C++ engine HARFANG® 3D. |
-| **F#** | Functional programming language. |
-| **lua** | Scripting language. |
-| **C++** | Object-oriented programming language. |
-| **Python** | Interpreted, high-level, general-purpose programming language. |
-| **OpenGL** | Cross-platform API for rendering 2D and 3D graphics. |
-| **Vulkan** | Cross-platform API for rendering 2D and 3D graphics. |
-| **DirectX 11** | Cross-platform API for rendering 2D and 3D graphics. |
+| **F#** | F# is a functional-first, multi-paradigm programming language for the .NET platform, developed by Microsoft, open-source and often used for functional programming and data science, as well as for high-performance and concurrent applications. |
+| **lua** | Lua is a lightweight, high-performance programming language designed for extending applications. It's commonly used in video games and other applications, is open-source, cross-platform and has a small footprint, making it well-suited for embedded systems and mobile devices. |
+| **C++** | C++ is a high-performance, general-purpose programming language widely used for developing operating systems, video games, browsers and other high-performance applications. It allows low-level memory manipulation and provides a lot of control over the hardware. |
+| **Python** | Python is a high-level, interpreted programming language known for its simple and easy-to-learn syntax, widely used for scientific computing, data analysis, artificial intelligence, and web development. It has a large number of libraries and frameworks that can be used for a variety of tasks. |
+| **OpenGL** | OpenGL is a cross-platform, industry-standard graphics API for 2D and 3D applications, widely used for video games and other 3D applications, supported on various platforms such as Windows, MacOS, Linux and mobile devices. |
+| **Vulkan** |Vulkan is a low-overhead, cross-platform 3D graphics API that provides improved performance and power efficiency, used for video games and other demanding applications. Developed by the Khronos Group and works on multiple platforms.|
+| **DirectX 11** | DirectX 11 is a set of APIs for programming graphics and video on Windows, commonly used for developing video games and other multimedia applications with improved 3D graphics and support for new features like tessellation and multi-core processors. |
 
 <br>
 
@@ -156,38 +156,7 @@ ___
 
   <br>
 
-  - #### 3.1.2 Uses Cases
-
-  | UC-1 | Create a binding for the HARFANG® 3D engine in F#. |
-  | --- | --- |
-  | **Primary Actor** | F# developer |
-  | **Stakeholders and Interests** | - |
-  | **Trigger** | The F# developer wants to use the HARFANG® 3D engine in F#. |
-  | **Preconditions** | The F# developer has the HARFANG® 3D engine installed on his computer. |
-  | **Postconditions** | The F# developer can use the HARFANG® 3D engine in F#. |
-  | **Main success scenario** | 1. The F# developer uses the FABgen generator to create the binding. <br> 2. The F# developer can use the HARFANG® 3D engine in F#. |
-  | **Extensions** | - |
-  | **Special Requirements** | - |
-  | **Open Questions** | - |
-  
-  <br>
-
-
-  | UC-2 | Create a set of tools and documentation that make it easy for F# developers to incorporate HARFANG® 3D into their projects. |
-  | --- | --- |
-  | **Primary Actor** | F# developer |
-  | **Stakeholders and Interests** | - |
-  | **Trigger** | The F# developer wants to use the HARFANG® 3D engine in F#. |
-  | **Preconditions** | The F# developer has the HARFANG® 3D engine installed on his computer. |
-  | **Postconditions** | The F# developer can use the HARFANG® 3D engine in F#. |
-  | **Main success scenario** | 1. The F# developer uses the FABgen generator to create the binding. <br> 2. The F# developer can use the HARFANG® 3D engine in F#. |
-  | **Extensions** | - |
-  | **Special Requirements** | - |
-  | **Open Questions** | - |
-
-  <br>
-
-  - #### 3.1.3 Mock-up
+  - #### 3.1.2 Mock-up
 
 <img src="img/Mock-Up.png" >
  
@@ -199,16 +168,25 @@ F# are not mentioned in the schema but that will work the same way as the other 
 
 | ID | Description | Priority | Status |
 | :--- | :--- | :--- | :--- |
-| FR-1 | The F# developer can use the HARFANG® 3D engine in F#. | 1 | To do |
-| FR-2 | Have a document to explain how to use the F# bindings | 2 | To do |
+| FR-1 | Generate binding layers to Cpython and Lua using FABgen. | 1 | To do |
+| FR-2 | Run unit tests and examine how the Go bindings work. | 2 | To do |
+| FR-3 | Map types and implement features required by tests, starting with easy ones from the specified repository. | 2 | To do |
+| FR-4 | Improve integration with the target language. | 2 | To do |
 
 
   - #### 3.1.5 Field level Specifications
 
 | ID | Description | Priority | Status |
 | :--- | :--- | :--- | :--- |
-| FLS-1 | The F# developer can use the HARFANG® 3D engine in F#. | 1 | To do |
-| FLS-2 | Have a document to explain how to use the F# bindings | 2 | To do |
+| FLS-1 | Harfang3D API: The F# bindings should provide access to all the functionality of the Harfang3D API, including classes, methods, and properties. | 1 | To do |
+| FLS-2 | FABGen: The bindings should be generated using FABGen, which is a code generator designed to create bindings for various languages. | 3 | To do |
+| FLS-3 | Types: The F# bindings should correctly map the types used in the Harfang3D API to the corresponding types in F#. | 2 | To do |
+| FLS-4 | Error handling: The bindings should handle errors and exceptions from the Harfang3D API gracefully, and provide appropriate error messages. | 4 | To do |
+| FLS-5 | Documentation: The bindings should be well-documented, with clear explanations of how to use the various classes, methods, and properties. | 8 | To do |
+| FLS-6 | Unit tests: The bindings should be accompanied by a set of unit tests to ensure that they are working correctly. | 5 | To do | 
+| FLS-7 | Compatibility: The bindings should be compatible with the latest version of Harfang3D and should be updated as new versions are released. | 7 | To do |   
+| FLS-8 | Performance: The bindings should not introduce a significant performance overhead when compared to using the C++ Harfang3D API directly. | 6 | To do |
+| FLS-9 | Support: The project should provide support for developers who are using the F# bindings, and should be actively maintained to fix any issues that are discovered. | 9 | To do | 
 
   - #### 3.1.6 Personas
 
@@ -224,6 +202,14 @@ ___
 ## 4. Other System Requirements/ Non Functional Requirements
 
 <!-- Todo -->
+| Requirements | Description |
+| :--- | :--- |
+| **Performance** | TF# bindings should be efficient, with minimal overhead and latency, utilizing optimized data structures, minimizing unnecessary calculations, parallel processing and thread-safe, able to handle high concurrency. |
+| **Security** | F# bindings should have strong security, implementing secure coding, input validation, error handling, authentication, authorization, encryption of sensitive data, and regular security testing. |
+| **Usability** | F# bindings should have a clear, intuitive interface with good documentation, consistent naming and organization, flexibility and configurability, and compatibility with a wide range of platforms and frameworks. |
+| **Maintainability** | F# bindings should have clear and well-organized code, following best practices for coding style, documentation, design patterns, abstractions and Testable, easy to add new features or make changes without introducing bugs. |
+| **Scalability** | F# bindings should be able to handle increasing data and traffic using optimized data structures, algorithms, caching, load balancing,horizontally scalable, handle varying levels of concurrency and different types of workloads. |
+
 
 ___
 
@@ -231,7 +217,7 @@ ___
 
 ### 6.1 Exception Handling/ Error Reporting
 
-See the [Test Plan](/Test%20Plan/Test_Plan.md) or the [Critical Path](/Critical%20Path/Critical_Path.md)
+See the [Test Plan](/Test%20Plan/Test_Plan.md) and the [Critical Path](/Critical%20Path/Critical_Path.md)
 
 ___
 
