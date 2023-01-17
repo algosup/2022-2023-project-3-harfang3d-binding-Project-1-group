@@ -17,17 +17,28 @@ import lib
 
 
 def route_lambda(name):
+	# This function takes in a single parameter, "name", which is a string
+    # it returns a new anonymous function that takes in a single parameter, "args"
+    # which is expected to be a list
 	return lambda args: "%s(%s);" % (name, ", ".join(args))
 
 
 def clean_name(name):
+	# This function takes in a single parameter "name" and removes whitespaces, "_" and ":" characters
+    # and replaces them with empty string
 	new_name = str(name).strip().replace("_", "").replace(":", "")
+	# check if the cleaned name is a keyword in the Go language 
 	if new_name in ["break", "default", "func", "interface", "select", "case", "defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var" ]:
+	# if it's a keyword, it appends "Go" at the end of the name
 		return new_name + "Go"
+	# if it's a keyword, it appends "Go" at the end of the name
 	return new_name
 
 
 def clean_name_with_title(name):
+	# This function takes a string name as an input and returns a cleaned version of the name 
+    # with the first letter of each word capitalized.
+    # The function uses the _, -, *, and & characters to determine when to capitalize the next letter.
 	new_name = ""
 	if "_" in name:
 		# redo a special string.title()
