@@ -96,3 +96,21 @@ func Test(t *testing.T) {
 	assert.Equal(t, AddIntByReference(&a, &b), 7, "should be the same.")
 }
 '''
+
+test_fsharp = '''\
+package mytest
+
+// Test ...
+assert(return_int() == 8, "should be the same.")
+assert(returnFloat()== 8, "should be the same.")
+assert(returnConstCharPtr() == "const char * -> string", "should be the same.")
+
+assert(return_int_by_pointer() == 9, "should be the same.")
+assert(return_int_by_reference() == 9, "should be the same.")
+	
+assert(add_int_by_value(3, 4) == 7, "should be the same.")
+a,b = int(3), int(4)
+assert(add_int_by_pointer(a, b) == 7, "should be the same.")
+assert(add_int_by_reference(a, b) == 7, "should be the same.")
+}
+'''
