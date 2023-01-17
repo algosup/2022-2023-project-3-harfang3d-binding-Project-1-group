@@ -24,6 +24,7 @@ parser.add_argument('--go', dest='go_build', help='Build GO', action="store_true
 parser.add_argument('--debug', dest='debug_test', help='Generate a working solution to debug a test')
 parser.add_argument('--x64', dest='x64', help='Build for 64 bit architecture', action='store_true', default=False)
 parser.add_argument('--linux', dest='linux', help='Build on Linux', action='store_true', default=False)
+parser.add_argument('--fsharpbase', dest='fsharp_base_path', help='Path to the F# interpreter')
 
 args = parser.parse_args()
 
@@ -450,6 +451,35 @@ class GoTestBed:
 
 		return success
 
+class FSharpTestBed:
+    def build_and_test_extension(self, work_path, module, sources):
+        if not hasattr(module, "test_fsharp"):
+            print("Can't find test_fsharp")
+            return False
+        
+        # copy test file
+        test_path = os.path.join(work_path, 'test.fs')
+        with open(test_path, 'w') as file:
+            file.write(module.test_fsharp)
+       
+        # Build the F# project
+        os.chdir(work_path)
+        try:
+            subprocess.check_output("dotnet new console -lang F# -n test", shell=True, stderr=subprocess.STDOUT)
+            subprocess.check_output("dotnet add test.fsproj reference sources", shell=True, stderr=subprocess.STDOUT)
+            subprocess.check_output("dotnet build test.fsproj", shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            print(e.output.decode('utf-8'))
+            return False
+        
+        success = True
+        try:
+            subprocess.check_output("dotnet test test.fsproj", shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            print(e.output.decode('utf-8'))
+            success = False
+        
+        return success
 
 # Clang format
 def create_clang_format_file(work_path):
@@ -463,6 +493,7 @@ AccessModifierOffset: -4
 AlignAfterOpenBracket: DontAlign
 AlwaysBreakTemplateDeclarations: false
 AlignTrailingComments: false''')
+
 
 
 #
@@ -488,6 +519,13 @@ if args.go_build:
 	gen = lang.go.GoGenerator()
 	gen.verbose = False
 	run_tests(gen, test_names, GoTestBed())
+
+if args.fsharp_base_path:
+	gen = lang.fsharp.FSharpGenerator()
+	gen.verbose = False
+	run_tests(gen, test_names, FSharpTestBed())
+
+
 
 
 #
