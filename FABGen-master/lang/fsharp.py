@@ -8,69 +8,101 @@ import re
 import sys
 import time
 import importlib
+
 import argparse
+
 import gen
 import lib
 
+
 def route_lambda(name):
+	# This function takes in a single string parameter : "name"
+    # it returns a new anonymous function that takes in a single parameter : "args"py
+    # which is expected to be a list
 	return lambda args: "%s(%s);" % (name, ", ".join(args))
 
+
 def clean_name(name):
+	# This function takes in a single parameter "name" and removes whitespaces, "_" and ":" characters
+    # and replaces them with empty string
 	new_name = str(name).strip().replace("_", "").replace(":", "")
-	if new_name in ["break", "default", "func", "interface", "select", "case", "defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var" ]:
+	# check if the cleaned name is a keyword in the F# language 
+	if new_name in ["fun", "map", "double", "char", "else", "package", "const", "if", "type", "for", "import", "let", "val", "single", "printf", "printfn", "length", "elif", "match"]:
+		# if it's a keyword, it appends "F#" at the end of the name
 		return new_name + "F#"
 	return new_name
 
+
 def clean_name_with_title(name):
+	# This function takes a string "name" as an input and returns a cleaned version of the name 
+    # with the first letter of each word capitalized.
+    # The function uses the _, -, *, and & characters to determine when to capitalize the next letter.
 	new_name = ""
 	if "_" in name:
 		# redo a special string.title()
 		next_is_forced_uppercase = True
 		for c in name:
 			if c in ["*", "&"]:
+				# Add special characters to the new name without modification
 				new_name += c
 			elif c in ["_", "-"]:
+				# Set the next character to be capitalized
 				next_is_forced_uppercase = True
 			else:
 				if next_is_forced_uppercase:
+					# Set the next character to be capitalized
 					next_is_forced_uppercase = False
 					new_name += c.capitalize()
 				else:
+					 # Add the character to the new name without modification
 					new_name += c
 	else:
 		# make sur the first letter is capitalize
 		first_letter_checked = False
 		for c in name:
 			if c in ["*", "&"] or first_letter_checked:
+				# Add special characters and characters after the first letter to the new name without modification
 				new_name += c
 			elif not first_letter_checked:
+				# Capitalize the first letter and set the flag
 				first_letter_checked = True
 				new_name += c.capitalize()
+	# Remove any trailing whitespaces and replace "_" and ":" characters with an empty string
 	return new_name.strip().replace("_", "").replace(":", "")
 
-# class GoTypeConverterCommon(gen.TypeConverter):
+# class FSharpTypeConverterCommon(gen.TypeConverter):
 # 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+# 		# call the __init__ method of the parent class with the provided arguments
 # 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+# 		# store the base type in an attribute
 # 		self.base_type = type
-# 		self.go_to_c_type = None
-# 		self.go_type = None
+# 		# initialize the fsharp_to_c_type and fsharp_type attributes to None
+# 		self.fsharp_to_c_type = None
+# 		self.fsharp_type = None
 
 # 	def get_type_api(self, module_name):
+# 		# This function generates the type API for the given type
 # 		out = "// type API for %s\n" % self.ctype
+# 		# If the type has a storage class, generate the struct definition for it
 # 		if self.c_storage_class:
 # 			out += "struct %s;\n" % self.c_storage_class
+# 		# If the type has a storage class, generate the function for converting F# type to C storage type 
 # 		if self.c_storage_class:
 # 			out += "void %s(int idx, void *obj, %s &storage);\n" % (self.to_c_func, self.c_storage_class)
+# 		# If the type doesn't have a storage class, generate the function for converting F# type to C type 
 # 		else:
 # 			out += "void %s(int idx, void *obj);\n" % self.to_c_func
+# 		# generate the function for converting C type to F# type
 # 		out += "int %s(void *obj, OwnershipPolicy);\n" % self.from_c_func
 # 		out += "\n"
 # 		return out
 
 # 	def to_c_call(self, in_var, out_var_p, is_pointer):
+# 		# This function generates the C code for converting a F# type to C type or C storage type
 # 		return ""
 
 # 	def from_c_call(self, out_var, expr, ownership):
+# 		# This function generates the C code for converting a C type to F# type
 # 		return "%s((void *)%s, %s);\n" % (self.from_c_func, expr, ownership)
 
 # class DummyTypeConverter(gen.TypeConverter):

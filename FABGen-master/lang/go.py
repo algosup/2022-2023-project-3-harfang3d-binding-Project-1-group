@@ -17,8 +17,8 @@ import lib
 
 
 def route_lambda(name):
-	# This function takes in a single parameter, "name", which is a string
-    # it returns a new anonymous function that takes in a single parameter, "args"
+	# This function takes in a single string parameter : "name"
+    # it returns a new anonymous function that takes in a single parameter : "args"py
     # which is expected to be a list
 	return lambda args: "%s(%s);" % (name, ", ".join(args))
 
@@ -29,14 +29,13 @@ def clean_name(name):
 	new_name = str(name).strip().replace("_", "").replace(":", "")
 	# check if the cleaned name is a keyword in the Go language 
 	if new_name in ["break", "default", "func", "interface", "select", "case", "defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var" ]:
-	# if it's a keyword, it appends "Go" at the end of the name
+		# if it's a keyword, it appends "Go" at the end of the name
 		return new_name + "Go"
-	# if it's a keyword, it appends "Go" at the end of the name
 	return new_name
 
 
 def clean_name_with_title(name):
-	# This function takes a string name as an input and returns a cleaned version of the name 
+	# This function takes a string "name" as an input and returns a cleaned version of the name 
     # with the first letter of each word capitalized.
     # The function uses the _, -, *, and & characters to determine when to capitalize the next letter.
 	new_name = ""
@@ -45,90 +44,119 @@ def clean_name_with_title(name):
 		next_is_forced_uppercase = True
 		for c in name:
 			if c in ["*", "&"]:
+				# Add special characters to the new name without modification
 				new_name += c
 			elif c in ["_", "-"]:
+				# Set the next character to be capitalized
 				next_is_forced_uppercase = True
 			else:
 				if next_is_forced_uppercase:
+					# Set the next character to be capitalized
 					next_is_forced_uppercase = False
 					new_name += c.capitalize()
 				else:
+					 # Add the character to the new name without modification
 					new_name += c
 	else:
 		# make sur the first letter is capitalize
 		first_letter_checked = False
 		for c in name:
 			if c in ["*", "&"] or first_letter_checked:
+				# Add special characters and characters after the first letter to the new name without modification
 				new_name += c
 			elif not first_letter_checked:
+				# Capitalize the first letter and set the flag
 				first_letter_checked = True
 				new_name += c.capitalize()
+	# Remove any trailing whitespaces and replace "_" and ":" characters with an empty string
 	return new_name.strip().replace("_", "").replace(":", "")
 
 
 class GoTypeConverterCommon(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+		# store the base type in an attribute
 		self.base_type = type
+		# initialize the go_to_c_type and go_type attributes to None
 		self.go_to_c_type = None
 		self.go_type = None
 
 	def get_type_api(self, module_name):
+		# This function generates the type API for the given type
 		out = "// type API for %s\n" % self.ctype
+		# If the type has a storage class, generate the struct definition for it
 		if self.c_storage_class:
 			out += "struct %s;\n" % self.c_storage_class
+		# If the type has a storage class, generate the function for converting Go type to C storage type 
 		if self.c_storage_class:
 			out += "void %s(int idx, void *obj, %s &storage);\n" % (self.to_c_func, self.c_storage_class)
+		# If the type doesn't have a storage class, generate the function for converting Go type to C type 
 		else:
 			out += "void %s(int idx, void *obj);\n" % self.to_c_func
+		# generate the function for converting C type to Go type
 		out += "int %s(void *obj, OwnershipPolicy);\n" % self.from_c_func
 		out += "\n"
 		return out
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a Go type to C type or C storage type
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C type to Go type
 		return "%s((void *)%s, %s);\n" % (self.from_c_func, expr, ownership)
 
 
 class DummyTypeConverter(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
 	def get_type_api(self, module_name):
+		# This function generates the type API for the given type, in this case, it returns an empty string
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a Go type to C type or C storage type, in this case, it returns an empty string
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C type to Go type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
+		# This function generates the C code for checking the type, in this case, it returns an empty string
 		return ""
 
 	def get_type_glue(self, gen, module_name):
+		# This function generates the glue code for the given type, in this case, it returns an empty string
 		return ""
 
 
 class GoPtrTypeConverter(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# # call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
 	def get_type_api(self, module_name):
+		# This function generates the type API for the given type, in this case, it returns an empty string
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a Go pointer type to C pointer type, in this case, it returns an empty string
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C pointer type to Go pointer type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
+		# This function generates the C code for checking the pointer type, in this case, it returns an empty string
 		return ""
 
 	def get_type_glue(self, gen, module_name):
+		# This function generates the glue code for the given pointer type, in this case, it returns an empty string
 		return ""
 
 
@@ -136,37 +164,48 @@ class GoPtrTypeConverter(gen.TypeConverter):
 
 class GoClassTypeDefaultConverter(GoTypeConverterCommon):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# # call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
 	def is_type_class(self):
+		# This function returns True if the type is a class
 		return True
 
 	def get_type_api(self, module_name):
+		# This function generates the type API for the given class type, in this case, it returns an empty string
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a Go class type to C class type
 		out = f"{out_var_p.replace('&', '_')} := {in_var}.h\n"
 		return out
 
 	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C class type to Go class type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
+		# This function generates the C code for checking the class type, in this case, it returns an empty string
 		return ""
 
 	def get_type_glue(self, gen, module_name):
+		# This function generates the glue code for the given class type, in this case, it returns an empty string
 		return ""
 
 
 class GoExternTypeConverter(GoTypeConverterCommon):
 	def __init__(self, type, to_c_storage_type, bound_name, module):
+		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name)
+		# store the module name
 		self.module = module
 
 	def get_type_api(self, module_name):
+		# This function generates the type API for the given extern type, in this case, it returns an empty string
 		return ''
 
 	def to_c_call(self, in_var, out_var_p):
+		# This function generates the C code for converting a Go extern type to C extern type
 		out = ''
 		if self.c_storage_class:
 			c_storage_var = 'storage_%s' % out_var_p.replace('&', '_')
