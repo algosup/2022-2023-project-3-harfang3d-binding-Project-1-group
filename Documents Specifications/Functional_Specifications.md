@@ -27,8 +27,7 @@ ___
     - [1.5 Risk and Assumptions](#15-risk-and-assumptions)
   - [2. System/ Solution Overview](#2-system-solution-overview)
     - [2.1 Context Diagram](#21-context-diagram)
-    - [2.2 System Actors](#22-system-actors)
-    - [2.3 Dependencies and Change Impacts](#23-dependencies-and-change-impacts)
+    - [2.2 Dependencies and Change Impacts](#22-dependencies-and-change-impacts)
   - [3. Functional Specifications](#3-functional-specifications)
     - [3.1 Binding F# for HARFANG® 3D](#31-binding-f-for-harfang-3d)
   - [4. Other System Requirements/ Non Functional Requirements](#4-other-system-requirements-non-functional-requirements)
@@ -54,6 +53,8 @@ ___
 [HARFANG® 3D](https://www.harfang3d.com/en_US/) is a 3D engine that allows you to create 3D games and applications. It is a cross-platform engine that can be used on Win32, Win64 Intel, Linux 64 Intel and Aarch 64 ARM . It is written in **C++** and uses OpenGL for rendering. It is also compatible with Vulkan and DirectX 11.
 
 Based on the information provided, it appears that the purpose of developing another 3D engine, **HARFANG® 3D** is to meet the specific technical, sovereignty, and long-term requirements of the civil and defense industries. These industries have strong technical requirements such as safety certification and custom hardware, as well as a need for confidentiality and the ability to run offline.
+
+
 
 <br>
 
@@ -90,6 +91,7 @@ Based on the information provided, it appears that the purpose of developing ano
 | :--- | :--- |
 | **HARFANG® 3D** | HARFANG® 3D is a proprietary, cross-platform 3D engine and toolset for creating interactive 3D applications and games, developed by "SNEAKY GAMES" and supports Windows, MacOS, Linux. |
 | **FABgen** | Generator of bindings for the C++ engine HARFANG® 3D. |
+| **SWIG** | SWIG is a tool for connecting C/C++ code with other high-level programming languages like Python, Java, and C#. It generates interfaces, also known as wrappers, to allow high-level languages to access C/C++ code, enabling developers to use the performance of C/C++ while still taking advantage of the ease of use of high-level languages. |
 | **F#** | F# is a functional-first, multi-paradigm programming language for the .NET platform, developed by Microsoft, open-source and often used for functional programming and data science, as well as for high-performance and concurrent applications. |
 | **lua** | Lua is a lightweight, high-performance programming language designed for extending applications. It's commonly used in video games and other applications, is open-source, cross-platform and has a small footprint, making it well-suited for embedded systems and mobile devices. |
 | **C++** | C++ is a high-performance, general-purpose programming language widely used for developing operating systems, video games, browsers and other high-performance applications. It allows low-level memory manipulation and provides a lot of control over the hardware. |
@@ -118,23 +120,16 @@ ___
 
 <br>
 
-### 2.2 System Actors
 
-| User | Example | Frequency of use | Security/ Access, Features Used | Additional Comments |
-| :--- | :--- | :--- | :--- | :--- |
-| **F# developer** |  | - | - | - | 
+### 2.2 Dependencies and Change Impacts
 
-<br>
-
-### 2.3 Dependencies and Change Impacts
-
-  - #### 2.3.1 System Dependencies
+  - #### 2.2.1 System Dependencies
       
        The proposed solution will not depend on any other system because it is   not mandatory for the proper functioning of Harfang3D or other systems.
 
 <br>
 
-  - #### 2.3.2 Change Impacts
+  - #### 2.2.2 Change Impacts
 
     - **HARFANG® 3D** : 3D engine that allows you to create 3D games and applications.
     - **FABgen** : Generator of bindings for the C++ engine HARFANG® 3D.
@@ -152,7 +147,9 @@ ___
 
   - #### 3.1.1 Purpose/ Description
 
-    The purpose of this section is to create the binding of the **HARFANG® 3D** engine in **F#**. The **HARFANG® 3D** engine is a 3D engine that allows you to create 3D games and applications. For that we will use the **FABgen** generator. This generator is written in **Python** and is used to generate the bindings for the **C++** engine, and it already got bindings in C#/Lua/Python/GoLang. 
+    The purpose of this section is to create the binding of the **HARFANG® 3D** engine in **F#**. For that we will use **FABgen** generator this is a depedency of **HARFANG® 3D** project to bring C++ engine to languages such as Python, Lua and GO. FABGen allows to replace **SWIG**, a another bindings generator supporting a lot of language. But SWIG have a some issues and that's why **HARFANG® 3D** create FABGen, and our goal is to use it to create bindings for **F#**.
+
+    The goals of this project is to implement **F#** in FABGen to allow access for everyone who want to use this software in **F#**. In fact, C++ are not very accessible for non-coding experts person so they want to make it easier and thanks to FABGen who implements Python, Lua, GO and soon F# and Rust. Incorporating F# into FABGen would be beneficial for those who utilize F# and require a 3D engine. It may also appeal to those seeking an alternative to SWIG when connecting a C++ library to F#. F# is a concise and user-friendly language that allows for faster code development and fewer errors. Additionally, F# utilizes the .NET "int" data type which is optimized for mathematical operations and bit manipulation, resulting in faster performance compared to other languages.
 
   <br>
 
@@ -169,24 +166,24 @@ F# are not mentioned in the schema but that will work the same way as the other 
 | ID | Description | Priority | Status |
 | :--- | :--- | :--- | :--- |
 | FR-1 | Generate binding layers to Cpython and Lua using FABgen. | 1 | To do |
-| FR-2 | Run unit tests and examine how the Go bindings work. | 2 | To do |
-| FR-3 | Map types and implement features required by tests, starting with easy ones from the specified repository. | 2 | To do |
-| FR-4 | Improve integration with the target language. | 2 | To do |
+| FR-2 | Run the unit tests. | 2 | To do |
+| FR-3 | Examine how the Go binding work. | 3 | To do |
+| FR-4 | We will have to specialize some of the code in our **"fsharp.py"**.| 4 | To do |
+| FR-5 | Map the types and implement the features required by the tests, here : https://github.com/ejulien/FABGen/tree/master/tests. | 5 | To do |
+| FR-6 | Improve the integration with the target language. | 6 | To do |
 
 
   - #### 3.1.5 Field level Specifications
 
 | ID | Description | Priority | Status |
 | :--- | :--- | :--- | :--- |
-| FLS-1 | Harfang3D API: The F# bindings should provide access to all the functionality of the Harfang3D API, including classes, methods, and properties. | 1 | To do |
-| FLS-2 | FABGen: The bindings should be generated using FABGen, which is a code generator designed to create bindings for various languages. | 3 | To do |
-| FLS-3 | Types: The F# bindings should correctly map the types used in the Harfang3D API to the corresponding types in F#. | 2 | To do |
-| FLS-4 | Error handling: The bindings should handle errors and exceptions from the Harfang3D API gracefully, and provide appropriate error messages. | 4 | To do |
-| FLS-5 | Documentation: The bindings should be well-documented, with clear explanations of how to use the various classes, methods, and properties. | 8 | To do |
-| FLS-6 | Unit tests: The bindings should be accompanied by a set of unit tests to ensure that they are working correctly. | 5 | To do | 
-| FLS-7 | Compatibility: The bindings should be compatible with the latest version of Harfang3D and should be updated as new versions are released. | 7 | To do |   
-| FLS-8 | Performance: The bindings should not introduce a significant performance overhead when compared to using the C++ Harfang3D API directly. | 6 | To do |
-| FLS-9 | Support: The project should provide support for developers who are using the F# bindings, and should be actively maintained to fix any issues that are discovered. | 9 | To do | 
+| FLS-1 | FABGen: The bindings should be generated using FABGen, which is a code generator designed to create bindings for various languages. | 1 | To do |
+| FLS-2 | Error handling: The bindings should handle errors and exceptions from the Harfang3D API gracefully, and provide appropriate error messages. | 2 | To do |
+| FLS-3 | Documentation: The bindings should be well-documented, with clear explanations of how to use the various classes, methods, and properties. | 6 | To do |
+| FLS-4 | Unit tests: The bindings should be accompanied by a set of unit tests to ensure that they are working correctly. | 3 | To do | 
+| FLS-5 | Compatibility: The bindings should be compatible with the latest version of Harfang3D and should be updated as new versions are released. | 5 | To do |   
+| FLS-6 | Performance: The bindings should not introduce a significant performance overhead when compared to using the C++ Harfang3D API directly. | 4 | To do |
+| FLS-7 | Support: The project should provide support for developers who are using the F# bindings, and should be actively maintained to fix any issues that are discovered. | 7 | To do | 
 
   - #### 3.1.6 Personas
 
