@@ -166,9 +166,11 @@ F# are not mentioned in the schema but that will work the same way as the other 
 | ID | Description | Priority | Status |
 | :--- | :--- | :--- | :--- |
 | FR-1 | Generate binding layers to Cpython and Lua using FABgen. | 1 | To do |
-| FR-2 | Run unit tests and examine how the Go bindings work. | 2 | To do |
-| FR-3 | Map types and implement features required by tests, starting with easy ones from the specified repository. | 2 | To do |
-| FR-4 | Improve integration with the target language. | 2 | To do |
+| FR-2 | Run the unit tests. | 2 | To do |
+| FR-3 | Examine how the Go binding work. | 3 | To do |
+| FR-4 | We will have to specialize some of the code in our **"fsharp.py"**.| 4 | To do |
+| FR-5 | Map the types and implement the features required by the tests, here : https://github.com/ejulien/FABGen/tree/master/tests. | 5 | To do |
+| FR-6 | Improve the integration with the target language. | 6 | To do |
 
 
   - #### 3.1.5 Field level Specifications
