@@ -8,19 +8,15 @@ import re
 import sys
 import time
 import importlib
-
 import argparse
-
 import gen
 import lib
-
 
 def route_lambda(name):
 	# This function takes in a single string parameter : "name"
     # it returns a new anonymous function that takes in a single parameter : "args"py
     # which is expected to be a list
 	return lambda args: "%s(%s);" % (name, ", ".join(args))
-
 
 def clean_name(name):
 	# This function takes in a single parameter "name" and removes whitespaces, "_" and ":" characters
@@ -31,7 +27,6 @@ def clean_name(name):
 		# if it's a keyword, it appends "F#" at the end of the name
 		return new_name + "F#"
 	return new_name
-
 
 def clean_name_with_title(name):
 	# This function takes a string "name" as an input and returns a cleaned version of the name 
@@ -70,138 +65,164 @@ def clean_name_with_title(name):
 	# Remove any trailing whitespaces and replace "_" and ":" characters with an empty string
 	return new_name.strip().replace("_", "").replace(":", "")
 
-# class FSharpTypeConverterCommon(gen.TypeConverter):
-# 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-# 		# call the __init__ method of the parent class with the provided arguments
-# 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
-# 		# store the base type in an attribute
-# 		self.base_type = type
-# 		# initialize the fsharp_to_c_type and fsharp_type attributes to None
-# 		self.fsharp_to_c_type = None
-# 		self.fsharp_type = None
+class FSharpTypeConverterCommon(gen.TypeConverter):
+	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# call the __init__ method of the parent class with the provided arguments
+		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+		# store the base type in an attribute
+		self.base_type = type
+		# initialize the fsharp_to_c_type and fsharp_type attributes to None
+		self.fsharp_to_c_type = None
+		self.fsharp_type = None
 
-# 	def get_type_api(self, module_name):
-# 		# This function generates the type API for the given type
-# 		out = "// type API for %s\n" % self.ctype
-# 		# If the type has a storage class, generate the struct definition for it
-# 		if self.c_storage_class:
-# 			out += "struct %s;\n" % self.c_storage_class
-# 		# If the type has a storage class, generate the function for converting F# type to C storage type 
-# 		if self.c_storage_class:
-# 			out += "void %s(int idx, void *obj, %s &storage);\n" % (self.to_c_func, self.c_storage_class)
-# 		# If the type doesn't have a storage class, generate the function for converting F# type to C type 
-# 		else:
-# 			out += "void %s(int idx, void *obj);\n" % self.to_c_func
-# 		# generate the function for converting C type to F# type
-# 		out += "int %s(void *obj, OwnershipPolicy);\n" % self.from_c_func
-# 		out += "\n"
-# 		return out
+	def get_type_api(self, module_name):
+		# This function generates the type API for the given type
+		out = "// type API for %s\n" % self.ctype
+		# If the type has a storage class, generate the struct definition for it
+		if self.c_storage_class:
+			out += "struct %s;\n" % self.c_storage_class
+		# If the type has a storage class, generate the function for converting F# type to C storage type 
+		if self.c_storage_class:
+			out += "void %s(int idx, void *obj, %s &storage);\n" % (self.to_c_func, self.c_storage_class)
+		# If the type doesn't have a storage class, generate the function for converting F# type to C type 
+		else:
+			out += "void %s(int idx, void *obj);\n" % self.to_c_func
+		# generate the function for converting C type to F# type
+		out += "int %s(void *obj, OwnershipPolicy);\n" % self.from_c_func
+		out += "\n"
+		return out
 
-# 	def to_c_call(self, in_var, out_var_p, is_pointer):
-# 		# This function generates the C code for converting a F# type to C type or C storage type
-# 		return ""
+	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a F# type to C type or C storage type
+		return ""
 
-# 	def from_c_call(self, out_var, expr, ownership):
-# 		# This function generates the C code for converting a C type to F# type
-# 		return "%s((void *)%s, %s);\n" % (self.from_c_func, expr, ownership)
+	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C type to F# type
+		return "%s((void *)%s, %s);\n" % (self.from_c_func, expr, ownership)
 
-# class DummyTypeConverter(gen.TypeConverter):
-# 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-# 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+class DummyTypeConverter(gen.TypeConverter):
+	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# call the __init__ method of the parent class with the provided arguments
+		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
-# 	def get_type_api(self, module_name):
-# 		return ""
+	def get_type_api(self, module_name):
+		# This function generates the type API for the given type, in this case, it returns an empty string
+		return ""
 
-# 	def to_c_call(self, in_var, out_var_p, is_pointer):
-# 		return ""
+	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a F# type to C type or C storage type, in this case, it returns an empty string
+		return ""
 
-# 	def from_c_call(self, out_var, expr, ownership):
-# 		return ""
+	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C type to F# type, in this case, it returns an empty string
+		return ""
 
-# 	def check_call(self, in_var):
-# 		return ""
+	def check_call(self, in_var):
+		# This function generates the C code for checking the type, in this case, it returns an empty string
+		return ""
 
-# 	def get_type_glue(self, gen, module_name):
-# 		return ""
+	def get_type_glue(self, gen, module_name):
+		# This function generates the glue code for the given type, in this case, it returns an empty string
+		return ""
 
-# class GoPtrTypeConverter(gen.TypeConverter):
-# 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-# 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+class FSharpPtrTypeConverter(gen.TypeConverter):
+	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# # call the __init__ method of the parent class with the provided arguments
+		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
-# 	def get_type_api(self, module_name):
-# 		return ""
+	def get_type_api(self, module_name):
+		# This function generates the type API for the given type, in this case, it returns an empty string
+		return ""
 
-# 	def to_c_call(self, in_var, out_var_p, is_pointer):
-# 		return ""
+	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a F# pointer type to C pointer type, in this case, it returns an empty string
+		return ""
 
-# 	def from_c_call(self, out_var, expr, ownership):
-# 		return ""
+	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C pointer type to F# pointer type, in this case, it returns an empty string
+		return ""
 
-# 	def check_call(self, in_var):
-# 		return ""
+	def check_call(self, in_var):
+		# This function generates the C code for checking the pointer type, in this case, it returns an empty string
+		return ""
 
-# 	def get_type_glue(self, gen, module_name):
-# 		return ""
+	def get_type_glue(self, gen, module_name):
+		# This function generates the glue code for the given pointer type, in this case, it returns an empty string
+		return ""
 
-# class GoClassTypeDefaultConverter(GoTypeConverterCommon):
-# 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-# 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+class FSharpClassTypeDefaultConverter(FSharpTypeConverterCommon):
+	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+		# # call the __init__ method of the parent class with the provided arguments
+		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
-# 	def is_type_class(self):
-# 		return True
+	def is_type_class(self):
+		# This function returns True if the type is a class
+		return True
 
-# 	def get_type_api(self, module_name):
-# 		return ""
+	def get_type_api(self, module_name):
+		# This function generates the type API for the given class type, in this case, it returns an empty string
+		return ""
 
-# 	def to_c_call(self, in_var, out_var_p, is_pointer):
-# 		out = f"{out_var_p.replace('&', '_')} := {in_var}.h\n"
-# 		return out
+	def to_c_call(self, in_var, out_var_p, is_pointer):
+		# This function generates the C code for converting a F# class type to C class type
+		out = f"{out_var_p.replace('&', '_')} := {in_var}.h\n"
+		return out
 
-# 	def from_c_call(self, out_var, expr, ownership):
-# 		return ""
+	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C class type to F# class type, in this case, it returns an empty string
+		return ""
 
-# 	def check_call(self, in_var):
-# 		return ""
+	def check_call(self, in_var):
+		# This function generates the C code for checking the class type, in this case, it returns an empty string
+		return ""
 
-# 	def get_type_glue(self, gen, module_name):
-# 		return ""
+	def get_type_glue(self, gen, module_name):
+		# This function generates the glue code for the given class type, in this case, it returns an empty string
+		return ""
 
-# class GoExternTypeConverter(GoTypeConverterCommon):
-# 	def __init__(self, type, to_c_storage_type, bound_name, module):
-# 		super().__init__(type, to_c_storage_type, bound_name)
-# 		self.module = module
+class FSharpExternTypeConverter(FSharpTypeConverterCommon):
+	def __init__(self, type, to_c_storage_type, bound_name, module):
+		# call the __init__ method of the parent class with the provided arguments
+		super().__init__(type, to_c_storage_type, bound_name)
+		# store the module name
+		self.module = module
 
-# 	def get_type_api(self, module_name):
-# 		return ''
+	def get_type_api(self, module_name):
+		# This function generates the type API for the given extern type, in this case, it returns an empty string
+		return ''
 
-# 	def to_c_call(self, in_var, out_var_p):
-# 		out = ''
-# 		if self.c_storage_class:
-# 			c_storage_var = 'storage_%s' % out_var_p.replace('&', '_')
-# 			out += '%s %s;\n' % (self.c_storage_class, c_storage_var)
-# 			out += '(*%s)(%s, (void *)%s, %s);\n' % (self.to_c_func, in_var, out_var_p, c_storage_var)
-# 		else:
-# 			out += '(*%s)(%s, (void *)%s);\n' % (self.to_c_func, in_var, out_var_p)
-# 		return out
+	def to_c_call(self, in_var, out_var_p):
+		# This function generates the C code for converting a F# extern type to C extern type
+		out = ''
+		if self.c_storage_class:
+			c_storage_var = 'storage_%s' % out_var_p.replace('&', '_')
+			out += '%s %s;\n' % (self.c_storage_class, c_storage_var)
+			out += '(*%s)(%s, (void *)%s, %s);\n' % (self.to_c_func, in_var, out_var_p, c_storage_var)
+		else:
+			out += '(*%s)(%s, (void *)%s);\n' % (self.to_c_func, in_var, out_var_p)
+		return out
 
-# 	def from_c_call(self, out_var, expr, ownership):
-# 		return "%s = (*%s)((void *)%s, %s);\n" % (out_var, self.from_c_func, expr, ownership)
+	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C extern type to F# extern type
+		return "%s = (*%s)((void *)%s, %s);\n" % (out_var, self.from_c_func, expr, ownership)
 
-# 	def check_call(self, in_var):
-# 		return "(*%s)(%s)" % (self.check_func, in_var)
+	def check_call(self, in_var):
+		# This function generates the C code to check if the given variable is a F# extern type
+		return "(*%s)(%s)" % (self.check_func, in_var)
 
-# 	def get_type_glue(self, gen, module_name):
-# 		out = '// extern type API for %s\n' % self.ctype
-# 		if self.c_storage_class:
-# 			out += 'struct %s;\n' % self.c_storage_class
-# 		out += 'bool (*%s)(void *o) = nullptr;\n' % self.check_func
-# 		if self.c_storage_class:
-# 			out += 'void (*%s)(void *o, void *obj, %s &storage) = nullptr;\n' % (self.to_c_func, self.c_storage_class)
-# 		else:
-# 			out += 'void (*%s)(void *o, void *obj) = nullptr;\n' % self.to_c_func
-# 		out += 'int (*%s)(void *obj, OwnershipPolicy) = nullptr;\n' % self.from_c_func
-# 		out += '\n'
-# 		return out
+	def get_type_glue(self, gen, module_name):
+		# This function generates the type glue for the given extern type
+		out = '// extern type API for %s\n' % self.ctype
+		if self.c_storage_class:
+			out += 'struct %s;\n' % self.c_storage_class
+		out += 'bool (*%s)(void *o) = nullptr;\n' % self.check_func
+		if self.c_storage_class:
+			out += 'void (*%s)(void *o, void *obj, %s &storage) = nullptr;\n' % (self.to_c_func, self.c_storage_class)
+		else:
+			out += 'void (*%s)(void *o, void *obj) = nullptr;\n' % self.to_c_func
+		out += 'int (*%s)(void *obj, OwnershipPolicy) = nullptr;\n' % self.from_c_func
+		out += '\n'
+		return out
 
 # class GoGenerator(gen.FABGen):
 # 	default_ptr_converter = GoPtrTypeConverter

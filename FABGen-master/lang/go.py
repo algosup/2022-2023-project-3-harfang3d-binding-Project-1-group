@@ -216,12 +216,15 @@ class GoExternTypeConverter(GoTypeConverterCommon):
 		return out
 
 	def from_c_call(self, out_var, expr, ownership):
+		# This function generates the C code for converting a C extern type to Go extern type
 		return "%s = (*%s)((void *)%s, %s);\n" % (out_var, self.from_c_func, expr, ownership)
 
 	def check_call(self, in_var):
+		# This function generates the C code to check if the given variable is a Go extern type
 		return "(*%s)(%s)" % (self.check_func, in_var)
 
 	def get_type_glue(self, gen, module_name):
+		# This function generates the type glue for the given extern type
 		out = '// extern type API for %s\n' % self.ctype
 		if self.c_storage_class:
 			out += 'struct %s;\n' % self.c_storage_class
