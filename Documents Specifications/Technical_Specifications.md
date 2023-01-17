@@ -18,7 +18,9 @@
   - [b. After the project](#b-after-the-project)
 - [4. Implementation](#4-implementation)
 - [5. Considerations](#5-considerations)
-- [6. Ressources](#6-ressources)
+- [6. Development](#6-development)
+  - [a. Types Conversion](#a-types-conversion)
+- [7. Ressources](#7-ressources)
   - [a. References](#a-references)
   - [b. Glossary](#b-glossary)
   
@@ -90,10 +92,7 @@ What is F# ?
   - Link to C library (C++ has to be wrapped with C first)
 
 # 3. Folder Structure
-
 ## a. Before the project
-
-Here is what the FABGen folder structure currently looks like:
 
 ```
 ├───FABGen-master
@@ -149,7 +148,7 @@ We also need to implement the F# binding in several files such as: bind.py, gen.
 
 Here is what the FABGen folder structure will look like:
 
-```
+<pre>
 ├───FABGen-master
 │   ├─── .travis
 │   ├─── .vscode
@@ -159,7 +158,7 @@ Here is what the FABGen folder structure will look like:
 │   │     ├─── cpython.py
 │   │     ├─── go.py
 │   │     ├─── lua.py
-│   │     ├─── **fsharp.py (New File) **
+│   │     ├─── <b>fsharp.py (New File) </b>
 │   │     └─── xml.py
 │   ├─── lib
 │   │     ├── cpython
@@ -175,10 +174,10 @@ Here is what the FABGen folder structure will look like:
 │   │     │     ├── __init__.py
 │   │     │     ├── std.py
 │   │     │     └─── stl.py
-│   │     ├── **fsharp (New Folder)**
-│   │     │     ├── __init__.py
-│   │     │     ├── std.py
-│   │     │     └─── stl.py **
+│   │     ├── <b>fsharp (New Folder) </b>
+│   │     │     ├── <b>__init__.py </b>
+│   │     │     ├── <b>std.py </b>
+│   │     │     └─── <b>stl.py </b>
 │   │     ├─── xml
 │   │     │      └─── stl.py
 │   │     │
@@ -187,18 +186,45 @@ Here is what the FABGen folder structure will look like:
 │   │     └─── stl.py
 │   ├─── tests
 │   │     └─── All the tests.py
-│   ├─── **bind.py ** (Edited)
-│   ├─── **gen.py ** (Edited)
+│   ├─── <b>bind.py (Edited) </b>
+│   ├─── <b>gen.py  (Edited) </b>
 │   ├─── requirements.txt
-│   ├─── **test.py ** (Edited)
+│   ├─── <b>test.py  (Edited) </b>
+</pre>
 
-```
+Moreover, here is a mock-up of the FABGen tool detailing the different steps of translation:
 
+<img src="img/Mock-Up.png">
+
+&nbsp;
 # 4. Implementation
  WIP
 # 5. Considerations
 WIP
-# 6. Ressources
+
+# 6. Development
+
+## a. Types Conversion
+
+Here is the following equivalence table between the different types used in the different languages that we will use in the project:
+
+|F# Type	| C Type	| C++ Type |
+|---|---|---|
+| int | int	 | int |
+| bool | _Bool | bool |
+| float | float | float |
+| double | double | double |
+| string | char* | std::string |
+| int32 | int32_t | int32_t |
+| int64 | int64_t | int64_t |
+| uint32 | uint32_t | uint32_t |
+| uint64 | uint64_t | uint64_t |
+| byte | uint8_t | uint8_t |
+| sbyte | int8_t | int8_t |
+
+
+
+# 7. Ressources
 ## a. References
 
 [1] [Harfang3D Website](https://www.harfang3d.com/en_US/)  
