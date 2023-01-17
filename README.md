@@ -7,9 +7,9 @@ Harfang3D is a 3D game engine written in C++ and designed for ease of use and ex
 
 ## Documents link
 
-- [Functionnal Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/documents/Documents%20Specifications/Functional_Specifications.md)
-- [Technical Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/documents/Documents%20Specifications/Technical_Specifications.md)
-- [Test Plan](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/documents/Test%20Plan/Test_Plan.md)
+- [Functionnal Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Documents%20Specifications/Functional_Specifications.md)
+- [Technical Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Documents%20Specifications/Technical_Specifications.md)
+- [Test Plan](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Test%20Plan/Test_Plan.md)
 - [Trello](https://trello.com/b/B7eB7vfa/f)
 
 ## Retro Planning
