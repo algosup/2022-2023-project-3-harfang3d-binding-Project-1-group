@@ -20,9 +20,9 @@ Harfang3D is a 3D game engine written in C++ and designed for ease of use and ex
 	- [x] Find informations about code and code languages
 
 - 2nd week:
-	- [ ] Functional Specifications 1.0
-	- [ ] Technical Specifications 1.0
-	- [ ] Continue to find informations
+	- [x] Functional Specifications 1.0
+	- [x] Technical Specifications 1.0
+	- [x] Continue to find informations
 
 - 3rd week:
 	- [ ] Functional Specifications 2.0
