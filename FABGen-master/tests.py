@@ -10,6 +10,7 @@ import lib
 import sys
 import os
 
+
 import lang.cpython
 import lang.lua
 import lang.go
@@ -38,9 +39,9 @@ if args.python_base_path:
 # -- CMake generator
 if not args.linux:
 	if args.x64:
-		cmake_generator = 'Visual Studio 16 2019'
+		cmake_generator = 'Visual Studio 17 2022'
 	else:
-		cmake_generator = 'Visual Studio 16 2019'
+		cmake_generator = 'Visual Studio 17 2022'
 
 	print("Using CMake generator: %s" % cmake_generator)
 
@@ -386,7 +387,7 @@ def build_and_deploy_go_extension(work_path, build_path):
 		else:
 			subprocess.check_output(['cmake', '--build', '.', '--config', 'Release'])
 	except subprocess.CalledProcessError as e:
-		print(e.output.decode('utf-8'))
+		print(e.output)
 		return False
 
 	print("install extension...")
@@ -443,7 +444,7 @@ class GoTestBed:
 			subprocess.check_output("goimports -w bind.go", shell=True, stderr=subprocess.STDOUT)
 			subprocess.check_output('go test -run ""', shell=True, stderr=subprocess.STDOUT)
 		except subprocess.CalledProcessError as e:
-			print(e.output.decode('utf-8'))
+			print(e.output)
 			success = False
 
 		print("Cleanup...")
