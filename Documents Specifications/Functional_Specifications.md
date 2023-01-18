@@ -34,7 +34,6 @@ ___
   - [6. Integration Requirements](#6-integration-requirements)
     - [6.1 Exception Handling/ Error Reporting](#61-exception-handling-error-reporting)
   - [7. References](#7-references)
-  - [8. Open Issues](#8-open-issues)
   
 </details>
 
@@ -201,7 +200,7 @@ ___
 <!-- Todo -->
 | Requirements | Description |
 | :--- | :--- |
-| **Performance** | TF# bindings should be efficient, with minimal overhead and latency, utilizing optimized data structures, minimizing unnecessary calculations, parallel processing and thread-safe, able to handle high concurrency. |
+| **Performance** | F# bindings should be efficient, with minimal overhead and latency, utilizing optimized data structures, minimizing unnecessary calculations, parallel processing and thread-safe, able to handle high concurrency. |
 | **Security** | F# bindings should have strong security, implementing secure coding, input validation, error handling, authentication, authorization, encryption of sensitive data, and regular security testing. |
 | **Usability** | F# bindings should have a clear, intuitive interface with good documentation, consistent naming and organization, flexibility and configurability, and compatibility with a wide range of platforms and frameworks. |
 | **Maintainability** | F# bindings should have clear and well-organized code, following best practices for coding style, documentation, design patterns, abstractions and Testable, easy to add new features or make changes without introducing bugs. |
@@ -226,8 +225,3 @@ ___
 | 2 | FABgen | [Link](https://github.com/ejulien/FABGen) |
 
 
-___
-
-## 8. Open Issues
-
-<!-- Todo -->
