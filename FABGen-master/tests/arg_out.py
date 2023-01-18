@@ -120,3 +120,6 @@ func Test(t *testing.T) {
 	assert.Equal(t, w, int32(20), "should be the same.")
 }
 '''
+
+test_fsharp = '''\
+'''

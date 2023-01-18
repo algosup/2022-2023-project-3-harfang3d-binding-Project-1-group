@@ -14,6 +14,7 @@ import os
 import lang.cpython
 import lang.lua
 import lang.go
+import lang.fsharp
 
 
 start_path = os.path.dirname(__file__)
@@ -25,7 +26,7 @@ parser.add_argument('--go', dest='go_build', help='Build GO', action="store_true
 parser.add_argument('--debug', dest='debug_test', help='Generate a working solution to debug a test')
 parser.add_argument('--x64', dest='x64', help='Build for 64 bit architecture', action='store_true', default=False)
 parser.add_argument('--linux', dest='linux', help='Build on Linux', action='store_true', default=False)
-parser.add_argument('--fsharpbase', dest='fsharp_base_path', help='Path to the F# interpreter')
+parser.add_argument('--fsharp', dest='fsharp_build', help='Build FSharp', action='store_true', default=False)
 
 args = parser.parse_args()
 
@@ -452,6 +453,33 @@ class GoTestBed:
 
 		return success
 
+
+# Fsharp test bed
+def create_fsharp_cmake_file(module, work_path, sources):
+	cmake_path = os.path.join(work_path, 'CMakeLists.txt')
+
+	with open(cmake_path, 'w') as file:
+		quoted_sources = ['"%s"' % source for source in sources if ".fs" not in source]
+
+		work_place_ = work_path.replace('\\', '/')
+
+		file.write(f"""
+cmake_minimum_required(VERSION 3.1)
+
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+set(CMAKE_MODULE_PATH ${{CMAKE_MODULE_PATH}} "${{CMAKE_SOURCE_DIR}}/")
+
+project({module})
+enable_language(C CXX)
+set(CMAKE_CXX_STANDARD 14)
+
+add_library(my_test SHARED {' '.join(quoted_sources)})
+set_target_properties(my_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE "{work_place_}")
+
+install(TARGETS my_test DESTINATION "${{CMAKE_SOURCE_DIR}}/" COMPONENT my_test)
+""")
+
 class FSharpTestBed:
     def build_and_test_extension(self, work_path, module, sources):
         if not hasattr(module, "test_fsharp"):
@@ -513,7 +541,7 @@ if args.linux or args.python_base_path:
 
 if args.lua_base_path:
 	gen = lang.lua.LuaGenerator()
-	gen.verbose = False
+	
 	run_tests(gen, test_names, LuaTestBed())
 
 if args.go_build:
@@ -521,10 +549,11 @@ if args.go_build:
 	gen.verbose = False
 	run_tests(gen, test_names, GoTestBed())
 
-if args.fsharp_base_path:
+if args.fsharp_build:
 	gen = lang.fsharp.FSharpGenerator()
 	gen.verbose = False
 	run_tests(gen, test_names, FSharpTestBed())
+
 
 
 
