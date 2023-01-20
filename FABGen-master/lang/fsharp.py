@@ -22,7 +22,7 @@ def clean_name(name):
 	# This function takes in a single parameter "name" and removes whitespaces, "_" and ":" characters
     # and replaces them with empty string
 	new_name = str(name).strip().replace("_", "").replace(":", "")
-	# check if the cleaned name is a keyword in the F# language 
+	# check if the cleaned name is a keyword in the fsharp language 
 	if new_name in ["fun", "map", "double", "char", "else", "package", "const", "if", "type", "for", "import", "let", "val", "single", "printf", "printfn", "length", "elif", "match"]:
 		# if it's a keyword, it appends "F#" at the end of the name
 		return new_name + "FSharp"
@@ -84,16 +84,16 @@ class FSharpTypeConverterCommon(gen.TypeConverter):
 		# If the type has a storage class, generate the function for converting F# type to C storage type 
 		if self.c_storage_class:
 			out += "void %s(int idx, void *obj, %s &storage);\n" % (self.to_c_func, self.c_storage_class)
-		# If the type doesn't have a storage class, generate the function for converting F# type to C type 
+		# If the type doesn't have a storage class, generate the function for converting fsharp type to C type 
 		else:
 			out += "void %s(int idx, void *obj);\n" % self.to_c_func
-		# generate the function for converting C type to F# type
+		# generate the function for converting C type to fsharp type
 		out += "int %s(void *obj, OwnershipPolicy);\n" % self.from_c_func
 		out += "\n"
 		return out
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a F# type to C type or C storage type
+		# This function generates the C code for converting a fsharp type to C type or C storage type
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
@@ -110,11 +110,11 @@ class DummyTypeConverter(gen.TypeConverter):
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a F# type to C type or C storage type, in this case, it returns an empty string
+		# This function generates the C code for converting a fsharp type to C type or C storage type, in this case, it returns an empty string
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C type to F# type, in this case, it returns an empty string
+		# This function generates the C code for converting a C type to fsharp type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
@@ -127,7 +127,7 @@ class DummyTypeConverter(gen.TypeConverter):
 
 class FSharpPtrTypeConverter(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-		# # call the __init__ method of the parent class with the provided arguments
+		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
 	def get_type_api(self, module_name):
@@ -135,11 +135,11 @@ class FSharpPtrTypeConverter(gen.TypeConverter):
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a F# pointer type to C pointer type, in this case, it returns an empty string
+		# This function generates the C code for converting a fsharp pointer type to C pointer type, in this case, it returns an empty string
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C pointer type to F# pointer type, in this case, it returns an empty string
+		# This function generates the C code for converting a C pointer type to fsharp pointer type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
@@ -164,12 +164,12 @@ class FSharpClassTypeDefaultConverter(FSharpTypeConverterCommon):
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a F# class type to C class type
+		# This function generates the C code for converting a fsharp class type to C class type
 		out = f"{out_var_p.replace('&', '_')} := {in_var}.h\n"
 		return out
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C class type to F# class type, in this case, it returns an empty string
+		# This function generates the C code for converting a C class type to fsharp class type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
