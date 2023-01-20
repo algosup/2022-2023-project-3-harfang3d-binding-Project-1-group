@@ -121,5 +121,6 @@ func Test(t *testing.T) {
 }
 '''
 
-test_fsharp = '''\
-'''
+# test_fsharp = '''\
+
+# '''
