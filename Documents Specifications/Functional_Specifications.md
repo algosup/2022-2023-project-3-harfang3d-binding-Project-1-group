@@ -1,6 +1,6 @@
 # Functional Specifications 
 
-2023 Project Harfang3D Binding Group 1 <br>
+2023 Project Harfang3D Bindings Group 1 <br>
 Created on: 2023-04-01 <br>
 Author: [Rémy Charles](https://github.com/RemyCHARLES)
 
