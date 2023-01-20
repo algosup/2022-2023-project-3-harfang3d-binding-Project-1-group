@@ -454,16 +454,16 @@ uint32_t %s(void* p) {
 
 	def __arg_from_cpp_to_c(self, val, retval_name, just_copy):
 		src = ""
-		# type class, not a pointer
+		# check if val['conv'] is a type class, not a pointer
 		if val['conv'] is not None and val['conv'].is_type_class() and \
 			not val['conv'].ctype.is_pointer() and ('storage_ctype' not in val or not hasattr(val['storage_ctype'], 'ref') or not any(s in val['storage_ctype'].ref for s in ["&", "*"])):
-				# special shared ptr
+				# check for special shared ptr
 				if 'proxy' in val['conv']._features:
 					src += f"	if(!{retval_name})\n" \
 						"		return nullptr;\n"
 
 					src += "	auto " + val['conv']._features['proxy'].wrap("ret", "retPointer")
-				# special std::future 
+				# check for special std::future 
 				elif val["conv"] is not None and "std::future" in str(val["conv"].ctype):
 					src += f"	auto retPointer = new std::future<int>(std::move({retval_name}));\n"
 				else:
@@ -474,7 +474,7 @@ uint32_t %s(void* p) {
 						src += f"	auto retPointer = new {val['conv'].ctype}({retval_name});\n"
 				retval_name = f"({clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)})(retPointer)"
 		else:
-			# special std::string (convert to const char*)
+			# check for special std::string (convert to const char*)
 			if val["conv"] is not None and "std::string" in str(val["conv"].ctype):
 				stars = self.__get_stars(val)
 				if len(stars) > 0:# rarely use but just in case
@@ -487,6 +487,7 @@ uint32_t %s(void* p) {
 		# cast it
 		# if it's an enum
 		if val["conv"].bound_name in self._enums.keys():
+			# store the enum conversion
 			enum_conv = self._get_conv_from_bound_name(val['conv'].bound_name)
 			if enum_conv is not None and hasattr(enum_conv, "base_type") and enum_conv.base_type is not None:
 				arg_bound_name = str(enum_conv.base_type)
