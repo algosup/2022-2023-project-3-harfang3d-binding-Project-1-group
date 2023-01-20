@@ -1,4 +1,4 @@
-# Harfang - The Fabulous binding Generator for CPython and FSharp
+#FABGen / Harfang 3D - The Fabulous binding Generator for CPython and FSharp
 
 import os
 from os import stat_result
@@ -71,9 +71,9 @@ class FSharpTypeConverterCommon(gen.TypeConverter):
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 		# store the base type in an attribute
 		self.base_type = type
-		# initialize the FSharp_to_c_type and FSharp_type attributes to None
-		self.FSharp_to_c_type = None
-		self.FSharp_type = None
+		# initialize the fsharp_to_c_type and fsharp_type attributes to None
+		self.fsharp_to_c_type = None
+		self.fsharp_type = None
 
 	def get_type_api(self, module_name):
 		# This function generates the type API for the given type
@@ -307,10 +307,9 @@ class FSharpGenerator(gen.FABGen):
 	def rbind_function(self, name, rval, args, internal=False):
 		# returns an empty string
 		return ""
-	#It seems like the above methods are not implemented yet, You should implement these methods according to the requirements and the way you
+	# It seems like the above methods are not implemented yet, You should implement these methods according to the requirements and the way you
 	# want to use them in your project.
 
-	#
 	def get_binding_api_declaration(self):
 		# define variable to store type_info name
 		type_info_name = gen.apply_api_prefix("type_info")
@@ -374,7 +373,6 @@ uint32_t %s(void* p) {
 	# It seems like the above methods are not implemented yet, You should implement these methods according to the requirements and the way you want to use them in
 	# your project.
 
-	#
 	def get_output(self):
 		# return a dictionary of the generated files
 		return {"wrapper.cpp": self.fsharp_c, "wrapper.h": self.fsharp_h, "bind.fsharp": self.fsharp_bind, "translate_file.json": self.fsharp_translate_file}
@@ -1756,6 +1754,7 @@ uint32_t %s(void* p) {
 			fsharp_h += extract_conv_and_bases(conv.static_methods, \
 									lambda method: self.__extract_method(conv.bound_name, conv, method, static=True, is_in_header=True), \
 									[base_class.static_methods for base_class in conv._bases])
+			
 			# methods
 			fsharp_h += extract_conv_and_bases(conv.methods, \
 									lambda method: self.__extract_method(conv.bound_name, conv, method, is_in_header=True), \
@@ -1774,7 +1773,6 @@ uint32_t %s(void* p) {
 				'}\n' \
 				'#endif\n'
 		self.fsharp_h = fsharp_h
-
 
 		# cpp
 		fsharp_c = '// fsharp wrapper c\n' \
@@ -1802,7 +1800,7 @@ uint32_t %s(void* p) {
 			fsharp_c += f"static const {arg_bound_name} {clean_name_with_title(self._name)}{bound_name} [] = {{ {', '.join(enum_vars)} }};\n"
 			fsharp_c += f"{arg_bound_name} Get{bound_name}(const int id) {{ return {clean_name_with_title(self._name)}{bound_name}[id];}}\n"
 
-		#  classes
+		# classes
 		for conv in self._bound_types:
 			if conv.nobind:
 				continue
