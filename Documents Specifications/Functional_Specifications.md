@@ -77,10 +77,10 @@ Based on the information provided, it appears that the purpose of developing ano
 
 | Document | Description |
 | :--- | :--- |
-| [Communication Plan](/Documents%20Specifications/Communication_Plan.md) | 
+| [Communication Plan]([/Documents%20Specifications/Communication_Plan.md](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Documents%20Specifications/Communication_Plan.md)) | 
 | [Critical Path](/Critical%20Path/Critical_Path.md) | Project schedule |
-| [Test Plan](/Test%20Plan/Test_Plan.md) | Test plan |
-| [Technical Specifications](/Documents%20Specifications/Technical_Specification.md) | Technical specifications |
+| [Test Plan](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Test%20Plan/Test_Plan.md) | Test plan |
+| [Technical Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Documents%20Specifications/Technical_Specifications.md) | Technical specifications |
 | [Trello](https://trello.com/b/B7eB7vfa/f) | Trello board |
 
 <br>
