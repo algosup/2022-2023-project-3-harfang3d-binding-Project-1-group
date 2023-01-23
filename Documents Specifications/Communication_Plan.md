@@ -16,3 +16,29 @@ The purpose of this communication plan is to define the various means of communi
 | Franck JEANNIN | ALGOSUP CEO | Slack, Github & Email | franck.jeannin@algosup.com |
 | Emmanuel JULIEN | Lead developer HARFANG®3D & Founder of FABGen | Email | emmanuel.julien@harfang3d.com |
 | François GUTHERZ | Chief technical officer & Project leader at HARFANG®3D | Email & Slack | francois.gutherz@harfang3d.com |
+
+## Frequency of communication
+
+Daily:
+
+- Slack
+- Trello
+- Github
+- Discord
+  
+Weekly:
+
+- Email
+- Discord
+
+## Contact information
+
+- François Gutherz at francois.gutherz@harfang3d.com
+- Emmanuel Julien at emmanuel.julien@harfang3d.com
+- Robert Pickering at robertfpickering@fastmail.com
+- Franck Jeannin at franck.jeannin@algosup.com
+- Elise Gautier at elise.gautier@algosup.com
+- Nicolas Mida at nicolas.mida@algosup.com
+- Théo Trouvé at theo.trouve@algosup.com
+- Grégory Pagnoux at gregory.pagnoux@algosup.com
+- Rémy Charles at remy.charles@algosup.com
