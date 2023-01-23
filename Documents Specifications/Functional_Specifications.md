@@ -77,6 +77,7 @@ Based on the information provided, it appears that the purpose of developing ano
 
 | Document | Description |
 | :--- | :--- |
+| [Communication Plan](/Documents%20Specifications/Communication_Plan.md) | 
 | [Critical Path](/Critical%20Path/Critical_Path.md) | Project schedule |
 | [Test Plan](/Test%20Plan/Test_Plan.md) | Test plan |
 | [Technical Specifications](/Documents%20Specifications/Technical_Specification.md) | Technical specifications |
