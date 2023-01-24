@@ -1,10 +1,10 @@
 
-func wrapFloat(goValue *float32) (wrapped *C.float, finisher func()) {
-	if goValue != nil {
-		cValue := C.float(*goValue)
+func wrapFloat(fsharpValue *float32) (wrapped *C.float, finisher func()) {
+	if fsharpValue != nil {
+		cValue := C.float(*fsharpValue)
 		wrapped = &cValue
 		finisher = func() {
-			*goValue = float32(cValue)
+			*fsharpValue = float32(cValue)
 		}
 	} else {
 		finisher = func() {}
@@ -65,12 +65,12 @@ func (buf *stringBuffer) resizeTo(requestedSize int) {
 	buf.size = bufSize
 }
 
-func (buf *stringBuffer) toGo() string {
+func (buf *stringBuffer) tofsharp() string {
 	if (buf.ptr == nil) || (buf.size < 1) {
 		return ""
 	}
 	ptrToByteSlice(buf.ptr)[buf.size-1] = 0
-	return C.GoString((*C.char)(buf.ptr))
+	return C.fsharpString((*C.char)(buf.ptr))
 }
 
 // unrealisticLargePointer is used to cast an arbitrary native pointer to a slice.
