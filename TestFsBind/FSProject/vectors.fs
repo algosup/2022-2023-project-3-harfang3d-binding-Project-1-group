@@ -16,29 +16,28 @@ type Vector3 =
 
 
 
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern double Vector2_distanceTo(Vector2 pos)
 
-
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern void Vector2_vectorMovement(Vector2 pos, double plusx, double plusy)
 
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern Vector2 Vector2_midpoint(Vector2 pos)
 
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern double Vector2_percentDistance(Vector2 pos, double percentOfDistance)
 
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern double v2distanceTo(Vector2 pos)
 
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern double v2percentDistance(Vector2 pos, double percentOfDistance)
 
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern double v3distanceTo(Vector3 pos)
 
-[<DllImport("../lib/libvectors.dylib")>]
+[<DllImport("../lib/libTest12.dylib")>]
 extern double v3percentDistance(Vector3 pos, double percentOfDistance)
 
 

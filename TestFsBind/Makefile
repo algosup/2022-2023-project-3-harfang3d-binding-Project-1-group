@@ -117,65 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named vectors
+# Target rules for targets named Test12
 
 # Build rule for target.
-vectors: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 vectors
-.PHONY : vectors
+Test12: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Test12
+.PHONY : Test12
 
 # fast build rule for target.
-vectors/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectors.dir/build.make CMakeFiles/vectors.dir/build
-.PHONY : vectors/fast
+Test12/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test12.dir/build.make CMakeFiles/Test12.dir/build
+.PHONY : Test12/fast
 
-vectors2.o: vectors2.cpp.o
-.PHONY : vectors2.o
-
-# target to build an object file
-vectors2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectors.dir/build.make CMakeFiles/vectors.dir/vectors2.cpp.o
-.PHONY : vectors2.cpp.o
-
-vectors2.i: vectors2.cpp.i
-.PHONY : vectors2.i
-
-# target to preprocess a source file
-vectors2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectors.dir/build.make CMakeFiles/vectors.dir/vectors2.cpp.i
-.PHONY : vectors2.cpp.i
-
-vectors2.s: vectors2.cpp.s
-.PHONY : vectors2.s
-
-# target to generate assembly for a file
-vectors2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectors.dir/build.make CMakeFiles/vectors.dir/vectors2.cpp.s
-.PHONY : vectors2.cpp.s
-
-vectors3.o: vectors3.cpp.o
-.PHONY : vectors3.o
+vectors.o: vectors.cpp.o
+.PHONY : vectors.o
 
 # target to build an object file
-vectors3.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectors.dir/build.make CMakeFiles/vectors.dir/vectors3.cpp.o
-.PHONY : vectors3.cpp.o
+vectors.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test12.dir/build.make CMakeFiles/Test12.dir/vectors.cpp.o
+.PHONY : vectors.cpp.o
 
-vectors3.i: vectors3.cpp.i
-.PHONY : vectors3.i
+vectors.i: vectors.cpp.i
+.PHONY : vectors.i
 
 # target to preprocess a source file
-vectors3.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectors.dir/build.make CMakeFiles/vectors.dir/vectors3.cpp.i
-.PHONY : vectors3.cpp.i
+vectors.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test12.dir/build.make CMakeFiles/Test12.dir/vectors.cpp.i
+.PHONY : vectors.cpp.i
 
-vectors3.s: vectors3.cpp.s
-.PHONY : vectors3.s
+vectors.s: vectors.cpp.s
+.PHONY : vectors.s
 
 # target to generate assembly for a file
-vectors3.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectors.dir/build.make CMakeFiles/vectors.dir/vectors3.cpp.s
-.PHONY : vectors3.cpp.s
+vectors.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test12.dir/build.make CMakeFiles/Test12.dir/vectors.cpp.s
+.PHONY : vectors.cpp.s
 
 # Help Target
 help:
@@ -185,13 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... vectors"
-	@echo "... vectors2.o"
-	@echo "... vectors2.i"
-	@echo "... vectors2.s"
-	@echo "... vectors3.o"
-	@echo "... vectors3.i"
-	@echo "... vectors3.s"
+	@echo "... Test12"
+	@echo "... vectors.o"
+	@echo "... vectors.i"
+	@echo "... vectors.s"
 .PHONY : help
 
 

@@ -1,23 +1,17 @@
 cmake_minimum_required(VERSION 3.10)
-set(lib_name vectors)
+set(lib_name Test12)
 project(${lib_name})
 
 
-# Add all the header files
-set(HEADERS
-    Vector2.h
-    Vector3.h
-)
 
 # Add all the source files
 set(SOURCES
-    vectors2.cpp
-    vectors3.cpp
+    vectors.cpp
 )
 
 
 # Compile the library
-add_library(${lib_name} SHARED ${HEADERS} ${SOURCES} )
+add_library(${lib_name} SHARED ${SOURCES} )
 
 # Set the include directories
 target_include_directories(${lib_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
