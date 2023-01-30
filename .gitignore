@@ -9,7 +9,6 @@ Debug
 *.user
 obj
 bin
-/build/
 *.exe
 !.paket/paket.bootstrapper.exe
 .ionide/
