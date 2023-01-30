@@ -17,18 +17,6 @@ type Vector3 =
 
 // ! DLLImport Function
 [<DllImport("../CMake/lib/libTest56")>]
-extern double Vector2_distanceTo(Vector2 pos)
-
-[<DllImport("../CMake/lib/libTest56")>]
-extern void Vector2_vectorMovement(Vector2 pos, double plusx, double plusy)
-
-[<DllImport("../CMake/lib/libTest56")>]
-extern Vector2 Vector2_midpoint(Vector2 pos)
-
-[<DllImport("../CMake/lib/libTest56")>]
-extern double Vector2_percentDistance(Vector2 pos, double percentOfDistance)
-
-[<DllImport("../CMake/lib/libTest56")>]
 extern double v2distanceTo(Vector2 pos)
 
 [<DllImport("../CMake/lib/libTest56")>]
