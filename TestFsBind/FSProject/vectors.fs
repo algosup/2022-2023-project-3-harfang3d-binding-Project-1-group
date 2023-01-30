@@ -42,15 +42,15 @@ extern double v3percentDistance(Vector3 pos, double percentOfDistance)
 
 
 let v2 = Vector2(1.0, 2.0)
-let res = v2distanceTo(v2)
-let res2 = v2percentDistance(v2, 0.5)
+let v2DistanceTo = v2distanceTo(v2)
+let v2PercentDistance = v2percentDistance(v2, 0.5)
 let v3 = Vector3(1.0, 2.0, 3.0)
-let res3 = v3distanceTo(v3)
-let res4 = v3percentDistance(v3, 0.5)
-printfn "Distance to origin in Vector 2: %f" res
-printfn "Percent distance to origin in Vector 2: %f" res2
-printfn "Distance to origin in Vector 3: %f" res3
-printfn "Percent distance to origin in Vector 3: %f" res4
+let v3DistanceTo = v3distanceTo(v3)
+let v3PercentDistance = v3percentDistance(v3, 0.5)
+printfn "Distance to origin in Vector 2: %f" v2DistanceTo
+printfn "Percent distance to origin in Vector 2: %f" v2PercentDistance
+printfn "Distance to origin in Vector 3: %f" v3DistanceTo
+printfn "Percent distance to origin in Vector 3: %f" v3PercentDistance
 
 
 
