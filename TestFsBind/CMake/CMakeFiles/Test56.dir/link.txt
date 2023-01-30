@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -dynamiclib -Wl,-headerpad_max_install_names -o lib/libTest56.dylib -install_name @rpath/libTest56.dylib "CMakeFiles/Test56.dir/Users/remycharles/Desktop/Github_Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/vectors.cpp.o" 

@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -dynamiclib -Wl,-headerpad_max_install_names -o lib/libTest12.dylib -install_name @rpath/libTest12.dylib CMakeFiles/Test12.dir/vectors.cpp.o 

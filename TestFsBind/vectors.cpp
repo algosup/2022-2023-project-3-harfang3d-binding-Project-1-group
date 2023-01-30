@@ -59,11 +59,6 @@ extern "C"
         return v2distanceTo(x, y, 0, 0) * percentOfDistance;
     }
 
-}
-
-extern "C"
-{
-
     Vector3::Vector3(double x, double y, double z) : x(x), y(y), z(z) {}
     double Vector3::distanceTo(Vector3 pos) {
         return sqrt((pos.y - y) * (pos.y - y) + (pos.x - x) * (pos.x - x) + (pos.z - z) * (pos.z - z));
