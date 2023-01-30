@@ -54,10 +54,10 @@ RM = /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/CMake"
+CMAKE_SOURCE_DIR = "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/cmake"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/CMake"
+CMAKE_BINARY_DIR = "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/cmake"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/Test56.dir/clean
 CMakeFiles/Test56.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test56.dir/build.make CMakeFiles/Test56.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Test56.dir/build.make CMakeFiles/Test56.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/CMake/CMakeFiles" --progress-num=1,2 "Built target Test56"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/cmake/CMakeFiles" --progress-num=1,2 "Built target Test56"
 .PHONY : CMakeFiles/Test56.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Test56.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/CMake/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/cmake/CMakeFiles" 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Test56.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/CMake/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/cmake/CMakeFiles" 0
 .PHONY : CMakeFiles/Test56.dir/rule
 
 # Convenience name for target.

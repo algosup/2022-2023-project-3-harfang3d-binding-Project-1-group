@@ -1,4 +1,4 @@
-# Install script for directory: /Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/CMake
+# Install script for directory: /Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/cmake
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/CMake/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/cmake/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

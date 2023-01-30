@@ -1,6 +1,25 @@
 // In F#
 open System.Runtime.InteropServices
 
+open System.Diagnostics
+
+let executeScript (fileName: string) =
+    let processStartInfo = new ProcessStartInfo("/bin/bash", fileName)
+    processStartInfo.UseShellExecute <- false
+    processStartInfo.RedirectStandardOutput <- true
+    processStartInfo.CreateNoWindow <- true
+    processStartInfo.WindowStyle <- ProcessWindowStyle.Hidden
+    let process = new Process()
+    process.StartInfo <- processStartInfo
+    process.Start()
+    let output = process.StandardOutput.ReadToEnd()
+    process.WaitForExit()
+    output
+
+let result = executeScript "./Requirements.sh"
+printfn "Output: %s" result
+
+
 // ! Structure 
 [<Struct;StructLayout(LayoutKind.Sequential)>]
 type Vector2 =
