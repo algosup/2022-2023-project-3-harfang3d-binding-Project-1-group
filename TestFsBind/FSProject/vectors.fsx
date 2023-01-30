@@ -34,6 +34,5 @@ printfn "Distance to origin: %f" res
 printfn "Percent distance to origin: %f" res2
 
 
-
 // Vector2_vectorMovement(v2, 1.0, 1.0)
 // printfn "Vector2 after movement: %f, %f" v2.x v2.y
