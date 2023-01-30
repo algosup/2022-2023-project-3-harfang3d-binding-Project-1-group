@@ -11,7 +11,7 @@ set(HEADERS
 
 # Add all the source files
 set(SOURCES
-    vectors.cpp
+    vectors2.cpp
     vectors3.cpp
 )
 
