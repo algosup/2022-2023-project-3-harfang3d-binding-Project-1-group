@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="vectors.fsx" />
+    <Compile Include="vectors.fs" />
     <!-- <Compile Include="Program.fsx" /> -->
   </ItemGroup>
 </Project>
