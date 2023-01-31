@@ -9,6 +9,7 @@ Debug
 *.user
 obj
 bin
+/cmake/
 *.exe
 !.paket/paket.bootstrapper.exe
 .ionide/
