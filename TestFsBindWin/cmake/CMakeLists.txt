@@ -22,8 +22,12 @@ set_target_properties(${lib_name} PROPERTIES
 )
 
 # Ensure that the library is built for macOS
-if (APPLE)
+if (WIN32)
     set_target_properties(${lib_name} PROPERTIES
-        MACOSX_RPATH ON
+        SUFFIX ".dll"
+    )
+elseif(APPLE)
+    set_target_properties(${lib_name} PROPERTIES
+        SUFFIX ".dylib"
     )
 endif()

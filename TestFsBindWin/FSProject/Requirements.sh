@@ -62,9 +62,13 @@ set_target_properties(\${lib_name} PROPERTIES
 )
 
 # Ensure that the library is built for macOS
-if (APPLE)
+if (WIN32)
     set_target_properties(\${lib_name} PROPERTIES
-        MACOSX_RPATH ON
+        SUFFIX ".dll"
+    )
+elseif(APPLE)
+    set_target_properties(\${lib_name} PROPERTIES
+        SUFFIX ".dylib"
     )
 endif()" > CMakeLists.txt | grep "/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/FSProject/vectors.fs(12,9): warning FS0046: The identifier 'process' is reserved for future use by F# [/Users/remycharles/Desktop/Github Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/FSProject/FsharpBindings.fsproj]"
     cmake .
