@@ -35,16 +35,16 @@ type Vector3 =
     new(x: double, y: double, z: double) = {x = x; y = y; z = z}
 
 // ! DLLImport Function
-[<DllImport("../CMake/lib/libTest56")>]
+[<DllImport("../CMake/lib/libVectors")>]
 extern double v2distanceTo(Vector2 pos)
 
-[<DllImport("../CMake/lib/libTest56")>]
+[<DllImport("../CMake/lib/libVectors")>]
 extern double v2percentDistance(Vector2 pos, double percentOfDistance)
 
-[<DllImport("../CMake/lib/libTest56")>]
+[<DllImport("../CMake/lib/libVectors")>]
 extern double v3distanceTo(Vector3 pos)
 
-[<DllImport("../CMake/lib/libTest56")>]
+[<DllImport("../CMake/lib/libVectors")>]
 extern double v3percentDistance(Vector3 pos, double percentOfDistance)
 
 // ! Vector 2 

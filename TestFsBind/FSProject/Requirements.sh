@@ -5,7 +5,7 @@ then
     mkdir ../cmake
     cd ../cmake
     echo "cmake_minimum_required(VERSION 3.10)
-set(lib_name Test56)
+set(lib_name Vectors)
 project(\${lib_name})
 
 
@@ -39,7 +39,7 @@ else
     mkdir ../cmake
     cd ../cmake
     echo "cmake_minimum_required(VERSION 3.10)
-set(lib_name Test56)
+set(lib_name Vectors)
 project(\${lib_name})
 
 
