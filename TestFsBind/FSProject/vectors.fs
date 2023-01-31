@@ -57,7 +57,7 @@ let v3 = Vector3(1.0, 2.0, 3.0)
 let v3DistanceTo = v3distanceTo(v3)
 let v3PercentDistance = v3percentDistance(v3, 0.5)
 
-// ! Print 
+// ! Output 
 printfn "Distance to origin in Vector 2: %f" v2DistanceTo
 printfn "Percent distance to origin in Vector 2: %f" v2PercentDistance
 printfn "Distance to origin in Vector 3: %f" v3DistanceTo
