@@ -56,9 +56,9 @@ def run_test(gen, name, testbed):
 		with open(os.path.join(work_path, path), 'w') as file:
 			file.write(src)
 
-	with open(os.path.join(work_path, 'fabgen.h'), 'w') as file:
-		import gen as gen_module
-		file.write(gen_module.get_fabgen_api())
+	# with open(os.path.join(work_path, 'fabgen.h'), 'w') as file:
+	# 	import gen as gen_module
+	# 	file.write(gen_module.get_fabgen_api())
 
 	run_test_list.append(name)
 	result = testbed.build_and_test_extension(work_path, test_module, sources)
@@ -67,7 +67,7 @@ def run_test(gen, name, testbed):
 		print("[OK]")
 	else:
 		print("[FAILED]")
-		failed_test_list.append('%s (%s)' % (name, gen.get_language()))
+		failed_test_list.append(name)
 
 	if args.debug_test:
 		if args.linux:
@@ -77,16 +77,16 @@ def run_test(gen, name, testbed):
 	else:
 		shutil.rmtree(work_path, ignore_errors=True)
 
-def run_tests(gen, names, testbed):
-	print("Starting tests with generator %s" % gen.get_language())
+def run_tests(names, testbed):
+	# print("Starting tests with generator %s" % gen.get_language())
 
 	test_count = len(names)
 	print("Running %d tests\n" % test_count)
 
 	for i, name in enumerate(names):
-		print('[%d/%d] Running test "%s" (%s)' % (i+1, test_count, name, gen.get_language()))
+		# print('[%d/%d] Running test "%s" (%s)' % (i+1, test_count, name, gen.get_language()))
 		cwd = os.getcwd()
-		run_test(gen, name, testbed)
+		run_test(name, testbed)
 		os.chdir(cwd)
 		print('')
 
@@ -94,7 +94,7 @@ def run_tests(gen, names, testbed):
 	failed_test_count = len(failed_test_list)
 
 	print("[Test summary: %d run, %d failed]" % (run_test_count, failed_test_count))
-	print("Done with fabgen generator %s\n" % gen.get_language())
+	# print("Done with fabgen generator %s\n" % gen.get_language())
 
 # Fsharp test bed
 def create_fsharp_cmake_file(module, work_path, sources):
@@ -173,9 +173,7 @@ else:
 	test_names = [file[:-3] for file in os.listdir('./tests') if file.endswith('.py')]
 
 if args.fsharp_build:
-	gen = lang.fsharp.FSharpGenerator()
-	gen.verbose = False
-	run_tests(gen, test_names, TestBed())
+	run_tests(test_names, TestBed())
 
 
 
