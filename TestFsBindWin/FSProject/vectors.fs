@@ -3,8 +3,10 @@ open System.Runtime.InteropServices
 
 open System.Diagnostics
 
+
+
 let executeScript (fileName: string) =
-    let processStartInfo = new ProcessStartInfo("/bin/bash", fileName)
+    let processStartInfo = new ProcessStartInfo("cmd", fileName)
     processStartInfo.UseShellExecute <- false
     processStartInfo.RedirectStandardOutput <- true
     processStartInfo.CreateNoWindow <- true
@@ -16,7 +18,7 @@ let executeScript (fileName: string) =
     process.WaitForExit()
     output
 
-let result = executeScript "./Requirements.sh"
+let result = executeScript "Requirements.cmd"
 printfn "Output: %s" result
 
 
@@ -35,16 +37,16 @@ type Vector3 =
     new(x: double, y: double, z: double) = {x = x; y = y; z = z}
 
 // ! DLLImport Function
-[<DllImport("../CMake/lib/libVectors")>]
+[<DllImport("../CMake/lib/Vectors")>]
 extern double v2distanceTo(Vector2 pos)
 
-[<DllImport("../CMake/lib/libVectors")>]
+[<DllImport("../CMake/lib/Vectors")>]
 extern double v2percentDistance(Vector2 pos, double percentOfDistance)
 
-[<DllImport("../CMake/lib/libVectors")>]
+[<DllImport("../CMake/lib/Vectors")>]
 extern double v3distanceTo(Vector3 pos)
 
-[<DllImport("../CMake/lib/libVectors")>]
+[<DllImport("../CMake/lib/Vectors")>]
 extern double v3percentDistance(Vector3 pos, double percentOfDistance)
 
 // ! Vector 2 
