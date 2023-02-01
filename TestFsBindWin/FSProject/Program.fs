@@ -2,12 +2,12 @@
 
 open System.Runtime.InteropServices
 
-[<DllImport("libMyNativeLib.dylib")>]
+[<DllImport("MyNativeLib.dll")>]
 // extern add and factorial functions
 extern int add(int a, int b) 
 
 
-[<DllImport("libMyNativeLib.dylib")>]
+[<DllImport("MyNativeLib.dll")>]
 extern int factorial(int a)
 
 
