@@ -4,13 +4,14 @@ project(${lib_name})
 
 # Add all the header files
 set(HEADERS
-    ../Vectors/vectors.h
+    ../Vectors/vector2.h
 )
 
 # Add all the source files
 set(SOURCES
-    ../Vectors/vectors.cpp
+    ../Vectors/vector2.cpp
 )
+
 
 # Compile the library
 add_library(${lib_name} SHARED ${HEADERS} ${SOURCES})

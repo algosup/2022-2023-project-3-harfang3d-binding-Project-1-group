@@ -8,16 +8,18 @@ then
 set(lib_name Vectors)
 project(\${lib_name})
 
-
+# Add all the header files
+set(HEADERS
+    ../Vectors/vectors.h
+)
 
 # Add all the source files
 set(SOURCES
-    ../vectors.cpp
+    ../Vectors/vectors.cpp
 )
 
-
 # Compile the library
-add_library(\${lib_name} SHARED \${SOURCES} )
+add_library(\${lib_name} SHARED \${HEADERS} \${SOURCES})
 
 # Set the include directories
 target_include_directories(\${lib_name} PRIVATE \${CMAKE_CURRENT_SOURCE_DIR})
@@ -42,16 +44,18 @@ else
 set(lib_name Vectors)
 project(\${lib_name})
 
-
+# Add all the header files
+set(HEADERS
+    ../Vectors/vectors.h
+)
 
 # Add all the source files
 set(SOURCES
-    ../vectors.cpp
+    ../Vectors/vectors.cpp
 )
 
-
 # Compile the library
-add_library(\${lib_name} SHARED \${SOURCES} )
+add_library(\${lib_name} SHARED \${HEADERS} \${SOURCES})
 
 # Set the include directories
 target_include_directories(\${lib_name} PRIVATE \${CMAKE_CURRENT_SOURCE_DIR})
