@@ -18,12 +18,16 @@ echo project(${lib_name})>>CMakeLists.txt
 echo. >>CMakeLists.txt
 
 echo set (SOURCES >>CMakeLists.txt
-echo      ../vectors.cpp  >>CMakeLists.txt
+echo      ../Vectors/vectors.cpp  >>CMakeLists.txt
+echo ) >>CMakeLists.txt
+
+echo set (HEADERS >>CMakeLists.txt
+echo      ../Vectors/vectors.h  >>CMakeLists.txt
 echo ) >>CMakeLists.txt
 
 rem Compile the library
 echo # Compile the library >>CMake\Lists.txt
-echo add_library(${lib_name} SHARED ${SOURCES}) >>CMakeLists.txt
+echo add_library(${lib_name} SHARED ${HEADERS} ${SOURCES}) >>CMakeLists.txt
 echo. >>CMakeLists.txt
 
 rem Set the include directories
