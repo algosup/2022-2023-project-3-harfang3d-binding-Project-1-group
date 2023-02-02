@@ -4,7 +4,6 @@ open System.Runtime.InteropServices
 open System.Diagnostics
 
 
-
 let executeScript (fileName: string) =
     let processStartInfo = new ProcessStartInfo("cmd", fileName)
     processStartInfo.UseShellExecute <- false
@@ -18,9 +17,9 @@ let executeScript (fileName: string) =
     process.WaitForExit()
     output
 
-let result = executeScript "Requirements.cmd"
-printfn "Output: %s" result
 
+let result = executeScript "./Requirements.cmd"
+printfn "Output: %s" result
 
 // ! Structure 
 [<Struct;StructLayout(LayoutKind.Sequential)>]
@@ -37,16 +36,16 @@ type Vector3 =
     new(x: double, y: double, z: double) = {x = x; y = y; z = z}
 
 // ! DLLImport Function
-[<DllImport("../CMake/lib/Vectors")>]
+[<DllImport("../cmake/Release/Vectors")>]
 extern double v2distanceTo(Vector2 pos)
 
-[<DllImport("../CMake/lib/Vectors")>]
+[<DllImport("../cmake/Release/Vectors")>]
 extern double v2percentDistance(Vector2 pos, double percentOfDistance)
 
-[<DllImport("../CMake/lib/Vectors")>]
+[<DllImport("../cmake/Release/Vectors")>]
 extern double v3distanceTo(Vector3 pos)
 
-[<DllImport("../CMake/lib/Vectors")>]
+[<DllImport("../cmake/Release/Vectors")>]
 extern double v3percentDistance(Vector3 pos, double percentOfDistance)
 
 // ! Vector 2 
