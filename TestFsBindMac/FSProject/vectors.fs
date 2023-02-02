@@ -85,3 +85,4 @@ module VectorsProgram =
     printfn "Midpoint between v1 and v2 : %f, %f" mid.x mid.y
 
     printfn "Percent distance between v1 and v2 : %f" perc
+
