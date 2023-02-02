@@ -64,16 +64,16 @@ extern "C"
         return v2distanceTo(x, y) * percentOfDistance;
     }
 
-    double v2vectorMovement(Vector2 v2, double plusx, double plusy)
-    {
-        v2.x += plusx;
-        v2.y += plusy;
-    }
+    // double v2vectorMovement(Vector2 v2, double plusx, double plusy)
+    // {
+    //     v2.x += plusx;
+    //     v2.y += plusy;
+    // }
 
-    Vector2 v2midpoint(Vector2 v2, Vector2 pos)
-    {
-        return Vector2((v2.x + pos.x) / 2, (v2.y + pos.y) / 2);
-    }
+    // Vector2 v2midpoint(Vector2 v2, Vector2 pos)
+    // {
+    //     return Vector2((v2.x + pos.x) / 2, (v2.y + pos.y) / 2);
+    // }
 
     Vector3::Vector3(double x, double y, double z) : x(x), y(y), z(z) {}
 
@@ -103,14 +103,14 @@ extern "C"
         return v3distanceTo(x, y, z) * percentOfDistance;
     }
 
-    double v3vectorMovement(Vector3 v3, double plusx, double plusy, double plusz) {
-        v3.x += plusx;
-        v3.y += plusy;
-        v3.z += plusz;
-    }
+    // double v3vectorMovement(Vector3 v3, double plusx, double plusy, double plusz) {
+    //     v3.x += plusx;
+    //     v3.y += plusy;
+    //     v3.z += plusz;
+    // }
 
-    Vector3 v3midpoint(Vector3 v3, Vector3 pos) {
-        return Vector3((v3.x + pos.x) / 2, (v3.y + pos.y) / 2, (v3.z + pos.z) / 2);
-    }
+    // Vector3 v3midpoint(Vector3 v3, Vector3 pos) {
+    //     return Vector3((v3.x + pos.x) / 2, (v3.y + pos.y) / 2, (v3.z + pos.z) / 2);
+    // }
 
 }
