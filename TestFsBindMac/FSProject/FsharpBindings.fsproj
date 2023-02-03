@@ -4,10 +4,10 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
-<ItemGroup>
+<ItemGroup> <!-- If you want to test the vectors, uncomment the lines below -->
     <Compile Include="Vectors.fs" />
-    <Compile Include="Helpers.fs" /> 
-    <Compile Include="testVectors.fs" />  
+    <!-- <Compile Include="Helpers.fs" /> 
+    <Compile Include="testVectors.fs" />   -->
 </ItemGroup>
 
   <ItemGroup>
