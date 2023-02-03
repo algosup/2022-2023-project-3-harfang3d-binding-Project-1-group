@@ -28,9 +28,9 @@ extern "C"
     {
     public:
         Vector3(double inx = 0, double iny = 0, double inz = 0);
-        double x;
-        double y;
-        double z;
+        mutable double x;
+        mutable double y;
+        mutable double z;
         double distanceTo(Vector3 pos);
         void vectorMovement(double plusx, double plusy, double plusz);
         Vector3 midpoint(Vector3 pos);
