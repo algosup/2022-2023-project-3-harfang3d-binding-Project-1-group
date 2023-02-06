@@ -55,7 +55,7 @@ def clean_name_with_title(name):
 	return new_name.strip().replace("_", "").replace(":", "")
 
 
-class FsharpTypeConverterCommon(gen.TypeConverter):
+class FSharpTypeConverterCommon(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 		self.base_type = type
@@ -97,11 +97,11 @@ class DummyTypeConverter(gen.TypeConverter):
 	def check_call(self, in_var):
 		return ""
 
-	def get_type_glue(self, gen, module_name):
+	def get_type_glue(self, gen:gen.FABGen, module_name):
 		return ""
 
 
-class FsharpPtrTypeConverter(gen.TypeConverter):
+class FSharpPtrTypeConverter(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
@@ -117,13 +117,13 @@ class FsharpPtrTypeConverter(gen.TypeConverter):
 	def check_call(self, in_var):
 		return ""
 
-	def get_type_glue(self, gen, module_name):
+	def get_type_glue(self, gen:gen.FABGen, module_name):
 		return ""
 
 
 #
 
-class FsharpClassTypeDefaultConverter(FsharpTypeConverterCommon):
+class FSharpClassTypeDefaultConverter(FSharpTypeConverterCommon):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
@@ -143,11 +143,11 @@ class FsharpClassTypeDefaultConverter(FsharpTypeConverterCommon):
 	def check_call(self, in_var):
 		return ""
 
-	def get_type_glue(self, gen, module_name):
+	def get_type_glue(self, gen:gen.FABGen, module_name):
 		return ""
 
 
-class FsharpExternTypeConverter(FsharpTypeConverterCommon):
+class FSharpExternTypeConverter(FSharpTypeConverterCommon):
 	def __init__(self, type, to_c_storage_type, bound_name, module):
 		super().__init__(type, to_c_storage_type, bound_name)
 		self.module = module
@@ -171,7 +171,7 @@ class FsharpExternTypeConverter(FsharpTypeConverterCommon):
 	def check_call(self, in_var):
 		return "(*%s)(%s)" % (self.check_func, in_var)
 
-	def get_type_glue(self, gen, module_name):
+	def get_type_glue(self, gen: gen.FABGen, module_name):
 		out = '// extern type API for %s\n' % self.ctype
 		if self.c_storage_class:
 			out += 'struct %s;\n' % self.c_storage_class
@@ -186,10 +186,10 @@ class FsharpExternTypeConverter(FsharpTypeConverterCommon):
 
 
 
-class FsharpGenerator(gen.FABGen):
-	default_ptr_converter = FsharpPtrTypeConverter
-	default_class_converter = FsharpClassTypeDefaultConverter
-	default_extern_converter = FsharpExternTypeConverter
+class FSharpGenerator(gen.FABGen):
+	default_ptr_converter = FSharpPtrTypeConverter
+	default_class_converter = FSharpClassTypeDefaultConverter
+	default_extern_converter = FSharpExternTypeConverter
 
 	def __init__(self):
 		super().__init__()
@@ -198,7 +198,7 @@ class FsharpGenerator(gen.FABGen):
 		self.cfsharp_directives = ""
 
 	def get_language(self):
-		return "Fsharp"
+		return "FSharp"
 
 	def output_includes(self):
 		pass
@@ -326,7 +326,7 @@ uint32_t %s(void* p) {
 
 	def __get_is_type_class_or_pointer_with_class(self, conv):
 		if conv.is_type_class() or \
-			(isinstance(conv, FsharpPtrTypeConverter) and self._get_conv(str(conv.ctype.scoped_typename)) is None):
+			(isinstance(conv, FSharpPtrTypeConverter) and self._get_conv(str(conv.ctype.scoped_typename)) is None):
 			return True
 		return False
 
@@ -409,13 +409,13 @@ uint32_t %s(void* p) {
 
 		retval = ""
 		# very special case, std::string &
-		if "FsharpStringConverter" in str(val["conv"]) and \
+		if "FSharpStringConverter" in str(val["conv"]) and \
 			"carg" in val and hasattr(val["carg"].ctype, "ref") and any(s in val["carg"].ctype.ref for s in ["&"]) and \
 			not val["carg"].ctype.const:
 			src += f"std::string {retval_name}_cpp(*{retval_name});\n"
 			retval += f"{retval_name}_cpp"
 		# std::function
-		elif "FsharpStdFunctionConverter" in str(val["conv"]):
+		elif "FSharpStdFunctionConverter" in str(val["conv"]):
 			func_name = val["conv"].base_type.replace("std::function<", "")[:-1]
 			first_parenthesis = func_name.find("(")
 			retval += f"({func_name[:first_parenthesis]}(*){func_name[first_parenthesis:]}){retval_name}"
@@ -424,7 +424,7 @@ uint32_t %s(void* p) {
 			if self.__get_is_type_class_or_pointer_with_class(val["conv"]):
 				stars = self.__get_stars(val, add_start_for_ref=False)
 				# for type pointer, there is a * in the ctype, so remove one
-				if isinstance(val['conv'], FsharpPtrTypeConverter):
+				if isinstance(val['conv'], FSharpPtrTypeConverter):
 					stars = stars[1:]
 				
 				# if it's not a pointer, add a star anyway because we use pointer to use in fsharp
@@ -493,19 +493,19 @@ uint32_t %s(void* p) {
 		# if pointer or ref
 		elif is_pointer:
 			# special const char * and string
-			if "FsharpConstCharPtrConverter" in str(val["conv"]) or \
-				"FsharpStringConverter" in str(val["conv"]):
+			if "FSharpConstCharPtrConverter" in str(val["conv"]) or \
+				"FSharpStringConverter" in str(val["conv"]):
 				stars = self.__get_stars(val)
 
 				retval_name_from_c = "*"*len(stars) + retval_name
-				if "FsharpConstCharPtrConverter" in str(val["conv"]):
+				if "FSharpConstCharPtrConverter" in str(val["conv"]):
 					retval_name_from_c = "*"*(len(stars) -1) + retval_name
 
 				conversion_ret = val['conv'].from_c_call(retval_name_from_c, "", "")
 
 				if len(stars) > 0:
 					prefix = "&" * len(stars)
-					if "FsharpConstCharPtrConverter" in str(val["conv"]):
+					if "FSharpConstCharPtrConverter" in str(val["conv"]):
 						prefix = "&" * (len(stars)-1)
 
 					src+= f"{retval_name}GO := string({conversion_ret})\n"
@@ -543,7 +543,7 @@ uint32_t %s(void* p) {
 				# get base conv (without pointer)
 				base_conv = self._get_conv(str(val["conv"].ctype.scoped_typename))
 				if base_conv is None:
-					if isinstance(val["conv"], FsharpPtrTypeConverter):
+					if isinstance(val["conv"], FSharpPtrTypeConverter):
 						c_call = f"{clean_name(arg_out_name).replace('&', '_')} := ({stars[1:]}C.{clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)})(unsafe.Pointer({clean_name(arg_name)}))\n"
 					else:
 						c_call = f"{clean_name(arg_out_name).replace('&', '_')} := ({stars}{str(val['conv'].bound_name)})(unsafe.Pointer({clean_name(arg_name)}))\n"
@@ -555,7 +555,7 @@ uint32_t %s(void* p) {
 		
 		c_call = ""
 		# if it's a pointer on something
-		if isinstance(val["conv"], FsharpPtrTypeConverter):
+		if isinstance(val["conv"], FSharpPtrTypeConverter):
 			base_conv = self._get_conv(str(val["conv"].ctype.scoped_typename))
 			if base_conv is None or base_conv.is_type_class():
 				c_call = f"{clean_name(arg_name)}ToC := {clean_name(arg_name)}.h\n"
@@ -583,8 +583,8 @@ uint32_t %s(void* p) {
 			c_call = ""
 			slice_name = clean_name(arg_name)
 			# special if string or const char*
-			if "FsharpConstCharPtrConverter" in str(val["conv"].T_conv) or \
-				"FsharpStringConverter" in str(val["conv"].T_conv):
+			if "FSharpConstCharPtrConverter" in str(val["conv"].T_conv) or \
+				"FSharpStringConverter" in str(val["conv"].T_conv):
 				c_call += f"var {slice_name}SpecialString []*C.char\n"
 				c_call += f"for _, s := range {slice_name} {{\n"
 				c_call += f"	{slice_name}SpecialString = append({slice_name}SpecialString, C.CString(s))\n"
@@ -604,7 +604,7 @@ uint32_t %s(void* p) {
 
 			c_call += convert_fsharpt_to_c({"conv": val["conv"].T_conv}, f"{slice_name}ToC.Data", f"{slice_name}ToCBuf", 1)
 		# std function
-		elif "FsharpStdFunctionConverter" in str(val["conv"]):
+		elif "FSharpStdFunctionConverter" in str(val["conv"]):
 			c_call += f"{clean_name(arg_name)}ToC := (C.{clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)})({clean_name(arg_name)})\n"
 		else:
 			how_many_stars = 0
@@ -622,7 +622,7 @@ uint32_t %s(void* p) {
 			
 			is_pointer = True
 			if how_many_stars == 0 or \
-				(how_many_stars == 1 and "FsharpConstCharPtrConverter" in str(val["conv"])):
+				(how_many_stars == 1 and "FSharpConstCharPtrConverter" in str(val["conv"])):
 				is_pointer = False
 			c_call = val["conv"].to_c_call(clean_name(arg_name), f"{clean_name(arg_name)}ToC", is_pointer)
 		return c_call
@@ -634,7 +634,7 @@ uint32_t %s(void* p) {
 			# check the convert from the base (in case of ptr) or a string
 			if ('carg' in val and (val['carg'].ctype.is_pointer() or (hasattr(val['carg'].ctype, 'ref') and any(s in val['carg'].ctype.ref for s in ["&", "*"])))) or \
 				('storage_ctype' in val and (val['storage_ctype'].is_pointer() or (hasattr(val['storage_ctype'], 'ref') and any(s in val['storage_ctype'].ref for s in ["&", "*"])))) or \
-				isinstance(val['conv'], FsharpPtrTypeConverter):
+				isinstance(val['conv'], FSharpPtrTypeConverter):
 
 				if hasattr(val["conv"], "fsharp_type") and val["conv"].fsharp_type is not None:
 					arg_bound_name = str(val["conv"].fsharp_type)
@@ -661,7 +661,7 @@ uint32_t %s(void* p) {
 		# if it's a pointer and not a string not a const
 		if (('carg' in val and (not val["carg"].ctype.const and(val['carg'].ctype.is_pointer() or (hasattr(val['carg'].ctype, 'ref') and any(s in val['carg'].ctype.ref for s in ["&", "*"]))))) or \
 			('storage_ctype' in val and (val['storage_ctype'].is_pointer() or (hasattr(val['storage_ctype'], 'ref') and any(s in val['storage_ctype'].ref for s in ["&", "*"])))) or \
-			isinstance(val['conv'], FsharpPtrTypeConverter)):
+			isinstance(val['conv'], FSharpPtrTypeConverter)):
 			# find how many * we need to add
 			stars = "*"
 			if "carg" in val and hasattr(val["carg"].ctype, "ref"):
@@ -670,7 +670,7 @@ uint32_t %s(void* p) {
 				stars += "*" * (len(val["storage_ctype"].ref) - 1)
 
 			# special const char *
-			if "FsharpConstCharPtrConverter" in str(val["conv"]):
+			if "FSharpConstCharPtrConverter" in str(val["conv"]):
 				stars = stars[1:]
 
 			# Harfang class doesn't need to be a pointer in fsharp (because it's a struct containing a wrap pointer C)
@@ -678,7 +678,7 @@ uint32_t %s(void* p) {
 				arg_bound_name = stars + arg_bound_name
 
 		# std function
-		if "FsharpStdFunctionConverter" in str(val["conv"]):
+		if "FSharpStdFunctionConverter" in str(val["conv"]):
 			arg_bound_name = "unsafe.Pointer"
 
 		# class or slice, clean the name with title
@@ -702,13 +702,13 @@ uint32_t %s(void* p) {
 		
 		# if class or pointer with class
 		if self.__get_is_type_class_or_pointer_with_class(val["conv"]) or \
-			"FsharpStdFunctionConverter" in str(val["conv"]):
+			"FSharpStdFunctionConverter" in str(val["conv"]):
 			arg_bound_name += f"{clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)} "
 		else:
 			# check the convert from the base (in case of ptr)
 			if  ('carg' in val and (val['carg'].ctype.is_pointer() or (hasattr(val['carg'].ctype, 'ref') and any(s in val['carg'].ctype.ref for s in ["&", "*"])))) or \
 				('storage_ctype' in val and (val['storage_ctype'].is_pointer() or (hasattr(val['storage_ctype'], 'ref') and any(s in val['storage_ctype'].ref for s in ["&", "*"])))) or \
-				isinstance(val['conv'], FsharpPtrTypeConverter):
+				isinstance(val['conv'], FSharpPtrTypeConverter):
 				# check if it's an enum
 				if val['conv'].bound_name in self._enums.keys():
 					enum_conv = self._get_conv_from_bound_name(val['conv'].bound_name)
@@ -730,13 +730,13 @@ uint32_t %s(void* p) {
 								arg_bound_name += f"{val['conv'].ctype} "
 					
 						# if it's a ptr type, remove a star
-						if isinstance(val['conv'], FsharpPtrTypeConverter):
+						if isinstance(val['conv'], FSharpPtrTypeConverter):
 							arg_bound_name = arg_bound_name.replace("*", "").replace("&", "")
 					else:
 						arg_bound_name += f"{val['conv'].bound_name} "
 
 				# add a star (only if it's not a const char * SPECIAL CASE)
-				if "FsharpConstCharPtrConverter" not in str(val["conv"]) and ("carg" not in val or not val["carg"].ctype.const):
+				if "FSharpConstCharPtrConverter" not in str(val["conv"]) and ("carg" not in val or not val["carg"].ctype.const):
 					arg_bound_name += "*"
 
 				if "carg" in val and hasattr(val["carg"].ctype, "ref") and not val["carg"].ctype.const:

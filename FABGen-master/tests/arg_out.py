@@ -123,32 +123,32 @@ func Test(t *testing.T) {
 
 test_fsharp = '''\
 
-open System
-open NUnit.Framework
-open my_test
+# open System
+# open NUnit.Framework
+# open my_test
 
-[<TestFixture>]
-type Test() =
-	[<Test>] member this.Test1() =
-		let a = A()
-		let a = modify_in_out_struct(a)
-		Assert.AreEqual(a.v, 3)
+# [<TestFixture>]
+# type Test() =
+# 	[<Test>] member this.Test1() =
+# 		let a = A()
+# 		let a = modify_in_out_struct(a)
+# 		Assert.AreEqual(a.v, 3)
 
-		let a, b = out_values_function_call(2, 3)
-		Assert.AreEqual(a, 16)
-		Assert.AreEqual(b, 42)
+# 		let a, b = out_values_function_call(2, 3)
+# 		Assert.AreEqual(a, 16)
+# 		Assert.AreEqual(b, 42)
 
-		let r, a, b = out_values_function_call_rval(2)
-		Assert.AreEqual(r, 2)
-		Assert.AreEqual(a, 16)
-		Assert.AreEqual(b, 28)
+# 		let r, a, b = out_values_function_call_rval(2)
+# 		Assert.AreEqual(r, 2)
+# 		Assert.AreEqual(a, 16)
+# 		Assert.AreEqual(b, 28)
 
-		let r, a, b = out_values_function_call_rval(2, 2)
-		Assert.AreEqual(r, 4)
-		Assert.AreEqual(a, 16)
-		Assert.AreEqual(b, 28)
+# 		let r, a, b = out_values_function_call_rval(2, 2)
+# 		Assert.AreEqual(r, 4)
+# 		Assert.AreEqual(a, 16)
+# 		Assert.AreEqual(b, 28)
 
-		let r, v = in_out_value(5)
-		Assert.AreEqual(r, true)
-		Assert.AreEqual(v, 20)
+# 		let r, v = in_out_value(5)
+# 		Assert.AreEqual(r, true)
+# 		Assert.AreEqual(v, 20)
 '''

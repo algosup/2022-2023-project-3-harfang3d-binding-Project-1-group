@@ -1903,7 +1903,7 @@ uint32_t %s(void* p) {
 		go_bind += '	"unsafe"\n' \
 				')\n'
 
-		with open("lib/go/WrapperConverter.go_", "r") as file:
+		with open("./lib/go/WrapperConverter.go_", "r") as file:
 			lines = file.readlines()
 			go_bind += "".join(lines)
 			go_bind += "\n"

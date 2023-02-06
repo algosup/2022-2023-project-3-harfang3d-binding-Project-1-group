@@ -295,6 +295,22 @@
 				"WaitOnNormalExit",
 				"RedirectOutput"
 			]
+		},
+		{
+			"name": "All FSharp: Tests",
+			"type": "python",
+			"request": "launch",
+			"stopOnEntry": false,
+			"python": "${command:python.interpreterPath}",
+			"program": "${workspaceRoot}/bind.py",
+			"cwd": "${workspaceRoot}",
+			"args": ["--fsharp" , "--out" , "./examples/harfang.py"],
+			"envFile": "${workspaceRoot}/.env",
+			"debugOptions": [
+				"WaitOnAbnormalExit",
+				"WaitOnNormalExit",
+				"RedirectOutput"
+			]
 		}
 	]
 }
