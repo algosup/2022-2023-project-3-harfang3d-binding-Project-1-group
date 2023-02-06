@@ -1,4 +1,5 @@
-#FABGen / Harfang 3D - The Fabulous binding Generator for CPython and FSharp
+# Harfang - The Fabulous binding Generator for CPython and Fsharp
+# Copyright (C) Rémy Charles <2022>
 
 import os
 from os import stat_result
@@ -8,191 +9,153 @@ import re
 import sys
 import time
 import importlib
+
 import argparse
+
 import gen
 import lib
 
+
 def route_lambda(name):
-	# This function takes in a single string parameter : "name"
-    # it returns a new anonymous function that takes in a single parameter : "args"py
-    # which is expected to be a list
 	return lambda args: "%s(%s);" % (name, ", ".join(args))
 
+
 def clean_name(name):
-	# This function takes in a single parameter "name" and removes whitespaces, "_" and ":" characters
-    # and replaces them with empty string
 	new_name = str(name).strip().replace("_", "").replace(":", "")
-	# check if the cleaned name is a keyword in the fsharp language 
-	if new_name in ["fun", "map", "double", "char", "else", "package", "const", "if", "type", "for", "import", "let", "val", "single", "printf", "printfn", "length", "elif", "match"]:
-		# if it's a keyword, it appends "F#" at the end of the name
-		return new_name + "FSharp"
+	if new_name in ["let", "match", "with", "try", "catch", "type", "module", "open", "use", "and", "or", "not", "do", "while", "for", "in", "fun", "rec", "yield", "async", "delegate", "namespace", "interface", "class", "struct", "new", "null", "true", "false", "upcast", "downcast" ]:
+		return new_name + "Fsharp"
 	return new_name
 
+
 def clean_name_with_title(name):
-	# This function takes a string "name" as an input and returns a cleaned version of the name 
-    # with the first letter of each word capitalized.
-    # The function uses the _, -, *, and & characters to determine when to capitalize the next letter.
 	new_name = ""
 	if "_" in name:
 		# redo a special string.title()
 		next_is_forced_uppercase = True
 		for c in name:
 			if c in ["*", "&"]:
-				# Add special characters to the new name without modification
 				new_name += c
 			elif c in ["_", "-"]:
-				# Set the next character to be capitalized
 				next_is_forced_uppercase = True
 			else:
 				if next_is_forced_uppercase:
-					# Set the next character to be capitalized
 					next_is_forced_uppercase = False
 					new_name += c.capitalize()
 				else:
-					 # Add the character to the new name without modification
 					new_name += c
 	else:
 		# make sur the first letter is capitalize
 		first_letter_checked = False
 		for c in name:
 			if c in ["*", "&"] or first_letter_checked:
-				# Add special characters and characters after the first letter to the new name without modification
 				new_name += c
 			elif not first_letter_checked:
-				# Capitalize the first letter and set the flag
 				first_letter_checked = True
 				new_name += c.capitalize()
-	# Remove any trailing whitespaces and replace "_" and ":" characters with an empty string
 	return new_name.strip().replace("_", "").replace(":", "")
 
-class FSharpTypeConverterCommon(gen.TypeConverter):
+
+class FsharpTypeConverterCommon(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
-		# store the base type in an attribute
 		self.base_type = type
-		# initialize the fsharp_to_c_type and fsharp_type attributes to None
 		self.fsharp_to_c_type = None
 		self.fsharp_type = None
 
 	def get_type_api(self, module_name):
-		# This function generates the type API for the given type
 		out = "// type API for %s\n" % self.ctype
-		# If the type has a storage class, generate the struct definition for it
 		if self.c_storage_class:
 			out += "struct %s;\n" % self.c_storage_class
-		# If the type has a storage class, generate the function for converting F# type to C storage type 
 		if self.c_storage_class:
 			out += "void %s(int idx, void *obj, %s &storage);\n" % (self.to_c_func, self.c_storage_class)
-		# If the type doesn't have a storage class, generate the function for converting fsharp type to C type 
 		else:
 			out += "void %s(int idx, void *obj);\n" % self.to_c_func
-		# generate the function for converting C type to fsharp type
 		out += "int %s(void *obj, OwnershipPolicy);\n" % self.from_c_func
 		out += "\n"
 		return out
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a fsharp type to C type or C storage type
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C type to F# type
 		return "%s((void *)%s, %s);\n" % (self.from_c_func, expr, ownership)
+
 
 class DummyTypeConverter(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
 	def get_type_api(self, module_name):
-		# This function generates the type API for the given type, in this case, it returns an empty string
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a fsharp type to C type or C storage type, in this case, it returns an empty string
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C type to fsharp type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
-		# This function generates the C code for checking the type, in this case, it returns an empty string
 		return ""
 
 	def get_type_glue(self, gen, module_name):
-		# This function generates the glue code for the given type, in this case, it returns an empty string
 		return ""
 
-class FSharpPtrTypeConverter(gen.TypeConverter):
+
+class FsharpPtrTypeConverter(gen.TypeConverter):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
 	def get_type_api(self, module_name):
-		# This function generates the type API for the given type, in this case, it returns an empty string
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a fsharp pointer type to C pointer type, in this case, it returns an empty string
 		return ""
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C pointer type to fsharp pointer type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
-		# This function generates the C code for checking the pointer type, in this case, it returns an empty string
 		return ""
 
 	def get_type_glue(self, gen, module_name):
-		# This function generates the glue code for the given pointer type, in this case, it returns an empty string
 		return ""
 
-class FSharpClassTypeDefaultConverter(FSharpTypeConverterCommon):
+
+#
+
+class FsharpClassTypeDefaultConverter(FsharpTypeConverterCommon):
 	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-		# # call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 
 	def is_type_class(self):
-		# This function returns True if the type is a class
 		return True
 
 	def get_type_api(self, module_name):
-		# This function generates the type API for the given class type, in this case, it returns an empty string
 		return ""
 
 	def to_c_call(self, in_var, out_var_p, is_pointer):
-		# This function generates the C code for converting a fsharp class type to C class type
 		out = f"{out_var_p.replace('&', '_')} := {in_var}.h\n"
 		return out
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C class type to fsharp class type, in this case, it returns an empty string
 		return ""
 
 	def check_call(self, in_var):
-		# This function generates the C code for checking the class type, in this case, it returns an empty string
 		return ""
 
 	def get_type_glue(self, gen, module_name):
-		# This function generates the glue code for the given class type, in this case, it returns an empty string
 		return ""
 
-class FSharpExternTypeConverter(FSharpTypeConverterCommon):
+
+class FsharpExternTypeConverter(FsharpTypeConverterCommon):
 	def __init__(self, type, to_c_storage_type, bound_name, module):
-		# call the __init__ method of the parent class with the provided arguments
 		super().__init__(type, to_c_storage_type, bound_name)
-		# store the module name
 		self.module = module
 
 	def get_type_api(self, module_name):
-		# This function generates the type API for the given extern type, in this case, it returns an empty string
 		return ''
 
 	def to_c_call(self, in_var, out_var_p):
-		# This function generates the C code for converting a F# extern type to C extern type
 		out = ''
 		if self.c_storage_class:
 			c_storage_var = 'storage_%s' % out_var_p.replace('&', '_')
@@ -203,15 +166,12 @@ class FSharpExternTypeConverter(FSharpTypeConverterCommon):
 		return out
 
 	def from_c_call(self, out_var, expr, ownership):
-		# This function generates the C code for converting a C extern type to F# extern type
 		return "%s = (*%s)((void *)%s, %s);\n" % (out_var, self.from_c_func, expr, ownership)
 
 	def check_call(self, in_var):
-		# This function generates the C code to check if the given variable is a F# extern type
 		return "(*%s)(%s)" % (self.check_func, in_var)
 
 	def get_type_glue(self, gen, module_name):
-		# This function generates the type glue for the given extern type
 		out = '// extern type API for %s\n' % self.ctype
 		if self.c_storage_class:
 			out += 'struct %s;\n' % self.c_storage_class
@@ -224,94 +184,75 @@ class FSharpExternTypeConverter(FSharpTypeConverterCommon):
 		out += '\n'
 		return out
 
-class FSharpGenerator(gen.FABGen):
-	default_ptr_converter = FSharpPtrTypeConverter
-	default_class_converter = FSharpClassTypeDefaultConverter
-	default_extern_converter = FSharpExternTypeConverter
 
-	# constructor method to initialize the parent class and set default values
+
+class FsharpGenerator(gen.FABGen):
+	default_ptr_converter = FsharpPtrTypeConverter
+	default_class_converter = FsharpClassTypeDefaultConverter
+	default_extern_converter = FsharpExternTypeConverter
+
 	def __init__(self):
 		super().__init__()
 		self.check_self_type_in_ops = True
 		self.fsharp = ""
 		self.cfsharp_directives = ""
 
-	# method to return the language name
 	def get_language(self):
-		return "FSharp"
+		return "Fsharp"
 
-	# method to output the includes
 	def output_includes(self):
 		pass
 
-	# method to start the generator
 	def start(self, module_name):
 		super().start(module_name)
 
-		# Append the binding API declaration to the source code
 		self._source += self.get_binding_api_declaration()
 
 	def set_compilation_directives(self, directives):
-		# set the cfsharp_directives variable to the provided value
 		self.cfsharp_directives = directives
-		# The cfsharp_directives variable is used to store the compilation directives used when generating F# code that calls C code.
 
 	# kill a bunch of functions we don't care about
 	def set_error(self, type, reason):
 		return ""
 
 	def get_self(self, ctx):
-		# returns an empty string
 		return ""
 
 	def get_var(self, i, ctx):
-		# returns an empty string
 		return ""
 
 	def open_proxy(self, name, max_arg_count, ctx):
-		# returns an empty string
 		return ""
 
 	def _proto_call(self, self_conv, proto, expr_eval, ctx, fixed_arg_count=None):
-		# returns an empty string
 		return ""
 
 	def _bind_proxy(self, name, self_conv, protos, desc, expr_eval, ctx, fixed_arg_count=None):
-		# returns an empty string
 		return ""
 
 	def close_proxy(self, ctx):
-		# returns an empty string
 		return ""
 
 	def proxy_call_error(self, msg, ctx):
-		# returns an empty string
 		return ""
 
 	def return_void_from_c(self):
-		# returns an empty string
 		return ""
 
 	def rval_from_nullptr(self, out_var):
-		# returns an empty string
 		return ""
 
 	def rval_from_c_ptr(self, conv, out_var, expr, ownership):
-		# returns an empty string
 		return ""
 
 	def commit_from_c_vars(self, rvals, ctx="default"):
-		# returns an empty string
 		return ""
 
 	def rbind_function(self, name, rval, args, internal=False):
-		# returns an empty string
 		return ""
-	# It seems like the above methods are not implemented yet, You should implement these methods according to the requirements and the way you
-	# want to use them in your project.
 
+	#
 	def get_binding_api_declaration(self):
-		# define variable to store type_info name
 		type_info_name = gen.apply_api_prefix("type_info")
 
 		out = '''\
@@ -326,26 +267,19 @@ struct %s {
 };\n
 ''' % type_info_name
 
-		# add comment for the function to return a type info from its type tag
 		out += "// return a type info from its type tag\n"
 		out += "%s *%s(uint32_t type_tag);\n" % (type_info_name, gen.apply_api_prefix("get_bound_type_info"))
 
-		# add comment for the function to return a type info from its type name
 		out += "// return a type info from its type name\n"
 		out += "%s *%s(const char *type);\n" % (type_info_name, gen.apply_api_prefix("get_c_type_info"))
 
-		# add comment for the function to return the typetag of a userdata object
 		out += "// returns the typetag of a userdata object, nullptr if not a Fabgen object\n"
 		out += "uint32_t %s(void* p);\n\n" % gen.apply_api_prefix("get_wrapped_object_type_tag")
 
 		return out
-	# It seems like the above methods are not implemented yet, You should implement these methods according to the requirements and the way you want to use them in
-	# your project.
 
 	def output_binding_api(self):
-		# define variable to store type_info name
 		type_info_name = gen.apply_api_prefix("type_info")
-		# append source code to return nullptr for get_bound_type_info
 		self._source += """\
 %s *%s(uint32_t type_tag) {
 	return nullptr;
@@ -354,7 +288,6 @@ struct %s {
 			gen.apply_api_prefix("get_bound_type_info"),
 		)
 
-		# append source code to return nullptr for get_c_type_info
 		self._source += """
 %s *%s(const char *type) {
 	return nullptr;
@@ -363,90 +296,62 @@ struct %s {
 			gen.apply_api_prefix("get_c_type_info"),
 		)
 
-		# append source code to return 0 for get_wrapped_object_type_tag
 		self._source += """\
 uint32_t %s(void* p) {
 	return 0;
 	//auto o = cast_to_wrapped_Object_safe(L, idx);
 	//return o ? o->type_tag : 0;
 }\n\n""" % gen.apply_api_prefix("get_wrapped_object_type_tag")
-	# It seems like the above methods are not implemented yet, You should implement these methods according to the requirements and the way you want to use them in
-	# your project.
 
+	#
 	def get_output(self):
-		# return a dictionary of the generated files
 		return {"wrapper.cpp": self.fsharp_c, "wrapper.h": self.fsharp_h, "bind.fsharp": self.fsharp_bind, "translate_file.json": self.fsharp_translate_file}
 
 	def _get_type(self, name):
-		# loop through the bound types
 		for type in self._bound_types:
-			# check if type is not None
 			if type:
-				# return the type
 				return type
-		# return None if no type is found
 		return None
 
 	def _get_conv(self, conv_name):
-		# check if the conv_name is in the list of type_convs
 		if conv_name in self._FABGen__type_convs:
-			# return the conv
 			return self.get_conv(conv_name)
-		# return None if conv is not found
 		return None
 
 	def _get_conv_from_bound_name(self, bound_name):
-		# loop through the type_convs
 		for name, conv in self._FABGen__type_convs.items():
-			# check if the bound_name of the conv matches the given bound_name
 			if conv.bound_name == bound_name:
-				# return the conv
 				return conv
-		# return None if no conv is found
 		return None
 
 	def __get_is_type_class_or_pointer_with_class(self, conv):
-		# check if the conv is a type class or a pointer with class
 		if conv.is_type_class() or \
-			(isinstance(conv, FSharpPtrTypeConverter) and self._get_conv(str(conv.ctype.scoped_typename)) is None):
+			(isinstance(conv, FsharpPtrTypeConverter) and self._get_conv(str(conv.ctype.scoped_typename)) is None):
 			return True
 		return False
 
 	def __get_stars(self, val, start_stars=0, add_start_for_ref=True):
-		# initialize the stars variable
 		stars = "*" * start_stars
-		# check if val has a carg and it has a ref attribute
 		if "carg" in val and hasattr(val["carg"].ctype, "ref"):
-			# add the number of stars in ref to the stars variable
-			# if add_start_for_ref is True, add the number of stars in ref,
-			# otherwise, add the number of * in ref
 			stars += "*" * (len(val["carg"].ctype.ref) if add_start_for_ref else val["carg"].ctype.ref.count('*'))
-		# check if val has a storage_ctype and it has a ref attribute
 		elif "storage_ctype" in val and hasattr(val["storage_ctype"], "ref"):
-			# add the number of stars in ref to the stars variable
-			# if add_start_for_ref is True, add the number of stars in ref,
-			# otherwise, add the number of * in ref
 			stars += "*" * (len(val["storage_ctype"].ref) if add_start_for_ref else val["storage_ctype"].ref.count('*'))
-		# check if val has a conv and it has a ref attribute
 		elif hasattr(val["conv"].ctype, "ref"):
-			# add the number of stars in ref to the stars variable
-			# if add_start_for_ref is True, add the number of stars in ref,
-			# otherwise, add the number of * in ref
 			stars += "*" * (len(val["conv"].ctype.ref) if add_start_for_ref else val["conv"].ctype.ref.count('*'))
 		return stars
 
 	def __arg_from_cpp_to_c(self, val, retval_name, just_copy):
 		src = ""
-		# check if val['conv'] is a type class, not a pointer
+		# type class, not a pointer
 		if val['conv'] is not None and val['conv'].is_type_class() and \
 			not val['conv'].ctype.is_pointer() and ('storage_ctype' not in val or not hasattr(val['storage_ctype'], 'ref') or not any(s in val['storage_ctype'].ref for s in ["&", "*"])):
-				# check for special shared ptr
+				# special shared ptr
 				if 'proxy' in val['conv']._features:
 					src += f"	if(!{retval_name})\n" \
 						"		return nullptr;\n"
 
 					src += "	auto " + val['conv']._features['proxy'].wrap("ret", "retPointer")
-				# check for special std::future 
+				# special std::future 
 				elif val["conv"] is not None and "std::future" in str(val["conv"].ctype):
 					src += f"	auto retPointer = new std::future<int>(std::move({retval_name}));\n"
 				else:
@@ -457,7 +362,7 @@ uint32_t %s(void* p) {
 						src += f"	auto retPointer = new {val['conv'].ctype}({retval_name});\n"
 				retval_name = f"({clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)})(retPointer)"
 		else:
-			# check for special std::string (convert to const char*)
+			# special std::string (convert to const char*)
 			if val["conv"] is not None and "std::string" in str(val["conv"].ctype):
 				stars = self.__get_stars(val)
 				if len(stars) > 0:# rarely use but just in case
@@ -470,7 +375,6 @@ uint32_t %s(void* p) {
 		# cast it
 		# if it's an enum
 		if val["conv"].bound_name in self._enums.keys():
-			# store the enum conversion
 			enum_conv = self._get_conv_from_bound_name(val['conv'].bound_name)
 			if enum_conv is not None and hasattr(enum_conv, "base_type") and enum_conv.base_type is not None:
 				arg_bound_name = str(enum_conv.base_type)
@@ -488,10 +392,10 @@ uint32_t %s(void* p) {
 	def __arg_from_c_to_cpp(self, val, retval_name, add_star=True):
 		src = ""
 		# check if there is special slice to convert
-		if isinstance(val["conv"], lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+		if isinstance(val["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 			# special if string or const char*
-			if "FSharpStringConverter" in str(val["conv"].T_conv): # or \
-				# "FSharpConstCharPtrConverter" in str(val["conv"].T_conv):
+			if "FsharpStringConverter" in str(val["conv"].T_conv): # or \
+				# "FsharpConstCharPtrConverter" in str(val["conv"].T_conv):
 				src += f"std::vector<{val['conv'].T_conv.ctype}> {retval_name};\n"\
 					f"for(int i_counter_c=0; i_counter_c < {retval_name}ToCSize; ++i_counter_c)\n"\
 					f"	{retval_name}.push_back(std::string({retval_name}ToCBuf[i_counter_c]));\n"
@@ -505,13 +409,13 @@ uint32_t %s(void* p) {
 
 		retval = ""
 		# very special case, std::string &
-		if "FSharpStringConverter" in str(val["conv"]) and \
+		if "FsharpStringConverter" in str(val["conv"]) and \
 			"carg" in val and hasattr(val["carg"].ctype, "ref") and any(s in val["carg"].ctype.ref for s in ["&"]) and \
 			not val["carg"].ctype.const:
 			src += f"std::string {retval_name}_cpp(*{retval_name});\n"
 			retval += f"{retval_name}_cpp"
 		# std::function
-		elif "FSharpStdFunctionConverter" in str(val["conv"]):
+		elif "FsharpStdFunctionConverter" in str(val["conv"]):
 			func_name = val["conv"].base_type.replace("std::function<", "")[:-1]
 			first_parenthesis = func_name.find("(")
 			retval += f"({func_name[:first_parenthesis]}(*){func_name[first_parenthesis:]}){retval_name}"
@@ -520,7 +424,7 @@ uint32_t %s(void* p) {
 			if self.__get_is_type_class_or_pointer_with_class(val["conv"]):
 				stars = self.__get_stars(val, add_start_for_ref=False)
 				# for type pointer, there is a * in the ctype, so remove one
-				if isinstance(val['conv'], FSharpPtrTypeConverter):
+				if isinstance(val['conv'], FsharpPtrTypeConverter):
 					stars = stars[1:]
 				
 				# if it's not a pointer, add a star anyway because we use pointer to use in fsharp
@@ -577,35 +481,35 @@ uint32_t %s(void* p) {
 					retval_boundname = val["conv"].bound_name
 					retval_boundname = clean_name_with_title(retval_boundname)
 
-					src += f"	{retval_name}FSharp := &{retval_boundname}{{h:{retval_name}}}\n"
+					src += f"	{retval_name}GO := &{retval_boundname}{{h:{retval_name}}}\n"
 
 					# check if owning to have the right to destroy it
 					if rval_ownership != "NonOwning" and not is_ref and not non_owning:
-						src += f"	runtime.SetFinalizer({retval_name}FSharp, func(cleanval *{retval_boundname}) {{\n" \
+						src += f"	runtime.SetFinalizer({retval_name}GO, func(cleanval *{retval_boundname}) {{\n" \
 								f"		C.{clean_name_with_title(self._name)}{retval_boundname}Free(cleanval.h)\n" \
 								f"	}})\n"
-					retval_name = f"{retval_name}FSharp"
+					retval_name = f"{retval_name}GO"
 
 		# if pointer or ref
 		elif is_pointer:
 			# special const char * and string
-			if "FSharpConstCharPtrConverter" in str(val["conv"]) or \
-				"FSharpStringConverter" in str(val["conv"]):
+			if "FsharpConstCharPtrConverter" in str(val["conv"]) or \
+				"FsharpStringConverter" in str(val["conv"]):
 				stars = self.__get_stars(val)
 
 				retval_name_from_c = "*"*len(stars) + retval_name
-				if "FSharpConstCharPtrConverter" in str(val["conv"]):
+				if "FsharpConstCharPtrConverter" in str(val["conv"]):
 					retval_name_from_c = "*"*(len(stars) -1) + retval_name
 
 				conversion_ret = val['conv'].from_c_call(retval_name_from_c, "", "")
 
 				if len(stars) > 0:
 					prefix = "&" * len(stars)
-					if "FSharpConstCharPtrConverter" in str(val["conv"]):
+					if "FsharpConstCharPtrConverter" in str(val["conv"]):
 						prefix = "&" * (len(stars)-1)
 
-					src+= f"{retval_name}FSharp := string({conversion_ret})\n"
-					retval_name = prefix + retval_name + "FSharp"
+					src+= f"{retval_name}GO := string({conversion_ret})\n"
+					retval_name = prefix + retval_name + "GO"
 				else:
 					conversion_ret = retval_name
 
@@ -613,24 +517,24 @@ uint32_t %s(void* p) {
 			elif self.__get_is_type_class_or_pointer_with_class(val["conv"]):
 				retval_boundname = val['conv'].bound_name
 				retval_boundname = clean_name_with_title(retval_boundname)
-				src += f"var {retval_name}FSharp *{retval_boundname}\n" \
+				src += f"var {retval_name}GO *{retval_boundname}\n" \
 						f"if {retval_name} != nil {{\n" \
-						f"	{retval_name}FSharp = &{retval_boundname}{{h:{retval_name}}}\n"
+						f"	{retval_name}GO = &{retval_boundname}{{h:{retval_name}}}\n"
 
 				# check if owning to have the right to destroy it
 				if rval_ownership != "NonOwning" and not is_ref and not non_owning:
-					src += f"	runtime.SetFinalizer({retval_name}FSharp, func(cleanval *{retval_boundname}) {{\n" \
+					src += f"	runtime.SetFinalizer({retval_name}GO, func(cleanval *{retval_boundname}) {{\n" \
 							f"		C.{clean_name_with_title(self._name)}{retval_boundname}Free(cleanval.h)\n"\
 							f"	}})\n"
 				src += "}\n"
-				retval_name = f"{retval_name}FSharp"
+				retval_name = f"{retval_name}GO"
 			else:
 				retval_name = f"({self.__get_arg_bound_name_to_fsharp(val)})(unsafe.Pointer({retval_name}))\n"
 
 		return src, retval_name
 
 	def __arg_from_fsharp_to_c(self, val, arg_name):
-		def convert_got_to_c(val, arg_name, arg_out_name, start_stars=0):
+		def convert_fsharpt_to_c(val, arg_name, arg_out_name, start_stars=0):
 			stars = self.__get_stars(val, start_stars)
 
 			if val["conv"].is_type_class():
@@ -639,7 +543,7 @@ uint32_t %s(void* p) {
 				# get base conv (without pointer)
 				base_conv = self._get_conv(str(val["conv"].ctype.scoped_typename))
 				if base_conv is None:
-					if isinstance(val["conv"], FSharpPtrTypeConverter):
+					if isinstance(val["conv"], FsharpPtrTypeConverter):
 						c_call = f"{clean_name(arg_out_name).replace('&', '_')} := ({stars[1:]}C.{clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)})(unsafe.Pointer({clean_name(arg_name)}))\n"
 					else:
 						c_call = f"{clean_name(arg_out_name).replace('&', '_')} := ({stars}{str(val['conv'].bound_name)})(unsafe.Pointer({clean_name(arg_name)}))\n"
@@ -651,12 +555,12 @@ uint32_t %s(void* p) {
 		
 		c_call = ""
 		# if it's a pointer on something
-		if isinstance(val["conv"], FSharpPtrTypeConverter):
+		if isinstance(val["conv"], FsharpPtrTypeConverter):
 			base_conv = self._get_conv(str(val["conv"].ctype.scoped_typename))
 			if base_conv is None or base_conv.is_type_class():
 				c_call = f"{clean_name(arg_name)}ToC := {clean_name(arg_name)}.h\n"
 			else:
-				c_call = convert_got_to_c(val, arg_name, f"{arg_name}ToC")
+				c_call = convert_fsharpt_to_c(val, arg_name, f"{arg_name}ToC")
 		# if it's a class
 		elif val["conv"].is_type_class():
 			stars = self.__get_stars(val)
@@ -666,7 +570,7 @@ uint32_t %s(void* p) {
 			enum_conv = self._get_conv_from_bound_name(val["conv"].bound_name)
 			#if it's a ref to an enum
 			if len(self.__get_stars(val)) > 0:
-				c_call = convert_got_to_c(val, arg_name, f"{arg_name}ToC")
+				c_call = convert_fsharpt_to_c(val, arg_name, f"{arg_name}ToC")
 			else:
 				if enum_conv is not None and hasattr(enum_conv, "fsharp_to_c_type") and enum_conv.fsharp_to_c_type is not None:
 					arg_bound_name = enum_conv.fsharp_to_c_type
@@ -675,12 +579,12 @@ uint32_t %s(void* p) {
 					
 				c_call = f"{clean_name(arg_name)}ToC := {arg_bound_name}({clean_name(arg_name)})\n"
 		# special Slice
-		elif isinstance(val["conv"], lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+		elif isinstance(val["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 			c_call = ""
 			slice_name = clean_name(arg_name)
 			# special if string or const char*
-			if "FSharpConstCharPtrConverter" in str(val["conv"].T_conv) or \
-				"FSharpStringConverter" in str(val["conv"].T_conv):
+			if "FsharpConstCharPtrConverter" in str(val["conv"].T_conv) or \
+				"FsharpStringConverter" in str(val["conv"].T_conv):
 				c_call += f"var {slice_name}SpecialString []*C.char\n"
 				c_call += f"for _, s := range {slice_name} {{\n"
 				c_call += f"	{slice_name}SpecialString = append({slice_name}SpecialString, C.CString(s))\n"
@@ -698,9 +602,9 @@ uint32_t %s(void* p) {
 			c_call += f"{slice_name}ToC := (*reflect.SliceHeader)(unsafe.Pointer(&{slice_name}))\n"
 			c_call += f"{slice_name}ToCSize := C.size_t({slice_name}ToC.Len)\n"
 
-			c_call += convert_got_to_c({"conv": val["conv"].T_conv}, f"{slice_name}ToC.Data", f"{slice_name}ToCBuf", 1)
+			c_call += convert_fsharpt_to_c({"conv": val["conv"].T_conv}, f"{slice_name}ToC.Data", f"{slice_name}ToCBuf", 1)
 		# std function
-		elif "FSharpStdFunctionConverter" in str(val["conv"]):
+		elif "FsharpStdFunctionConverter" in str(val["conv"]):
 			c_call += f"{clean_name(arg_name)}ToC := (C.{clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)})({clean_name(arg_name)})\n"
 		else:
 			how_many_stars = 0
@@ -718,7 +622,7 @@ uint32_t %s(void* p) {
 			
 			is_pointer = True
 			if how_many_stars == 0 or \
-				(how_many_stars == 1 and "FSharpConstCharPtrConverter" in str(val["conv"])):
+				(how_many_stars == 1 and "FsharpConstCharPtrConverter" in str(val["conv"])):
 				is_pointer = False
 			c_call = val["conv"].to_c_call(clean_name(arg_name), f"{clean_name(arg_name)}ToC", is_pointer)
 		return c_call
@@ -730,7 +634,7 @@ uint32_t %s(void* p) {
 			# check the convert from the base (in case of ptr) or a string
 			if ('carg' in val and (val['carg'].ctype.is_pointer() or (hasattr(val['carg'].ctype, 'ref') and any(s in val['carg'].ctype.ref for s in ["&", "*"])))) or \
 				('storage_ctype' in val and (val['storage_ctype'].is_pointer() or (hasattr(val['storage_ctype'], 'ref') and any(s in val['storage_ctype'].ref for s in ["&", "*"])))) or \
-				isinstance(val['conv'], FSharpPtrTypeConverter):
+				isinstance(val['conv'], FsharpPtrTypeConverter):
 
 				if hasattr(val["conv"], "fsharp_type") and val["conv"].fsharp_type is not None:
 					arg_bound_name = str(val["conv"].fsharp_type)
@@ -757,7 +661,7 @@ uint32_t %s(void* p) {
 		# if it's a pointer and not a string not a const
 		if (('carg' in val and (not val["carg"].ctype.const and(val['carg'].ctype.is_pointer() or (hasattr(val['carg'].ctype, 'ref') and any(s in val['carg'].ctype.ref for s in ["&", "*"]))))) or \
 			('storage_ctype' in val and (val['storage_ctype'].is_pointer() or (hasattr(val['storage_ctype'], 'ref') and any(s in val['storage_ctype'].ref for s in ["&", "*"])))) or \
-			isinstance(val['conv'], FSharpPtrTypeConverter)):
+			isinstance(val['conv'], FsharpPtrTypeConverter)):
 			# find how many * we need to add
 			stars = "*"
 			if "carg" in val and hasattr(val["carg"].ctype, "ref"):
@@ -766,7 +670,7 @@ uint32_t %s(void* p) {
 				stars += "*" * (len(val["storage_ctype"].ref) - 1)
 
 			# special const char *
-			if "FSharpConstCharPtrConverter" in str(val["conv"]):
+			if "FsharpConstCharPtrConverter" in str(val["conv"]):
 				stars = stars[1:]
 
 			# Harfang class doesn't need to be a pointer in fsharp (because it's a struct containing a wrap pointer C)
@@ -774,12 +678,12 @@ uint32_t %s(void* p) {
 				arg_bound_name = stars + arg_bound_name
 
 		# std function
-		if "FSharpStdFunctionConverter" in str(val["conv"]):
+		if "FsharpStdFunctionConverter" in str(val["conv"]):
 			arg_bound_name = "unsafe.Pointer"
 
 		# class or slice, clean the name with title
 		if self.__get_is_type_class_or_pointer_with_class(val["conv"]) or \
-			isinstance(val['conv'], lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+			isinstance(val['conv'], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 			arg_bound_name = clean_name_with_title(arg_bound_name)
 
 		# i'f it's a class, it's a pointer
@@ -798,13 +702,13 @@ uint32_t %s(void* p) {
 		
 		# if class or pointer with class
 		if self.__get_is_type_class_or_pointer_with_class(val["conv"]) or \
-			"FSharpStdFunctionConverter" in str(val["conv"]):
+			"FsharpStdFunctionConverter" in str(val["conv"]):
 			arg_bound_name += f"{clean_name_with_title(self._name)}{clean_name_with_title(val['conv'].bound_name)} "
 		else:
 			# check the convert from the base (in case of ptr)
 			if  ('carg' in val and (val['carg'].ctype.is_pointer() or (hasattr(val['carg'].ctype, 'ref') and any(s in val['carg'].ctype.ref for s in ["&", "*"])))) or \
 				('storage_ctype' in val and (val['storage_ctype'].is_pointer() or (hasattr(val['storage_ctype'], 'ref') and any(s in val['storage_ctype'].ref for s in ["&", "*"])))) or \
-				isinstance(val['conv'], FSharpPtrTypeConverter):
+				isinstance(val['conv'], FsharpPtrTypeConverter):
 				# check if it's an enum
 				if val['conv'].bound_name in self._enums.keys():
 					enum_conv = self._get_conv_from_bound_name(val['conv'].bound_name)
@@ -826,13 +730,13 @@ uint32_t %s(void* p) {
 								arg_bound_name += f"{val['conv'].ctype} "
 					
 						# if it's a ptr type, remove a star
-						if isinstance(val['conv'], FSharpPtrTypeConverter):
+						if isinstance(val['conv'], FsharpPtrTypeConverter):
 							arg_bound_name = arg_bound_name.replace("*", "").replace("&", "")
 					else:
 						arg_bound_name += f"{val['conv'].bound_name} "
 
 				# add a star (only if it's not a const char * SPECIAL CASE)
-				if "FSharpConstCharPtrConverter" not in str(val["conv"]) and ("carg" not in val or not val["carg"].ctype.const):
+				if "FsharpConstCharPtrConverter" not in str(val["conv"]) and ("carg" not in val or not val["carg"].ctype.const):
 					arg_bound_name += "*"
 
 				if "carg" in val and hasattr(val["carg"].ctype, "ref") and not val["carg"].ctype.const:
@@ -1072,7 +976,7 @@ uint32_t %s(void* p) {
 		cleanClassname = clean_name_with_title(classname)
 
 		# special Slice
-		if isinstance(conv, lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+		if isinstance(conv, lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 			arg_bound_name = self.__get_arg_bound_name_to_c({"conv": conv.T_conv})
 		else:
 			arg_bound_name = self.__get_arg_bound_name_to_c({"conv": conv})
@@ -1317,10 +1221,10 @@ uint32_t %s(void* p) {
 						fsharp += " ,"
 
 					# special Slice
-					if isinstance(arg["conv"], lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+					if isinstance(arg["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 						slice_name = clean_name(arg['carg'].name)
-						if "FSharpConstCharPtrConverter" in str(arg["conv"].T_conv) or \
-							"FSharpStringConverter" in str(arg["conv"].T_conv):	
+						if "FsharpConstCharPtrConverter" in str(arg["conv"].T_conv) or \
+							"FsharpStringConverter" in str(arg["conv"].T_conv):	
 							slice_name = f"{slice_name}SpecialString"
 						# if it's a class, get a list of pointer to c class
 						elif self.__get_is_type_class_or_pointer_with_class(arg["conv"].T_conv):
@@ -1431,7 +1335,7 @@ uint32_t %s(void* p) {
 
 					# get arg name
 					# special Slice
-					if isinstance(argin["conv"], lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+					if isinstance(argin["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 						arg_bound_name = self.__get_arg_bound_name_to_c({"conv": argin["conv"].T_conv})
 					else:
 						arg_bound_name = self.__get_arg_bound_name_to_c(argin)
@@ -1441,7 +1345,7 @@ uint32_t %s(void* p) {
 					arg_bound_name = arg_bound_name.replace("const const", "const")
 
 					# special Slice
-					if isinstance(argin["conv"], lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+					if isinstance(argin["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 						fsharp += f"size_t {clean_name(argin['carg'].name)}ToCSize, {arg_bound_name} *{clean_name(argin['carg'].name)}ToCBuf"
 					else:
 						# normal argument
@@ -1472,7 +1376,7 @@ uint32_t %s(void* p) {
 					# other normal args
 					for argin in proto["args"]:
 						# special Slice
-						if isinstance(argin["conv"], lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+						if isinstance(argin["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 							src, retval_c = self.__arg_from_c_to_cpp(argin, clean_name(str(argin["carg"].name)))
 						else:
 							src, retval_c = self.__arg_from_c_to_cpp(argin, str(argin["carg"].name))
@@ -1530,7 +1434,7 @@ uint32_t %s(void* p) {
 								if ('arg_out' in proto['features'] and str(arg['carg'].name) in proto['features']['arg_out']) or \
 									('arg_in_out' in proto['features'] and str(arg['carg'].name) in proto['features']['arg_in_out']):
 									# FOR NOW ONLY FOR THE STD::STRING
-									if "FSharpStringConverter" in str(arg["conv"]) and \
+									if "FsharpStringConverter" in str(arg["conv"]) and \
 										"carg" in arg and hasattr(arg["carg"].ctype, "ref") and any(s in arg["carg"].ctype.ref for s in ["&"]):
 										# it's a pointer (or there is a bug)
 										retval_cpp = f"(&({str(arg['carg'].name)}_cpp))"
@@ -1698,7 +1602,7 @@ uint32_t %s(void* p) {
 			if self.__get_is_type_class_or_pointer_with_class(conv) :
 				fsharp_h += f"typedef void* {clean_name_with_title(self._name)}{cleanBoundName};\n"
 
-			if "FSharpStdFunctionConverter" in str(conv):
+			if "FsharpStdFunctionConverter" in str(conv):
 				func_name = conv.base_type.replace("std::function<", "").replace("&", "*")[:-1] # [:-1] to remove the > of std::function
 				first_parenthesis = func_name.find("(")
 				# get all args boundname in c
@@ -1754,7 +1658,6 @@ uint32_t %s(void* p) {
 			fsharp_h += extract_conv_and_bases(conv.static_methods, \
 									lambda method: self.__extract_method(conv.bound_name, conv, method, static=True, is_in_header=True), \
 									[base_class.static_methods for base_class in conv._bases])
-			
 			# methods
 			fsharp_h += extract_conv_and_bases(conv.methods, \
 									lambda method: self.__extract_method(conv.bound_name, conv, method, is_in_header=True), \
@@ -1773,6 +1676,7 @@ uint32_t %s(void* p) {
 				'}\n' \
 				'#endif\n'
 		self.fsharp_h = fsharp_h
+
 
 		# cpp
 		fsharp_c = '// fsharp wrapper c\n' \
@@ -1800,7 +1704,7 @@ uint32_t %s(void* p) {
 			fsharp_c += f"static const {arg_bound_name} {clean_name_with_title(self._name)}{bound_name} [] = {{ {', '.join(enum_vars)} }};\n"
 			fsharp_c += f"{arg_bound_name} Get{bound_name}(const int id) {{ return {clean_name_with_title(self._name)}{bound_name}[id];}}\n"
 
-		# classes
+		#  classes
 		for conv in self._bound_types:
 			if conv.nobind:
 				continue
@@ -1863,7 +1767,7 @@ uint32_t %s(void* p) {
 		self.fsharp_c = fsharp_c
 
 		# .fsharp
-		fsharp_bind = f"package {clean_name_with_title(self._name).lower()}\n" \
+		fsharp_bind = f"package {clean_name_with_title(self._name)}\n" \
 				'// #include "wrapper.h"\n' \
 				'// #cfsharp CFLAGS: -I . -Wall -Wno-unused-variable -Wno-unused-function -O3\n' \
 				'// #cfsharp CXXFLAGS: -std=c++14 -O3\n'
@@ -1874,7 +1778,7 @@ uint32_t %s(void* p) {
 		# check if reflect package is needed
 		for conv in self._FABGen__type_convs.values():
 			# special Slice
-			if isinstance(conv, lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+			if isinstance(conv, lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 				fsharp_bind += '	"reflect"\n'
 				break
 		# add runtime package if we have class
@@ -1901,7 +1805,7 @@ uint32_t %s(void* p) {
 			cleanBoundName = clean_name_with_title(conv.bound_name)
 
 			# special Slice
-			if isinstance(conv, lib.fsharp.stl.FSharpSliceToStdVectorConverter):
+			if isinstance(conv, lib.fsharp.stl.FsharpSliceToStdVectorConverter):
 				arg_boung_name = self.__get_arg_bound_name_to_fsharp({"conv":conv.T_conv})
 				fsharp_bind += f"// {clean_name_with_title(conv.bound_name)} ...\n" \
 							f"type {clean_name_with_title(conv.bound_name)} []{arg_boung_name}\n\n"
@@ -1920,8 +1824,8 @@ uint32_t %s(void* p) {
 							"}\n\n" \
 							f"// New{cleanBoundName}FromCPointer ...\n" \
 							f"func New{cleanBoundName}FromCPointer(p unsafe.Pointer) *{cleanBoundName} {{\n" \
-							f"	retvalFSharp := &{cleanBoundName}{{h: (C.{clean_name_with_title(self._name)}{cleanBoundName})(p)}}\n" \
-							f"	return retvalFSharp\n" \
+							f"	retvalGO := &{cleanBoundName}{{h: (C.{clean_name_with_title(self._name)}{cleanBoundName})(p)}}\n" \
+							f"	return retvalGO\n" \
 							"}\n"
 			
 			# it's a sequence
