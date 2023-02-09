@@ -4,35 +4,49 @@
 <details><summary><b>Table of Contents</b></summary>
 
 - [Technical Specifications](#technical-specifications)
-- [1. Introduction](#1-introduction)
+- [1. Purpose of the document](#1-purpose-of-the-document)
+- [2. Introduction of the project](#2-introduction-of-the-project)
   - [a. Context](#a-context)
-  - [b. Goal](#b-goal)
+  - [b. Goal of the project](#b-goal-of-the-project)
   - [c. General Description](#c-general-description)
   - [d. Team Members](#d-team-members)
-- [2. Solution](#2-solution)
+- [3. Solution](#3-solution)
   - [a. Existing Solutions](#a-existing-solutions)
   - [b. Current Solution](#b-current-solution)
   - [c. Proposed Solution](#c-proposed-solution)
-- [3. Process](#3-process)
-- [4. Further Considerations](#4-further-considerations)
+- [4. Process (Vector example)](#4-process-vector-example)
+  - [a. How is it working ?](#a-how-is-it-working-)
+  - [b. Vector class](#b-vector-class)
+    - [- Structure](#--structure)
+    - [- DLL Import Functions](#--dll-import-functions)
+    - [- Testing](#--testing)
+- [5. Further Considerations](#5-further-considerations)
   - [a. License](#a-license)
   - [b. Cost Estimation](#b-cost-estimation)
   - [c. Security](#c-security)
   - [d. Risks](#d-risks)
   - [e. Accessibility](#e-accessibility)
   - [Types Conversion](#types-conversion)
-- [5. Success Evaluation](#5-success-evaluation)
-- [6. Folder Structure](#6-folder-structure)
+- [6. Success Evaluation](#6-success-evaluation)
+- [7. Folder Structure](#7-folder-structure)
   - [a. Before the project](#a-before-the-project)
   - [b. During the project](#b-during-the-project)
-- [7. Ressources](#7-ressources)
+- [8. Ressources](#8-ressources)
   - [a. References](#a-references)
   - [b. Glossary](#b-glossary)
   
 </details>
 
+
+# 1. Purpose of the document
+
+
+ The Technical Specifications Document (TSD) is a document that describes the technical aspects of the project. It is a document that serves to define the project and to ensure that the project is well understood by both the client and the team members.
+
+
+
 &nbsp;
-# 1. Introduction
+# 2. Introduction of the project
 
 [HARFANG](https://www.harfang3d.com/en_US/framework) is a real-time 3D engine open-source and available on GitHub, developed by [HARFANG3D](https://www.harfang3d.com/en_US/). It is written in C++ and is based on the open-source [bgfx](https://github.com/bkaradzic/bgfx) library supporting Vulkan, Metal, DirectX, OpenGL and OpenGL ES.
 
@@ -41,7 +55,7 @@
 [FABGen](https://github.com/ejulien/FABGen/) (a set of Python scripts to generate C++ binding code to different languages) is used to generate binding for HARFANG and currently supports the following target languages: CPython 3.2+, Lua and Go 1.11+. 
 
 For more details, please take a look at the [Functional Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Documents%20Specifications/Functional_Specifications.md).
-## b. Goal
+## b. Goal of the project 
 
 The goal of the project is to provide a F# binding for HARFANG.
 
@@ -65,7 +79,7 @@ We have 7 weeks to complete the project.
 
 &nbsp;
 
-# 2. Solution
+# 3. Solution
 
 ## a. Existing Solutions
 
@@ -103,9 +117,53 @@ We need to define what is F# :
   - Link to C library (C++ has to be wrapped with C first)
 
 
-# 3. Process
+# 4. Process (Vector example)
 
-# 4. Further Considerations
+In this section, we will explain how we will implement the F# binding for the Vector class.
+
+## a. How is it working ?
+
+  To use native C++ code in F#, we need to wrap it with C first. Then, we can use the C wrapper in F#.
+
+  For that we're using CMake to generate a .dylib file for MacOS and the .dll file for Windows. (They are Dynamic Link Libraries)
+
+  WIP
+
+  &nbsp;
+## b. Vector class
+
+The Vector Library provides a set of functions for operating on 2-dimensional and 3-dimensional vectors. The library is written in F# and uses interop services to access functions in a shared library written in C.
+
+
+### - Structure
+
+The library defines two structures, Vector2 and Vector3, to represent 2-dimensional and 3-dimensional vectors, respectively. Both structures contain two or three double-precision floating-point values to represent the x, y, and z components of the vector. The structures are defined using the Struct and StructLayout attributes to specify the memory layout.
+
+&nbsp;
+### - DLL Import Functions
+
+The library uses the DLLImport attribute to access functions in a shared library. There are functions for both Vector2 and Vector3 structures, including functions for calculating the distance between two vectors, finding the midpoint between two vectors, finding a specified percentage of the distance between two vectors, and updating the values of a vector
+
+Here is a example of usage of the DLLImport attribute with the distanceToVector2 function :
+```fsharp
+[<DllImport("libVectors")>]
+extern double distanceToVector2(Vector2 vec1, Vector2 v2)
+```
+
+This function takes two Vector2 parameters, vec1 and v2, and returns a double value. The DllImport attribute is used to specify the name of the DLL from which to import the function.
+
+Once these functions are imported, they can be called in the code just like any other F# function. For example, the distanceToVector2 function is called later in the code block like this:
+
+```fsharp
+let distV2 = distanceToVector2 (vec2_n1, vec2_n2)
+```
+
+In this case, vec2_n1 and vec2_n2 are Vector2 values, and the call to distanceToVector2 returns a double value which is stored in the distV2 variable.
+
+### - Testing
+
+
+# 5. Further Considerations
 ## a. License
 
 The FABGen software is licensed under the GPLv3 license. That means that we can use it for our project as long as we respect the license terms.
@@ -177,13 +235,13 @@ Here is the following equivalence table between the different types used in the 
 
 
 
-# 5. Success Evaluation
+# 6. Success Evaluation
 
 To ensure that the project is successful, we will have to make the 29 unit tests pass and to test the binding with the HARFANG engine.
 
 
 
-# 6. Folder Structure
+# 7. Folder Structure
 ## a. Before the project
 
 ```
@@ -290,7 +348,7 @@ Moreover, here is a mock-up of the FABGen tool detailing the different steps of 
 
 &nbsp;
 
-# 7. Ressources
+# 8. Ressources
 ## a. References
 
 [1] [Harfang3D Website](https://www.harfang3d.com/en_US/)  
