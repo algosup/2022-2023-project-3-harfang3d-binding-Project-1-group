@@ -38,14 +38,14 @@ Harfang3D is a 3D game engine written in C++ and designed for ease of use and ex
 	- [x] Documents verification
 
 - 5th week:
-	- [ ] Continue to code
-	- [ ] Start testing
-	- [ ] Update documents after verifications
+	- [x] Continue to code
+	- [x] Start testing
+	- [x] Update documents after verifications
 
 - 6th week:
-	- [ ] Continue to testing
-	- [ ] Continue to code
-	- [ ] The Tech lead will help with the code
+	- [x] Continue to testing
+	- [x] Continue to code
+	- [x] The Tech lead will help with the code
 
 - 7th week:
 	- [ ] Complete the tests
