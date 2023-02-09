@@ -62,9 +62,10 @@ The goal of the project is to provide a F# binding for HARFANG.
 We have 7 weeks to complete the project.
 
  ## c. General Description
-| Project | Client | Author | Created on | Last update |
-|:---|:---|:---|:---|:---|
-| 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-20 |
+| Project | Client | Author | Created on | Last update | Document Version |
+|:---|:---|:---|:---|:---|:---|
+| 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-20 | V1.0 |
+| 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d) | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-02-09 | V2.0 |
 
 &nbsp;
 ## d. Team Members
