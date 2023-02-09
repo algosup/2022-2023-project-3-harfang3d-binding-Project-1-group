@@ -206,7 +206,7 @@ def bind_std(gen):
 			super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 			self.fsharp_to_c_type = "bool"
 			
-		def get_type_glue(self, module_name: str) -> str:
+		def get_type_glue(self, gen, module_name: str) -> str:
 			return ''
 
 		def get_type_api(self, module_name: str) -> str:

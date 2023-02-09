@@ -56,7 +56,7 @@ def clean_name_with_title(name):
 
 
 class FSharpTypeConverterCommon(gen.TypeConverter):
-	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+	def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=None): 
 		super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
 		self.base_type = type
 		self.fsharp_to_c_type = None
@@ -171,7 +171,7 @@ class FSharpExternTypeConverter(FSharpTypeConverterCommon):
 	def check_call(self, in_var):
 		return "(*%s)(%s)" % (self.check_func, in_var)
 
-	def get_type_glue(self, gen: gen.FABGen, module_name):
+	def get_type_glue(self, gen, module_name):
 		out = '// extern type API for %s\n' % self.ctype
 		if self.c_storage_class:
 			out += 'struct %s;\n' % self.c_storage_class

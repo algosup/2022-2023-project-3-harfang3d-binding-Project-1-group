@@ -302,9 +302,9 @@
 			"request": "launch",
 			"stopOnEntry": false,
 			"python": "${command:python.interpreterPath}",
-			"program": "${workspaceRoot}/bind.py",
+			"program": "${workspaceRoot}/tests.py",
 			"cwd": "${workspaceRoot}",
-			"args": ["--fsharp" , "--out" , "./examples/harfang.py"],
+			"args": ["--fsharp"],
 			"envFile": "${workspaceRoot}/.env",
 			"debugOptions": [
 				"WaitOnAbnormalExit",

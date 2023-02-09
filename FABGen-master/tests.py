@@ -531,7 +531,7 @@ sys.path.append(os.path.join(start_path, 'tests'))
 if args.debug_test:
 	test_names = [args.debug_test]
 else:
-	test_names = [file[:-3] for file in os.listdir('./FABGen-master/tests') if file.endswith('.py')]
+	test_names = [file[:-3] for file in os.listdir('./tests') if file.endswith('.py')]
 
 
 if args.linux or args.python_base_path:

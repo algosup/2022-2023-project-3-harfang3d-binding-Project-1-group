@@ -3,19 +3,15 @@
 
 import lang.fsharp
 
-
 def bind_stl(gen):
     gen.add_include('List', True)
     gen.add_include('String', True)
-
+    
     class FSharpStringConverter(lang.fsharp.FSharpTypeConverterCommon):
-        def __init__(self, type, *args, **kwargs) -> None:
-            super().__init__(type, *args, **kwargs)
-            self.fsharp_to_c_type = "string"
-            self.fsharp_type = "System.String"
-        # def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
-        #     super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
-
+        def __init__(self, type, to_c_storage_type=None, bound_name=None, from_c_storage_type=None, needs_c_storage_class=False):
+            super().__init__(type, to_c_storage_type, bound_name, from_c_storage_type, needs_c_storage_class)
+            self.fsharp_to_c_type = "*char"
+            self.fsharp_type = "string"
             
         def get_type_glue(self, gen, module_name):
             return ''
