@@ -16,8 +16,11 @@
   - [c. Proposed Solution](#c-proposed-solution)
 - [4. Process (Vector example)](#4-process-vector-example)
   - [a. How is it working ?](#a-how-is-it-working-)
-  - [b. Vector class](#b-vector-class)
-    - [- Structure](#--structure)
+    - [What is a C wrapper ?](#what-is-a-c-wrapper-)
+    - [How to create a C wrapper ?](#how-to-create-a-c-wrapper-)
+    - [Using the C wrapper in F#](#using-the-c-wrapper-in-f)
+  - [b. The Vector class](#b-the-vector-class)
+    - [Structure](#structure)
     - [- DLL Import Functions](#--dll-import-functions)
     - [- Testing](#--testing)
 - [5. Further Considerations](#5-further-considerations)
@@ -42,7 +45,6 @@
 
 
  The Technical Specifications Document (TSD) is a document that describes the technical aspects of the project. It is a document that serves to define the project and to ensure that the project is well understood by both the client and the team members.
-
 
 
 &nbsp;
@@ -120,30 +122,125 @@ We need to define what is F# :
 
 # 4. Process (Vector example)
 
-In this section, we will explain how we will implement the F# binding for the Vector class.
+In this section, we will explain how's working a F# binding for a C++ library using the Vector class as an example.
 
 ## a. How is it working ?
 
-  To use native C++ code in F#, we need to wrap it with C first. Then, we can use the C wrapper in F#.
+  In order to use native C++ code in F# it is often necessary to create a C wrapper around the C++ code. This is because F# uses the Common Language Infrastructure (CLI) to interact with dynamic libraries, which requires that the functions in the dynamic library be written in C or a similar language that can interface with the CLI.
 
-  For that we're using CMake to generate a .dylib file for MacOS and the .dll file for Windows. (They are Dynamic Link Libraries)
+  ### What is a C wrapper ?
 
-  WIP
+  A C wrapper is simply a thin layer of C code that acts as an interface between the C++ code and the F# code. The C wrapper exports the functions from the C++ code as C functions, which can be called from F# using the DllImport attribute.
 
-  &nbsp;
-## b. Vector class
+  ### How to create a C wrapper ?
+
+  To create a C wrapper, you need to add the extern "C" keyword to the function declarations in the C++ header file. This tells the compiler to use the C calling convention for the functions, which is required for the functions to be callable from F#.
+
+  Here's a basic example from the vector.h file :
+
+```cpp
+#ifndef VECTOR_H
+#define VECTOR_H
+
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string>
+#include <math.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+    class Vector2
+    {
+    public:
+        Vector2(double inx = 0, double iny = 0);
+        mutable double x;
+        mutable double y;
+        double distanceTo(Vector2 pos);
+        void vectorMovement(double plusx, double plusy);
+        Vector2 midpoint(Vector2 pos);
+        double percentDistance(Vector2 pos, double percentOfDistance = 100);
+    };
+```
+
+We will take the distanceToVector2 function as an example from the vector.cpp file :
+
+```cpp
+#include "vectors.h"
+
+extern "C"
+{
+    double distanceToVector2(Vector2 vec, Vector2 pos)
+    {
+        return vec.distanceTo(pos);
+    }
+}
+```
+
+### Using the C wrapper in F#
+
+Now that we have prepared the C wrapper, we need to create the DLL (or .dylib on macOS) that will be used by F#. To do this, we will use the CMake build system. 
+
+The CMakeLists.txt file is used to specify the build configuration for the project. It contains a set of commands that specify the minimum version of CMake required to build the project, the name of the project, and the C++ standard to use. It also contains a set of commands that specify the source files to compile and the name of the output file.
+
+&nbsp;
+
+Here is an example of the CMakeLists.txt file :
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+set(lib_name Vectors)
+project(${lib_name})
+
+# Add all the header files
+set(HEADERS
+    ../Vectors/vectors.h
+)
+
+# Add all the source files
+set(SOURCES
+    ../Vectors/vectors.cpp
+)
+
+# Compile the library
+add_library(${lib_name} SHARED ${HEADERS} ${SOURCES})
+
+# Set the include directories
+target_include_directories(${lib_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Set the output directory for the library
+set_target_properties(${lib_name} PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
+)
+
+# Ensure that the library is built for macOS
+if (WIN32)
+    set_target_properties(${lib_name} PROPERTIES
+        SUFFIX .dll
+    )
+elseif(APPLE)
+    set_target_properties(${lib_name} PROPERTIES
+        SUFFIX .dylib
+    )
+endif()
+```
+
+## b. The Vector class
 
 The Vector Library provides a set of functions for operating on 2-dimensional and 3-dimensional vectors. The library is written in F# and uses interop services to access functions in a shared library written in C.
 
 
-### - Structure
+### Structure
 
 The library defines two structures, Vector2 and Vector3, to represent 2-dimensional and 3-dimensional vectors, respectively. Both structures contain two or three double-precision floating-point values to represent the x, y, and z components of the vector. The structures are defined using the Struct and StructLayout attributes to specify the memory layout.
 
 &nbsp;
 ### - DLL Import Functions
 
-The library uses the DLLImport attribute to access functions in a shared library. There are functions for both Vector2 and Vector3 structures, including functions for calculating the distance between two vectors, finding the midpoint between two vectors, finding a specified percentage of the distance between two vectors, and updating the values of a vector
+The library uses the DLLImport attribute to access functions in the generated shared library. There are several functions defined in the library, but only one is used in this example, distanceToVector2, calculates the distance between two Vector2 values.
 
 Here is a example of usage of the DLLImport attribute with the distanceToVector2 function :
 ```fsharp
@@ -182,6 +279,7 @@ To make the project, we don't need to buy anything. We will use the tools that w
 - The binding should not allow arbitrary memory access, and should properly validate input data to prevent buffer overflow and other types of attacks.
 
 - The binding should also be designed to minimize the attack surface by limiting the number of exposed functions and data structures.
+
 
 ## d. Risks
 
