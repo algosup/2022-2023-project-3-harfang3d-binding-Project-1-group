@@ -21,8 +21,8 @@
     - [Using the C wrapper in F#](#using-the-c-wrapper-in-f)
   - [b. The Vector class](#b-the-vector-class)
     - [Structure](#structure)
-    - [- DLL Import Functions](#--dll-import-functions)
-    - [- Testing](#--testing)
+    - [DLL Import Functions](#dll-import-functions)
+  - [c. Testing](#c-testing)
 - [5. Further Considerations](#5-further-considerations)
   - [a. License](#a-license)
   - [b. Cost Estimation](#b-cost-estimation)
@@ -230,25 +230,27 @@ endif()
 
 ## b. The Vector class
 
-The Vector Library provides a set of functions for operating on 2-dimensional and 3-dimensional vectors. The library is written in F# and uses interop services to access functions in a shared library written in C.
+For this example, we will use the Vector2 class from the Vectors library.
+
+The Vector2 class is a simple class that represents a 2-dimensional vector. It contains two double-precision floating-point values to represent the x and y components of the vector. The class is defined in the vectors.h header file.
 
 
 ### Structure
 
 The library defines two structures, Vector2 and Vector3, to represent 2-dimensional and 3-dimensional vectors, respectively. Both structures contain two or three double-precision floating-point values to represent the x, y, and z components of the vector. The structures are defined using the Struct and StructLayout attributes to specify the memory layout.
 
-&nbsp;
-### - DLL Import Functions
+### DLL Import Functions
 
 The library uses the DLLImport attribute to access functions in the generated shared library. There are several functions defined in the library, but only one is used in this example, distanceToVector2, calculates the distance between two Vector2 values.
 
-Here is a example of usage of the DLLImport attribute with the distanceToVector2 function :
+Here is an example of usage of the DLLImport attribute with the distanceToVector2 function :
+
 ```fsharp
 [<DllImport("libVectors")>]
-extern double distanceToVector2(Vector2 vec1, Vector2 v2)
+extern double distanceToVector2(Vector2 vec1, Vector2 vec2)
 ```
 
-This function takes two Vector2 parameters, vec1 and v2, and returns a double value. The DllImport attribute is used to specify the name of the DLL from which to import the function.
+This function takes two Vector2 parameters, vec1 and vec2, and returns a double value. The DllImport attribute is used to specify the name of the DLL from which to import the function.
 
 Once these functions are imported, they can be called in the code just like any other F# function. For example, the distanceToVector2 function is called later in the code block like this:
 
@@ -258,7 +260,31 @@ let distV2 = distanceToVector2 (vec2_n1, vec2_n2)
 
 In this case, vec2_n1 and vec2_n2 are Vector2 values, and the call to distanceToVector2 returns a double value which is stored in the distV2 variable.
 
-### - Testing
+## c. Testing
+
+To ensure that the Vector class works as expected, we wrote a simple test program that uses the Vector2 class.
+
+For instance here is the beggining of the test program :
+
+```fs
+namespace TestsVectors
+
+open System
+open FSharpExercises.Core.Helpers
+open NUnit.Framework
+open Vectors
+
+module TestVectorsProgram =
+    // Ignore test template : [<Ignore("Not implemented");Test>]
+
+    // ! Test for Vectors2
+    [<Test>]
+    let TestCreateVector2() =
+        let expectedValue = VectorsProgram.Vector2(1.0, 2.0)
+        let actualValue = VectorsProgram.Vector2(1.0, 2.0)
+        AssertEquality expectedValue actualValue
+```
+
 
 
 # 5. Further Considerations
