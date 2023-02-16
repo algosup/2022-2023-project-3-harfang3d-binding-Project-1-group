@@ -25,7 +25,7 @@ def bind_stl(gen):
         def from_c_call(self, out_var, expr, ownership):
             return f"System.String({out_var})"
 
-    gen.bind_type(FSharpStringConverter("System.String"))
+    gen.bind_type(FSharpStringConverter("string"))
 
 
 def bind_function_T(gen, type, bound_name=None):

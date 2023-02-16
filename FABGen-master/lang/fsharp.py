@@ -392,7 +392,7 @@ uint32_t %s(void* p) {
 	def __arg_from_c_to_cpp(self, val, retval_name, add_star=True):
 		src = ""
 		# check if there is special slice to convert
-		if isinstance(val["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+		if isinstance(val["conv"], lib.fsharp.stl.FSharpListToStdListConverter):
 			# special if string or const char*
 			if "FsharpStringConverter" in str(val["conv"].T_conv): # or \
 				# "FsharpConstCharPtrConverter" in str(val["conv"].T_conv):
@@ -579,7 +579,7 @@ uint32_t %s(void* p) {
 					
 				c_call = f"{clean_name(arg_name)}ToC := {arg_bound_name}({clean_name(arg_name)})\n"
 		# special Slice
-		elif isinstance(val["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+		elif isinstance(val["conv"], lib.fsharp.stl.FSharpListToStdListConverter):
 			c_call = ""
 			slice_name = clean_name(arg_name)
 			# special if string or const char*
@@ -683,7 +683,7 @@ uint32_t %s(void* p) {
 
 		# class or slice, clean the name with title
 		if self.__get_is_type_class_or_pointer_with_class(val["conv"]) or \
-			isinstance(val['conv'], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+			isinstance(val['conv'], lib.fsharp.stl.FSharpListToStdListConverter):
 			arg_bound_name = clean_name_with_title(arg_bound_name)
 
 		# i'f it's a class, it's a pointer
@@ -976,7 +976,7 @@ uint32_t %s(void* p) {
 		cleanClassname = clean_name_with_title(classname)
 
 		# special Slice
-		if isinstance(conv, lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+		if isinstance(conv, lib.fsharp.stl.FSharpListToStdListConverter):
 			arg_bound_name = self.__get_arg_bound_name_to_c({"conv": conv.T_conv})
 		else:
 			arg_bound_name = self.__get_arg_bound_name_to_c({"conv": conv})
@@ -1221,7 +1221,7 @@ uint32_t %s(void* p) {
 						fsharp += " ,"
 
 					# special Slice
-					if isinstance(arg["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+					if isinstance(arg["conv"], lib.fsharp.stl.FSharpListToStdListConverter):
 						slice_name = clean_name(arg['carg'].name)
 						if "FsharpConstCharPtrConverter" in str(arg["conv"].T_conv) or \
 							"FsharpStringConverter" in str(arg["conv"].T_conv):	
@@ -1335,7 +1335,7 @@ uint32_t %s(void* p) {
 
 					# get arg name
 					# special Slice
-					if isinstance(argin["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+					if isinstance(argin["conv"], lib.fsharp.stl.FSharpListToStdListConverter): # FSharpSliceToStdVectorConverter
 						arg_bound_name = self.__get_arg_bound_name_to_c({"conv": argin["conv"].T_conv})
 					else:
 						arg_bound_name = self.__get_arg_bound_name_to_c(argin)
@@ -1345,7 +1345,7 @@ uint32_t %s(void* p) {
 					arg_bound_name = arg_bound_name.replace("const const", "const")
 
 					# special Slice
-					if isinstance(argin["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+					if isinstance(argin["conv"], lib.fsharp.stl.FSharpListToStdListConverter):
 						fsharp += f"size_t {clean_name(argin['carg'].name)}ToCSize, {arg_bound_name} *{clean_name(argin['carg'].name)}ToCBuf"
 					else:
 						# normal argument
@@ -1376,7 +1376,7 @@ uint32_t %s(void* p) {
 					# other normal args
 					for argin in proto["args"]:
 						# special Slice
-						if isinstance(argin["conv"], lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+						if isinstance(argin["conv"], lib.fsharp.stl.FSharpListToStdListConverter):
 							src, retval_c = self.__arg_from_c_to_cpp(argin, clean_name(str(argin["carg"].name)))
 						else:
 							src, retval_c = self.__arg_from_c_to_cpp(argin, str(argin["carg"].name))
@@ -1778,7 +1778,7 @@ uint32_t %s(void* p) {
 		# check if reflect package is needed
 		for conv in self._FABGen__type_convs.values():
 			# special Slice
-			if isinstance(conv, lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+			if isinstance(conv, lib.fsharp.stl.FSharpListToStdListConverter):
 				fsharp_bind += '	"reflect"\n'
 				break
 		# add runtime package if we have class
@@ -1805,7 +1805,7 @@ uint32_t %s(void* p) {
 			cleanBoundName = clean_name_with_title(conv.bound_name)
 
 			# special Slice
-			if isinstance(conv, lib.fsharp.stl.FsharpSliceToStdVectorConverter):
+			if isinstance(conv, lib.fsharp.stl.FSharpListToStdListConverter):
 				arg_boung_name = self.__get_arg_bound_name_to_fsharp({"conv":conv.T_conv})
 				fsharp_bind += f"// {clean_name_with_title(conv.bound_name)} ...\n" \
 							f"type {clean_name_with_title(conv.bound_name)} []{arg_boung_name}\n\n"

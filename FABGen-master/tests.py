@@ -480,35 +480,41 @@ set_target_properties(my_test PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE "{work
 install(TARGETS my_test DESTINATION "${{CMAKE_SOURCE_DIR}}/" COMPONENT my_test)
 """)
 
-class FSharpTestBed:
-    def build_and_test_extension(self, work_path, module, sources):
-        if not hasattr(module, "test_fsharp"):
-            print("Can't find test_fsharp")
-            return False
-        
-        # copy test file
-        test_path = os.path.join(work_path, 'test.fs')
-        with open(test_path, 'w') as file:
-            file.write(module.test_fsharp)
-       
-        # Build the F# project
-        os.chdir(work_path)
-        try:
-            subprocess.check_output("dotnet new console -lang F# -n test", shell=True, stderr=subprocess.STDOUT)
-            subprocess.check_output("dotnet add test.fsproj reference sources", shell=True, stderr=subprocess.STDOUT)
-            subprocess.check_output("dotnet build test.fsproj", shell=True, stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as e:
-            print(e.output.decode('utf-8'))
-            return False
-        
-        success = True
-        try:
-            subprocess.check_output("dotnet test test.fsproj", shell=True, stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as e:
-            print(e.output.decode('utf-8'))
-            success = False
-        
-        return success
+def build_and_deploy_fsharp_extension(work_path, build_path):
+	print("Generating build system...")
+	try:
+		if args.linux:
+			subprocess.check_output(['cmake', '..'])
+		else:
+			subprocess.check_output('cmake .. -G "%s"' % cmake_generator)
+	except subprocess.CalledProcessError as e:
+		print(e.output.decode('utf-8'))
+		return False
+
+	print("Building extension...")
+	try:
+		if args.linux:
+			subprocess.check_output(['make'])
+		else:
+			print("cmake --build . --config Release doing")
+			subprocess.check_output(['cmake', '--build', '.', '--config', 'Release'])
+			print("cmake --build . --config Release done")
+	except subprocess.CalledProcessError as e:
+		print(e.output)
+		return False
+
+	print("install extension...")
+	try:
+		if args.linux:
+			subprocess.check_output(['make', 'install'])
+		else:
+			subprocess.check_output(['cmake', '--install', '.', '--config', 'Release'])
+	except subprocess.CalledProcessError as e:
+		print(e.output.decode('utf-8'))
+		return False
+
+	return True
+
 
 # Clang format
 def create_clang_format_file(work_path):
@@ -523,9 +529,75 @@ AlignAfterOpenBracket: DontAlign
 AlwaysBreakTemplateDeclarations: false
 AlignTrailingComments: false''')
 
+class FSharpTestBed:
+    def build_and_test_extension(self, work_path, module, sources):
+        if not hasattr(module, "test_fsharp"):
+            print("Can't find test_fsharp")
+            return False
+
+        # copy test file
+        test_path = os.path.join(work_path, 'test.fs')
+        with open(test_path, 'w') as file:
+            file.write(module.test_fsharp)
+
+        # if need special other file in package
+        if hasattr(module, "test_special_fsharp"):
+            test_path = os.path.join(work_path, 'test_special_fsharp.fs')
+            with open(test_path, 'w') as file:
+                file.write(module.test_special_fsharp)
+
+        build_path = os.path.join(work_path, 'build')
+        os.mkdir(build_path)
+        os.chdir(build_path)
+
+        create_fsharp_cmake_file(module.__name__, work_path, sources)
+        create_clang_format_file(work_path)
+
+        if not build_and_deploy_fsharp_extension(work_path, build_path):
+            return False
+
+        # after build, delete the wrapper.cpp to test the lib which has been build
+        if os.path.exists(os.path.join(work_path, 'wrapper.cpp')):
+            os.remove(os.path.join(work_path, 'wrapper.cpp'))
+
+        print("Executing Fsharp test...")
+        os.chdir(work_path)
+
+        # retrieve the .fsproj file name
+        def get_fsproj_file_name(work_path):
+            for file in os.listdir(work_path):
+                if file.endswith('.fsproj'):
+                    fsproj_file_name = file[:-7] # remove the extension from the filename
+                    return fsproj_file_name
+            return None
+
+        success = True
+        try:
+            subprocess.check_output('dotnet new console -lang "F#"', shell=True, stderr=subprocess.STDOUT)
+            fsproj_file_name = get_fsproj_file_name(work_path)
+
+            if fsproj_file_name is None:
+                print("Can't find .fsproj file")
+                return False
+
+            with open(os.path.join(work_path, fsproj_file_name + '.fsproj'), 'w') as file:
+                new_contents = '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net7.0</TargetFramework></PropertyGroup><ItemGroup><Compile Include="test.fs" /> </ItemGroup><ItemGroup><PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" /><PackageReference Include="NUnit" Version="3.13.2" /><PackageReference Include="NUnit3TestAdapter" Version="4.2.0" /></ItemGroup></Project>'
+                file.write(new_contents)
+
+            # Create a Helpers.fs file in the work_path directory
+            with open(os.path.join(work_path, 'Helpers.fs'), 'w') as file:
+                new_contents = '[<AutoOpenAttribute>]\nmodule FSharpExercises.Core.Helpers\n\nopen System\nopen NUnit.Framework\n\nlet inline __<\'T> : \'T = failwith "Seek wisdom by filling in the __"\n\ntype FILL_ME_IN =\n    class end\n\ntype FILL_IN_THE_EXCEPTION() =\n    inherit Exception()\n\nlet AssertWithMessage (x : bool) message =\n    Assert.IsTrue(x, message)\n\nlet inline AssertEquality (x:\'T) (y:\'T) =\n    match box y with\n    | :? System.Type as t when t = typeof<FILL_ME_IN> -> failwith "Seek wisdom by correcting the type FILL_ME_IN"\n    | :? System.Type as t when t = typeof<FILL_IN_THE_EXCEPTION> -> failwith "Seek wisdom by correcting the type FILL_IN_THE_EXCEPTION"\n    | _ -> Assert.AreEqual(x,y)\n\nlet  AssertEquality2dp (x: float) (y: float) =\n    Assert.AreEqual(x, Math.Round(y, 2))\n\nlet AssertInequality (x:\'T) (y:\'T) =\n    Assert.AreNotEqual(x,y)\n\nlet AssertThrows<\'a when \'a :> exn> action =\n    Assert.Throws<\'a>(fun () -> action()) |> ignore\n\nlet Assert (x : bool) =\n    Assert.IsTrue(x)'
+                file.write(new_contents)
+
+            subprocess.check_output('dotnet test', shell=True, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            print(e.output)
+            success = False
+
+        print("Cleanup...")
+        return success
 
 
-#
 sys.path.append(os.path.join(start_path, 'tests'))
 
 if args.debug_test:
