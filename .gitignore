@@ -9,7 +9,7 @@ Debug
 *.user
 obj
 bin
-TestFsBind/CMake
+/build/
 *.exe
 !.paket/paket.bootstrapper.exe
 .ionide/
@@ -36,8 +36,3 @@ TestFsBind/CMake
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,fsharp
 .DS_Store
-TestFsBind/cmake/CMakeFiles/3.25.0/CMakeDetermineCompilerABI_C.bin
-TestFsBind/cmake/lib/libTest56.dylib
-TestFsBind/cmake/CMakeFiles/Test56.dir/Users/remycharles/Desktop/Github_Desktop/2022-2023-project-3-harfang3d-binding-Project-1-group/TestFsBind/vectors.cpp.o
-TestFsBind/cmake/CMakeFiles/CMakeOutput.log
-TestFsBind/cmake/CMakeFiles/3.25.0/CMakeDetermineCompilerABI_CXX.bin
