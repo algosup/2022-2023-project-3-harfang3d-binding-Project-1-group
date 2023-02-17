@@ -4,6 +4,7 @@
 <details><summary><b>Table of Contents</b></summary>
 
 - [Technical Specifications](#technical-specifications)
+<<<<<<< HEAD
 - [1. Purpose of the document](#1-purpose-of-the-document)
 - [2. Introduction of the project](#2-introduction-of-the-project)
   - [a. Context](#a-context)
@@ -24,22 +25,44 @@
     - [DLL Import Functions](#dll-import-functions)
   - [c. Testing](#c-testing)
 - [5. Further Considerations](#5-further-considerations)
+=======
+- [1. Introduction](#1-introduction)
+  - [a. Context](#a-context)
+  - [b. Goal](#b-goal)
+  - [c. General Description](#c-general-description)
+  - [d. Team Members](#d-team-members)
+- [2. Solution](#2-solution)
+  - [a. Existing Solutions](#a-existing-solutions)
+  - [b. Current Solution](#b-current-solution)
+  - [c. Proposed Solution](#c-proposed-solution)
+- [3. Process](#3-process)
+- [4. Further Considerations](#4-further-considerations)
+>>>>>>> parent of 54aedb2 (prepare to merge)
   - [a. License](#a-license)
   - [b. Cost Estimation](#b-cost-estimation)
   - [c. Security](#c-security)
   - [d. Risks](#d-risks)
   - [e. Accessibility](#e-accessibility)
   - [Types Conversion](#types-conversion)
+<<<<<<< HEAD
 - [6. Success Evaluation](#6-success-evaluation)
 - [7. Folder Structure](#7-folder-structure)
   - [a. Before the project](#a-before-the-project)
   - [b. During the project](#b-during-the-project)
 - [8. Ressources](#8-ressources)
+=======
+- [5. Success Evaluation](#5-success-evaluation)
+- [6. Folder Structure](#6-folder-structure)
+  - [a. Before the project](#a-before-the-project)
+  - [b. During the project](#b-during-the-project)
+- [7. Ressources](#7-ressources)
+>>>>>>> parent of 54aedb2 (prepare to merge)
   - [a. References](#a-references)
   - [b. Glossary](#b-glossary)
   
 </details>
 
+<<<<<<< HEAD
 
 # 1. Purpose of the document
 
@@ -49,6 +72,10 @@
 
 &nbsp;
 # 2. Introduction of the project
+=======
+&nbsp;
+# 1. Introduction
+>>>>>>> parent of 54aedb2 (prepare to merge)
 
 [HARFANG](https://www.harfang3d.com/en_US/framework) is a real-time 3D engine open-source and available on GitHub, developed by [HARFANG3D](https://www.harfang3d.com/en_US/). It is written in C++ and is based on the open-source [bgfx](https://github.com/bkaradzic/bgfx) library supporting Vulkan, Metal, DirectX, OpenGL and OpenGL ES.
 
@@ -57,17 +84,27 @@
 [FABGen](https://github.com/ejulien/FABGen/) (a set of Python scripts to generate C++ binding code to different languages) is used to generate binding for HARFANG and currently supports the following target languages: CPython 3.2+, Lua and Go 1.11+. 
 
 For more details, please take a look at the [Functional Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Documents%20Specifications/Functional_Specifications.md).
+<<<<<<< HEAD
 ## b. Goal of the project 
+=======
+## b. Goal
+>>>>>>> parent of 54aedb2 (prepare to merge)
 
 The goal of the project is to provide a F# binding for HARFANG.
 
 We have 7 weeks to complete the project.
 
  ## c. General Description
+<<<<<<< HEAD
 | Project | Client | Author | Created on | Last update | Document Version |
 |:---|:---|:---|:---|:---|:---|
 | 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-20 | V1.0 |
 | 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d) | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-02-09 | V2.0 |
+=======
+| Project | Client | Author | Created on | Last update |
+|:---|:---|:---|:---|:---|
+| 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-20 |
+>>>>>>> parent of 54aedb2 (prepare to merge)
 
 &nbsp;
 ## d. Team Members
@@ -82,7 +119,11 @@ We have 7 weeks to complete the project.
 
 &nbsp;
 
+<<<<<<< HEAD
 # 3. Solution
+=======
+# 2. Solution
+>>>>>>> parent of 54aedb2 (prepare to merge)
 
 ## a. Existing Solutions
 
@@ -120,6 +161,7 @@ We need to define what is F# :
   - Link to C library (C++ has to be wrapped with C first)
 
 
+<<<<<<< HEAD
 # 4. Process (Vector example)
 
 In this section, we will explain how's working a F# binding for a C++ library using the Vector class as an example.
@@ -288,6 +330,11 @@ module TestVectorsProgram =
 
 
 # 5. Further Considerations
+=======
+# 3. Process
+
+# 4. Further Considerations
+>>>>>>> parent of 54aedb2 (prepare to merge)
 ## a. License
 
 The FABGen software is licensed under the GPLv3 license. That means that we can use it for our project as long as we respect the license terms.
@@ -306,7 +353,10 @@ To make the project, we don't need to buy anything. We will use the tools that w
 
 - The binding should also be designed to minimize the attack surface by limiting the number of exposed functions and data structures.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 54aedb2 (prepare to merge)
 ## d. Risks
 
 A lot of risks can occur during the project. We have to be aware of them and try to minimize them as much as possible.
@@ -360,13 +410,21 @@ Here is the following equivalence table between the different types used in the 
 
 
 
+<<<<<<< HEAD
 # 6. Success Evaluation
+=======
+# 5. Success Evaluation
+>>>>>>> parent of 54aedb2 (prepare to merge)
 
 To ensure that the project is successful, we will have to make the 29 unit tests pass and to test the binding with the HARFANG engine.
 
 
 
+<<<<<<< HEAD
 # 7. Folder Structure
+=======
+# 6. Folder Structure
+>>>>>>> parent of 54aedb2 (prepare to merge)
 ## a. Before the project
 
 ```
@@ -473,7 +531,11 @@ Moreover, here is a mock-up of the FABGen tool detailing the different steps of 
 
 &nbsp;
 
+<<<<<<< HEAD
 # 8. Ressources
+=======
+# 7. Ressources
+>>>>>>> parent of 54aedb2 (prepare to merge)
 ## a. References
 
 [1] [Harfang3D Website](https://www.harfang3d.com/en_US/)  
