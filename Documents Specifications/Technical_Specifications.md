@@ -4,28 +4,6 @@
 <details><summary><b>Table of Contents</b></summary>
 
 - [Technical Specifications](#technical-specifications)
-<<<<<<< HEAD
-- [1. Purpose of the document](#1-purpose-of-the-document)
-- [2. Introduction of the project](#2-introduction-of-the-project)
-  - [a. Context](#a-context)
-  - [b. Goal of the project](#b-goal-of-the-project)
-  - [c. General Description](#c-general-description)
-  - [d. Team Members](#d-team-members)
-- [3. Solution](#3-solution)
-  - [a. Existing Solutions](#a-existing-solutions)
-  - [b. Current Solution](#b-current-solution)
-  - [c. Proposed Solution](#c-proposed-solution)
-- [4. Process (Vector example)](#4-process-vector-example)
-  - [a. How is it working ?](#a-how-is-it-working-)
-    - [What is a C wrapper ?](#what-is-a-c-wrapper-)
-    - [How to create a C wrapper ?](#how-to-create-a-c-wrapper-)
-    - [Using the C wrapper in F#](#using-the-c-wrapper-in-f)
-  - [b. The Vector class](#b-the-vector-class)
-    - [Structure](#structure)
-    - [DLL Import Functions](#dll-import-functions)
-  - [c. Testing](#c-testing)
-- [5. Further Considerations](#5-further-considerations)
-=======
 - [1. Introduction](#1-introduction)
   - [a. Context](#a-context)
   - [b. Goal](#b-goal)
@@ -37,45 +15,24 @@
   - [c. Proposed Solution](#c-proposed-solution)
 - [3. Process](#3-process)
 - [4. Further Considerations](#4-further-considerations)
->>>>>>> parent of 54aedb2 (prepare to merge)
   - [a. License](#a-license)
   - [b. Cost Estimation](#b-cost-estimation)
   - [c. Security](#c-security)
   - [d. Risks](#d-risks)
   - [e. Accessibility](#e-accessibility)
   - [Types Conversion](#types-conversion)
-<<<<<<< HEAD
-- [6. Success Evaluation](#6-success-evaluation)
-- [7. Folder Structure](#7-folder-structure)
-  - [a. Before the project](#a-before-the-project)
-  - [b. During the project](#b-during-the-project)
-- [8. Ressources](#8-ressources)
-=======
 - [5. Success Evaluation](#5-success-evaluation)
 - [6. Folder Structure](#6-folder-structure)
   - [a. Before the project](#a-before-the-project)
   - [b. During the project](#b-during-the-project)
 - [7. Ressources](#7-ressources)
->>>>>>> parent of 54aedb2 (prepare to merge)
   - [a. References](#a-references)
   - [b. Glossary](#b-glossary)
   
 </details>
 
-<<<<<<< HEAD
-
-# 1. Purpose of the document
-
-
- The Technical Specifications Document (TSD) is a document that describes the technical aspects of the project. It is a document that serves to define the project and to ensure that the project is well understood by both the client and the team members.
-
-
-&nbsp;
-# 2. Introduction of the project
-=======
 &nbsp;
 # 1. Introduction
->>>>>>> parent of 54aedb2 (prepare to merge)
 
 [HARFANG](https://www.harfang3d.com/en_US/framework) is a real-time 3D engine open-source and available on GitHub, developed by [HARFANG3D](https://www.harfang3d.com/en_US/). It is written in C++ and is based on the open-source [bgfx](https://github.com/bkaradzic/bgfx) library supporting Vulkan, Metal, DirectX, OpenGL and OpenGL ES.
 
@@ -84,27 +41,16 @@
 [FABGen](https://github.com/ejulien/FABGen/) (a set of Python scripts to generate C++ binding code to different languages) is used to generate binding for HARFANG and currently supports the following target languages: CPython 3.2+, Lua and Go 1.11+. 
 
 For more details, please take a look at the [Functional Specifications](https://github.com/algosup/2022-2023-project-3-harfang3d-binding-Project-1-group/blob/main/Documents%20Specifications/Functional_Specifications.md).
-<<<<<<< HEAD
-## b. Goal of the project 
-=======
 ## b. Goal
->>>>>>> parent of 54aedb2 (prepare to merge)
 
 The goal of the project is to provide a F# binding for HARFANG.
 
 We have 7 weeks to complete the project.
 
  ## c. General Description
-<<<<<<< HEAD
-| Project | Client | Author | Created on | Last update | Document Version |
-|:---|:---|:---|:---|:---|:---|
-| 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-20 | V1.0 |
-| 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d) | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-02-09 | V2.0 |
-=======
 | Project | Client | Author | Created on | Last update |
 |:---|:---|:---|:---|:---|
 | 2023 Project 3 - Harfang3D Binding Group 1 | [HARFANG3D](https://github.com/harfang3d/harfang3d)  | [Nicolas MIDA](https://github.com/Nicolas-Mida) | 2022-01-03 | 2022-01-20 |
->>>>>>> parent of 54aedb2 (prepare to merge)
 
 &nbsp;
 ## d. Team Members
@@ -119,11 +65,7 @@ We have 7 weeks to complete the project.
 
 &nbsp;
 
-<<<<<<< HEAD
-# 3. Solution
-=======
 # 2. Solution
->>>>>>> parent of 54aedb2 (prepare to merge)
 
 ## a. Existing Solutions
 
@@ -161,180 +103,9 @@ We need to define what is F# :
   - Link to C library (C++ has to be wrapped with C first)
 
 
-<<<<<<< HEAD
-# 4. Process (Vector example)
-
-In this section, we will explain how's working a F# binding for a C++ library using the Vector class as an example.
-
-## a. How is it working ?
-
-  In order to use native C++ code in F# it is often necessary to create a C wrapper around the C++ code. This is because F# uses the Common Language Infrastructure (CLI) to interact with dynamic libraries, which requires that the functions in the dynamic library be written in C or a similar language that can interface with the CLI.
-
-  ### What is a C wrapper ?
-
-  A C wrapper is simply a thin layer of C code that acts as an interface between the C++ code and the F# code. The C wrapper exports the functions from the C++ code as C functions, which can be called from F# using the DllImport attribute.
-
-  ### How to create a C wrapper ?
-
-  To create a C wrapper, you need to add the extern "C" keyword to the function declarations in the C++ header file. This tells the compiler to use the C calling convention for the functions, which is required for the functions to be callable from F#.
-
-  Here's a basic example from the vector.h file :
-
-```cpp
-#ifndef VECTOR_H
-#define VECTOR_H
-
-#include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string>
-#include <math.h>
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
-    class Vector2
-    {
-    public:
-        Vector2(double inx = 0, double iny = 0);
-        mutable double x;
-        mutable double y;
-        double distanceTo(Vector2 pos);
-        void vectorMovement(double plusx, double plusy);
-        Vector2 midpoint(Vector2 pos);
-        double percentDistance(Vector2 pos, double percentOfDistance = 100);
-    };
-```
-
-We will take the distanceToVector2 function as an example from the vector.cpp file :
-
-```cpp
-#include "vectors.h"
-
-extern "C"
-{
-    double distanceToVector2(Vector2 vec, Vector2 pos)
-    {
-        return vec.distanceTo(pos);
-    }
-}
-```
-
-### Using the C wrapper in F#
-
-Now that we have prepared the C wrapper, we need to create the DLL (or .dylib on macOS) that will be used by F#. To do this, we will use the CMake build system. 
-
-The CMakeLists.txt file is used to specify the build configuration for the project. It contains a set of commands that specify the minimum version of CMake required to build the project, the name of the project, and the C++ standard to use. It also contains a set of commands that specify the source files to compile and the name of the output file.
-
-&nbsp;
-
-Here is an example of the CMakeLists.txt file :
-
-```cmake
-cmake_minimum_required(VERSION 3.10)
-set(lib_name Vectors)
-project(${lib_name})
-
-# Add all the header files
-set(HEADERS
-    ../Vectors/vectors.h
-)
-
-# Add all the source files
-set(SOURCES
-    ../Vectors/vectors.cpp
-)
-
-# Compile the library
-add_library(${lib_name} SHARED ${HEADERS} ${SOURCES})
-
-# Set the include directories
-target_include_directories(${lib_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-
-# Set the output directory for the library
-set_target_properties(${lib_name} PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
-)
-
-# Ensure that the library is built for macOS
-if (WIN32)
-    set_target_properties(${lib_name} PROPERTIES
-        SUFFIX .dll
-    )
-elseif(APPLE)
-    set_target_properties(${lib_name} PROPERTIES
-        SUFFIX .dylib
-    )
-endif()
-```
-
-## b. The Vector class
-
-For this example, we will use the Vector2 class from the Vectors library.
-
-The Vector2 class is a simple class that represents a 2-dimensional vector. It contains two double-precision floating-point values to represent the x and y components of the vector. The class is defined in the vectors.h header file.
-
-
-### Structure
-
-The library defines two structures, Vector2 and Vector3, to represent 2-dimensional and 3-dimensional vectors, respectively. Both structures contain two or three double-precision floating-point values to represent the x, y, and z components of the vector. The structures are defined using the Struct and StructLayout attributes to specify the memory layout.
-
-### DLL Import Functions
-
-The library uses the DLLImport attribute to access functions in the generated shared library. There are several functions defined in the library, but only one is used in this example, distanceToVector2, calculates the distance between two Vector2 values.
-
-Here is an example of usage of the DLLImport attribute with the distanceToVector2 function :
-
-```fsharp
-[<DllImport("libVectors")>]
-extern double distanceToVector2(Vector2 vec1, Vector2 vec2)
-```
-
-This function takes two Vector2 parameters, vec1 and vec2, and returns a double value. The DllImport attribute is used to specify the name of the DLL from which to import the function.
-
-Once these functions are imported, they can be called in the code just like any other F# function. For example, the distanceToVector2 function is called later in the code block like this:
-
-```fsharp
-let distV2 = distanceToVector2 (vec2_n1, vec2_n2)
-```
-
-In this case, vec2_n1 and vec2_n2 are Vector2 values, and the call to distanceToVector2 returns a double value which is stored in the distV2 variable.
-
-## c. Testing
-
-To ensure that the Vector class works as expected, we wrote a simple test program that uses the Vector2 class.
-
-For instance here is the beggining of the test program :
-
-```fs
-namespace TestsVectors
-
-open System
-open FSharpExercises.Core.Helpers
-open NUnit.Framework
-open Vectors
-
-module TestVectorsProgram =
-    // Ignore test template : [<Ignore("Not implemented");Test>]
-
-    // ! Test for Vectors2
-    [<Test>]
-    let TestCreateVector2() =
-        let expectedValue = VectorsProgram.Vector2(1.0, 2.0)
-        let actualValue = VectorsProgram.Vector2(1.0, 2.0)
-        AssertEquality expectedValue actualValue
-```
-
-
-
-# 5. Further Considerations
-=======
 # 3. Process
 
 # 4. Further Considerations
->>>>>>> parent of 54aedb2 (prepare to merge)
 ## a. License
 
 The FABGen software is licensed under the GPLv3 license. That means that we can use it for our project as long as we respect the license terms.
@@ -353,10 +124,6 @@ To make the project, we don't need to buy anything. We will use the tools that w
 
 - The binding should also be designed to minimize the attack surface by limiting the number of exposed functions and data structures.
 
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 54aedb2 (prepare to merge)
 ## d. Risks
 
 A lot of risks can occur during the project. We have to be aware of them and try to minimize them as much as possible.
@@ -410,21 +177,13 @@ Here is the following equivalence table between the different types used in the 
 
 
 
-<<<<<<< HEAD
-# 6. Success Evaluation
-=======
 # 5. Success Evaluation
->>>>>>> parent of 54aedb2 (prepare to merge)
 
 To ensure that the project is successful, we will have to make the 29 unit tests pass and to test the binding with the HARFANG engine.
 
 
 
-<<<<<<< HEAD
-# 7. Folder Structure
-=======
 # 6. Folder Structure
->>>>>>> parent of 54aedb2 (prepare to merge)
 ## a. Before the project
 
 ```
@@ -531,11 +290,7 @@ Moreover, here is a mock-up of the FABGen tool detailing the different steps of 
 
 &nbsp;
 
-<<<<<<< HEAD
-# 8. Ressources
-=======
 # 7. Ressources
->>>>>>> parent of 54aedb2 (prepare to merge)
 ## a. References
 
 [1] [Harfang3D Website](https://www.harfang3d.com/en_US/)  
